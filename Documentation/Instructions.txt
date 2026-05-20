@@ -1,0 +1,7 @@
+1. Open Index.html
+2. Click Link File and select a JSON File anywhere in your PC (I recommend root directory)
+3. Go through the course and click checkboxes after completion 
+4. Close the browser 
+5. After returning to the course, open Index.html again and you will be greeted with a fresh page. 
+6. Click Import and select the JSON file that you selected in Step 2
+7. You can see the website with your progress again

@@ -393,7 +393,10 @@
         <div class="toolbar">
             <button onclick="exportProgress()">Export</button>
             <button onclick="importProgress()">Import</button>
+            <button onclick="linkProgressFile()">Link File</button>
             <button class="danger" onclick="resetProgress()">Reset</button>
+            <span id="save-indicator" style="margin-left:0.5rem;font-size:0.75rem;color:var(--text-secondary);"></span>
+            <span id="file-sync-status" style="margin-left:0.3rem;font-size:0.75rem;color:#c77;"></span>
         </div>
     </div>
 </header>
@@ -4604,15 +4607,38 @@ $ java -jar target/order-processor-1.0-SNAPSHOT.jar</code></pre>
 <script>
 const STORAGE_KEY = 'java-3day-progress';
 const TAB_KEY = 'java-3day-active-tab';
+const SAVE_TIMESTAMP_KEY = 'java-3day-last-save';
+const AUTO_SAVE_INTERVAL = 30 * 60 * 1000;
+const PROGRESS_FILE = '../progress.json';
 let activeDay = 1;
+let autoSaveTimer = null;
+let fileHandle = null;
 
-function saveProgress() {
+function getProgressData() {
     const data = {};
     document.querySelectorAll('.progress-check').forEach(cb => {
         data[cb.id] = cb.checked;
     });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    return data;
+}
+
+function saveProgress() {
+    const data = getProgressData();
+    const json = JSON.stringify(data);
+    localStorage.setItem(STORAGE_KEY, json);
+    localStorage.setItem(SAVE_TIMESTAMP_KEY, Date.now().toString());
     updateAllProgress();
+    updateSaveIndicator();
+    writeProgressToFile(json);
+}
+
+async function writeProgressToFile(json) {
+    if (!fileHandle) return;
+    try {
+        const writable = await fileHandle.createWritable();
+        await writable.write(json);
+        await writable.close();
+    } catch (e) {}
 }
 
 function loadProgress() {
@@ -4626,6 +4652,41 @@ function loadProgress() {
     } catch(e) {}
 }
 
+function mergeAndLoad(fileData) {
+    const localRaw = localStorage.getItem(STORAGE_KEY);
+    if (!localRaw) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(fileData));
+    } else {
+        const localData = JSON.parse(localRaw);
+        const merged = { ...fileData, ...localData };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+    }
+    loadProgress();
+    updateAllProgress();
+}
+
+function loadFromFile() {
+    fetch(PROGRESS_FILE)
+        .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+        .then(text => {
+            try {
+                const fileData = JSON.parse(text);
+                mergeAndLoad(fileData);
+            } catch(e) {}
+        })
+        .catch(() => {});
+}
+
+async function readFromFileHandle() {
+    if (!fileHandle) return;
+    try {
+        const file = await fileHandle.getFile();
+        const text = await file.text();
+        const fileData = JSON.parse(text);
+        mergeAndLoad(fileData);
+    } catch (e) {}
+}
+
 function updateProgress(day) {
     const checks = document.querySelectorAll('#day' + day + ' .progress-check');
     const total = checks.length;
@@ -4633,7 +4694,6 @@ function updateProgress(day) {
     const pct = total ? Math.round((checked / total) * 100) : 0;
     const label = document.getElementById('progress-text-' + day);
     if (label) label.textContent = 'Day ' + day + ': ' + checked + '/' + total + ' (' + pct + '%)';
-    // Nav completion
     const hourCounts = {1: 15, 2: 16, 3: 8, 4: 8};
     const hc = hourCounts[day] || 0;
     for (let h = 1; h <= hc; h++) {
@@ -4680,14 +4740,16 @@ function switchDay(day) {
 }
 
 function exportProgress() {
+    saveProgress();
     const data = localStorage.getItem(STORAGE_KEY) || '{}';
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'java-3day-progress.json';
+    a.download = 'progress.json';
     a.click();
     URL.revokeObjectURL(url);
+    updateSaveIndicator();
 }
 
 function importProgress() {
@@ -4700,10 +4762,9 @@ function importProgress() {
         const reader = new FileReader();
         reader.onload = ev => {
             try {
-                JSON.parse(ev.target.result);
-                localStorage.setItem(STORAGE_KEY, ev.target.result);
-                loadProgress();
-                updateAllProgress();
+                const imported = JSON.parse(ev.target.result);
+                mergeAndLoad(imported);
+                updateSaveIndicator();
             } catch (err) {
                 alert('Invalid progress file.');
             }
@@ -4732,7 +4793,6 @@ function toggleDetails() {
     updateStickyOffset();
 }
 
-// Scroll spy
 window.addEventListener('scroll', () => {
     const day = activeDay;
     const sections = document.querySelectorAll('#day' + day + ' .hour-section');
@@ -4745,27 +4805,18 @@ window.addEventListener('scroll', () => {
     });
     navBtns.forEach(btn => {
         btn.classList.remove('active');
-        if (btn.getAttribute('href') === '#' + current) {
-            btn.classList.add('active');
-        }
+        if (btn.getAttribute('href') === '#' + current) btn.classList.add('active');
     });
 });
 
-// Intersection Observer for fadeInUp
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
     });
 }, { threshold: 0.05 });
 
-document.querySelectorAll('.hour-section').forEach(section => {
-    observer.observe(section);
-});
+document.querySelectorAll('.hour-section').forEach(section => observer.observe(section));
 
-// Dynamic sticky offset - calculates final header height immediately
-// to avoid lag from max-height CSS transition
 function updateStickyOffset() {
     const header = document.querySelector('.app-header');
     const navs = document.querySelectorAll('.nav-container');
@@ -4774,27 +4825,118 @@ function updateStickyOffset() {
     const row = header.querySelector('.header-row');
     const rowH = row ? row.offsetHeight : 0;
     const isOpen = details && details.classList.contains('open');
-    // When open: scrollHeight of details content; when closed: 0
     const detailsH = isOpen ? details.scrollHeight : 0;
     const headerH = rowH + detailsH;
     navs.forEach(n => n.style.top = headerH + 'px');
     document.documentElement.style.setProperty('--sticky-offset', headerH + 50 + 'px');
 }
 
-// Init
-document.addEventListener('DOMContentLoaded', () => {
-    loadProgress();
+function updateSaveIndicator() {
+    const el = document.getElementById('save-indicator');
+    if (!el) return;
+    const ts = parseInt(localStorage.getItem(SAVE_TIMESTAMP_KEY) || '0');
+    if (ts === 0) { el.textContent = ''; return; }
+    const ago = Math.floor((Date.now() - ts) / 60000);
+    el.textContent = ago < 1 ? 'Saved just now' : 'Saved ' + ago + ' min ago';
+}
+
+function updateFileSyncStatus() {
+    const el = document.getElementById('file-sync-status');
+    if (!el) return;
+    if (fileHandle) {
+        el.textContent = '\u2192 File sync: ON';
+        el.style.color = '#7c7';
+    } else {
+        el.textContent = '\u2192 File sync: OFF';
+        el.style.color = '#c77';
+    }
+}
+
+function startAutoSave() {
+    if (autoSaveTimer) clearInterval(autoSaveTimer);
+    autoSaveTimer = setInterval(() => { saveProgress(); }, AUTO_SAVE_INTERVAL);
+}
+
+async function linkProgressFile() {
+    if (!('showSaveFilePicker' in window)) {
+        alert('Automatic file sync requires Chrome or Edge.\nUse Export/Import buttons to save progress manually.');
+        return;
+    }
+    try {
+        fileHandle = await window.showSaveFilePicker({
+            suggestedName: 'progress.json',
+            types: [{ description: 'JSON Files', accept: { 'application/json': ['.json'] } }]
+        });
+        await saveFileHandleToDB(fileHandle);
+        const json = JSON.stringify(getProgressData(), null, 2);
+        const writable = await fileHandle.createWritable();
+        await writable.write(json);
+        await writable.close();
+        updateFileSyncStatus();
+    } catch (e) {}
+}
+
+function openIDB() {
+    return new Promise((resolve, reject) => {
+        const req = indexedDB.open('java3day-progress-db', 1);
+        req.onupgradeneeded = () => req.result.createObjectStore('handles');
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+    });
+}
+
+async function saveFileHandleToDB(handle) {
+    try {
+        const db = await openIDB();
+        const tx = db.transaction('handles', 'readwrite');
+        tx.objectStore('handles').put(handle, 'progressFile');
+        return new Promise((resolve, reject) => {
+            tx.oncomplete = resolve;
+            tx.onerror = () => reject(tx.error);
+        });
+    } catch(e) {}
+}
+
+async function getFileHandleFromDB() {
+    try {
+        const db = await openIDB();
+        const tx = db.transaction('handles', 'readonly');
+        const req = tx.objectStore('handles').get('progressFile');
+        return new Promise((resolve, reject) => {
+            req.onsuccess = () => resolve(req.result || null);
+            req.onerror = () => reject(req.error);
+        });
+    } catch(e) { return null; }
+}
+
+async function initFileHandle() {
+    const handle = await getFileHandleFromDB();
+    if (handle) {
+        try {
+            if ((await handle.queryPermission({ mode: 'readwrite' })) === 'granted') {
+                fileHandle = handle;
+            }
+        } catch(e) {}
+    }
+    updateFileSyncStatus();
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    loadFromFile();
+    await initFileHandle();
+    if (fileHandle) await readFromFileHandle();
     const savedTab = localStorage.getItem(TAB_KEY) || '1';
     switchDay(parseInt(savedTab));
     updateAllProgress();
     updateStickyOffset();
+    updateSaveIndicator();
+    setInterval(updateSaveIndicator, 60000);
+    startAutoSave();
 });
 
-// Re-calculate on toggle and resize
 const mutObs = new MutationObserver(updateStickyOffset);
 mutObs.observe(document.getElementById('header-details'), { attributes: true, attributeFilter: ['class'] });
 window.addEventListener('resize', updateStickyOffset);
-// Also recalculate after transition completes to catch any remaining drift
 document.getElementById('header-details').addEventListener('transitionend', updateStickyOffset);
 </script>
 
