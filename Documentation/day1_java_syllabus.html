@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1: Core Java, OOP & Foundations — 16-Hour Intensive Syllabus</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --code-bg: #0d1117;
+            --code-text: #e6edf3;
+            --border: #475569;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+            padding: 3rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 600;
+            position: relative;
+        }
+
+        .hero .meta {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0 0.25rem;
+        }
+
+        .badge-java { background: var(--accent); color: var(--bg-primary); }
+        .badge-lts { background: var(--success); color: white; }
+        .badge-time { background: var(--warning); color: var(--bg-primary); }
+
+        .nav-container {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-scroll {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--bg-secondary);
+        }
+
+        .nav-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .nav-scroll::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .nav-btn {
+            flex-shrink: 0;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .hour-section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 5rem;
+        }
+
+        .hour-header {
+            background: linear-gradient(90deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border-left: 5px solid var(--accent);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hour-number {
+            font-size: 0.875rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+
+        .hour-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .hour-goal {
+            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-title svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        li strong {
+            color: var(--text-primary);
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid #30363d;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        pre::before {
+            content: 'java';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-family: monospace;
+            border-bottom-left-radius: 0.5rem;
+            border-top-right-radius: 0.75rem;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .inline-code {
+            background: var(--code-bg);
+            color: var(--accent);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.85em;
+            border: 1px solid #30363d;
+        }
+
+        .keyword { color: #ff7b72; }
+        .type { color: #ffa657; }
+        .string { color: #a5d6ff; }
+        .comment { color: #8b949e; font-style: italic; }
+        .function { color: #d2a8ff; }
+        .number { color: #79c0ff; }
+        .annotation { color: #ff7b72; }
+
+        .practice {
+            background: linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(34,197,94,0.05) 100%);
+            border: 1px solid var(--success);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .practice-title {
+            color: var(--success);
+            font-weight: 800;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pitfall {
+            background: linear-gradient(135deg, rgba(239,68,68,0.1) 0%, rgba(239,68,68,0.05) 100%);
+            border: 1px solid var(--danger);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .pitfall-title {
+            color: var(--danger);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .info {
+            background: linear-gradient(135deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.05) 100%);
+            border: 1px solid var(--accent);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .info-title {
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .strategy {
+            background: linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(245,158,11,0.05) 100%);
+            border: 1px solid var(--warning);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .strategy-title {
+            color: var(--warning);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-card);
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:hover {
+            background: rgba(56,189,248,0.05);
+        }
+
+        .checklist {
+            background: var(--bg-secondary);
+            border: 2px solid var(--success);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .checklist h3 {
+            color: var(--success);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .checklist ol {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            counter-reset: checklist;
+        }
+
+        .checklist li {
+            counter-increment: checklist;
+            padding: 0.75rem 0 0.75rem 3rem;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .checklist li::before {
+            content: counter(checklist);
+            position: absolute;
+            left: 0;
+            top: 0.75rem;
+            width: 2rem;
+            height: 2rem;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.875rem;
+        }
+
+        .break-schedule {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .break-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .break-time {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--warning);
+        }
+
+        .break-after {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        @media print {
+            .nav-container { display: none; }
+            .hero { background: white; color: black; }
+            body { background: white; color: black; }
+            .card, .hour-header { break-inside: avoid; }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 1.75rem; }
+            .hour-title { font-size: 1.25rem; }
+            pre { padding: 0.75rem; font-size: 0.8rem; }
+        }
+
+        .hour-section {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hour-section:nth-child(1) { animation-delay: 0.1s; }
+        .hour-section:nth-child(2) { animation-delay: 0.2s; }
+        .hour-section:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>Day 1: Core Java, OOP & Foundations</h1>
+    <div class="subtitle">16-Hour Intensive Syllabus</div>
+    <div class="meta">
+        <span class="badge badge-java">Java 21 LTS</span>
+        <span class="badge badge-lts">Production Ready</span>
+        <span class="badge badge-time">16 Hours + Breaks</span>
+    </div>
+    <div class="meta" style="margin-top: 0.75rem; font-style: italic;">
+        Goal: Master language mechanics and every prerequisite for Day 2.
+    </div>
+    <div class="meta" style="margin-top: 0.5rem; font-style: italic; font-size: 0.9rem;">
+        Prerequisite: Basic programming logic (variables, conditionals, loops) from any other language.
+    </div>
+</header>
+
+<nav class="nav-container">
+    <div class="nav-scroll">
+        <a href="#hour1" class="nav-btn">H1: Environment</a>
+        <a href="#hour2" class="nav-btn">H2: Control Flow</a>
+        <a href="#hour3" class="nav-btn">H3: Classes</a>
+        <a href="#hour4" class="nav-btn">H4: Inheritance</a>
+        <a href="#hour5" class="nav-btn">H5: Contracts</a>
+        <a href="#hour6" class="nav-btn">H6: Records</a>
+        <a href="#hour7" class="nav-btn">H7: Comparable</a>
+        <a href="#hour8" class="nav-btn">H8: static/final</a>
+        <a href="#hour9" class="nav-btn">H9: Strings</a>
+        <a href="#hour10" class="nav-btn">H10: java.time</a>
+        <a href="#hour11" class="nav-btn">H11: Arrays</a>
+        <a href="#hour12" class="nav-btn">H12: PECS</a>
+        <a href="#hour13" class="nav-btn">H13: Collections</a>
+        <a href="#hour14" class="nav-btn">H14: Exceptions</a>
+        <a href="#hour15" class="nav-btn">H15: JVM/Maven</a>
+        <a href="#hour16" class="nav-btn">H16: Review</a>
+    </div>
+</nav>
+
+<main class="container">
+
+<!-- IDE STRATEGY -->
+<div class="strategy" style="margin-bottom: 2rem;">
+    <div class="strategy-title">IDE Strategy</div>
+    <p><strong>Hours 1–8:</strong> Text editor + terminal only. You must understand compilation and classpath manually before an IDE hides it.</p>
+    <p><strong>Hour 9 onwards:</strong> Switch to <strong>IntelliJ IDEA Community Edition</strong> (or VS Code with Java extensions) for refactoring, debugging, and Maven integration.</p>
+</div>
+
+<!-- BREAK SCHEDULE -->
+<section class="card" style="margin-bottom: 2rem;">
+    <div class="card-title">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Break Schedule
+    </div>
+    <div class="break-schedule">
+        <div class="break-card">
+            <div class="break-time">30 min</div>
+            <div class="break-after">After Hour 4</div>
+        </div>
+        <div class="break-card">
+            <div class="break-time">45 min</div>
+            <div class="break-after">After Hour 8 (Meal)</div>
+        </div>
+        <div class="break-card">
+            <div class="break-time">30 min</div>
+            <div class="break-after">After Hour 12</div>
+        </div>
+    </div>
+</section>
+
+<!-- HOUR 1 -->
+<section class="hour-section" id="hour1">
+    <div class="hour-header">
+        <div class="hour-number">Hour 1</div>
+        <div class="hour-title">Environment, Packages & Manual Compilation</div>
+        <div class="hour-goal">No IDE. Just the terminal, JDK 21, and raw bytecode.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            Setup & Installation
+        </div>
+        <ul>
+            <li>Download <strong>JDK 21 (LTS)</strong> from <a href="https://adoptium.net" style="color:var(--accent);">Adoptium</a> or Oracle.</li>
+            <li>Set <span class="inline-code">JAVA_HOME</span> to the JDK root directory.</li>
+            <li>Append <span class="inline-code">%JAVA_HOME%\bin</span> (Windows) or <span class="inline-code">$JAVA_HOME/bin</span> (Unix) to <span class="inline-code">PATH</span>.</li>
+            <li>Verify: <span class="inline-code">java -version</span> and <span class="inline-code">javac -version</span> must both report 21.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            Packages & Directory Structure
+        </div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            A <span class="inline-code">package</span> declaration is a namespace. The JVM requires the filesystem to mirror the package exactly.
+        </p>
+        <pre><code><span class="comment">// File: src/com/example/day1/Calculator.java</span>
+<span class="keyword">package</span> com.example.day1;
+
+<span class="keyword">public class</span> <span class="type">Calculator</span> {
+    <span class="keyword">public static void</span> <span class="function">main</span>(<span class="type">String</span>[] args) {
+        <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Compiled manually!"</span>);
+    }
+}</code></pre>
+        <div class="info">
+            <div class="info-title">The Mirror Rule</div>
+            <p><span class="inline-code">package com.example.day1;</span> <strong>must</strong> live in <span class="inline-code">src/com/example/day1/Calculator.java</span>. Any mismatch produces <span class="inline-code">NoClassDefFoundError</span> at runtime.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            Classpath & Manual Compilation
+        </div>
+        <table>
+            <tr><th>Command</th><th>Purpose</th></tr>
+            <tr><td><span class="inline-code">javac -d out src/com/example/day1/*.java</span></td><td>Compile all .java files; output package tree into <span class="inline-code">out/</span></td></tr>
+            <tr><td><span class="inline-code">java -cp out com.example.day1.Calculator</span></td><td>Run the class; <span class="inline-code">-cp</span> (or <span class="inline-code">-classpath</span>) tells JVM where to search</td></tr>
+        </table>
+        <div class="pitfall">
+            <div class="pitfall-title">Common Pitfall</div>
+            <p>Running <span class="inline-code">java Calculator</span> instead of <span class="inline-code">java com.example.day1.Calculator</span> ignores the package declaration and fails with <span class="inline-code">NoClassDefFoundError</span>.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            Primitive Types & Operators
+        </div>
+        <table>
+            <tr><th>Type</th><th>Width</th><th>Range / Notes</th></tr>
+            <tr><td><span class="inline-code">byte</span></td><td>8-bit</td><td>-128 to 127</td></tr>
+            <tr><td><span class="inline-code">short</span></td><td>16-bit</td><td>-32,768 to 32,767</td></tr>
+            <tr><td><span class="inline-code">int</span></td><td>32-bit</td><td>Standard integer</td></tr>
+            <tr><td><span class="inline-code">long</span></td><td>64-bit</td><td>Suffix <span class="inline-code">L</span> required: <span class="inline-code">100L</span></td></tr>
+            <tr><td><span class="inline-code">float</span></td><td>32-bit</td><td>Suffix <span class="inline-code">f</span> required: <span class="inline-code">3.14f</span></td></tr>
+            <tr><td><span class="inline-code">double</span></td><td>64-bit</td><td>Default floating-point</td></tr>
+            <tr><td><span class="inline-code">char</span></td><td>16-bit</td><td>Unsigned UTF-16 code unit</td></tr>
+            <tr><td><span class="inline-code">boolean</span></td><td>JVM-dependent</td><td><span class="inline-code">true</span> / <span class="inline-code">false</span></td></tr>
+        </table>
+        <p style="margin-top:1rem;color:var(--text-secondary);">
+            <strong>Operators:</strong> Arithmetic (+, -, *, /, %), Relational (==, !=, <, >, <=, >=), Logical (&&, ||, !), Bitwise (&, |, ^, ~, <<, >>, >>>), Ternary (<span class="inline-code">condition ? a : b</span>).
+        </p>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Terminal Calculator</div>
+        <ol>
+            <li>Create <span class="inline-code">src/com/example/Calculator.java</span> with a <span class="inline-code">main</span> method that accepts three arguments: <span class="inline-code">number operator number</span>.</li>
+            <li>Support <span class="inline-code">+</span>, <span class="inline-code">-</span>, <span class="inline-code">*</span>, <span class="inline-code">/</span> (guard division by zero with ternary).</li>
+            <li>Compile with <span class="inline-code">javac -d out src/com/example/*.java</span>.</li>
+            <li>Run with <span class="inline-code">java -cp out com.example.Calculator 10 + 5</span>.</li>
+            <li><strong>Stretch goal:</strong> Add a second package <span class="inline-code">com.example.math</span> containing a <span class="inline-code">MathUtils</span> class with static methods. Call it from <span class="inline-code">Calculator</span> across packages.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 2 -->
+<section class="hour-section" id="hour2">
+    <div class="hour-header">
+        <div class="hour-number">Hour 2</div>
+        <div class="hour-title">Control Flow, Methods & <code>var</code></div>
+        <div class="hour-goal">Master branching, looping, method contracts, and local type inference.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Control Flow Structures</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);"><strong>Switch Expressions (Java 14+):</strong> The modern <span class="inline-code">-></span> syntax eliminates fall-through bugs and yields a value.</p>
+        <pre><code><span class="keyword">int</span> day = <span class="number">3</span>;
+<span class="type">String</span> type = <span class="keyword">switch</span> (day) {
+    <span class="keyword">case</span> <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span> -> <span class="string">"Weekday"</span>;
+    <span class="keyword">case</span> <span class="number">6</span>, <span class="number">7</span>       -> <span class="string">"Weekend"</span>;
+    <span class="keyword">default</span>            -> <span class="string">"Invalid"</span>;
+};
+
+<span class="comment">// Classic switch still works (with fall-through)</span>
+<span class="keyword">switch</span> (day) {
+    <span class="keyword">case</span> <span class="number">1</span>:
+        <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Monday"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="number">2</span>:
+        <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Tuesday"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Other"</span>);
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Loops & Jump Statements</div>
+        <pre><code><span class="comment">// Classic for</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">10</span>; i++) { ... }
+
+<span class="comment">// Enhanced for (iterable)</span>
+<span class="keyword">for</span> (<span class="type">String</span> s : list) { ... }
+
+<span class="comment">// while & do-while</span>
+<span class="keyword">while</span> (condition) { ... }
+<span class="keyword">do</span> { ... } <span class="keyword">while</span> (condition);
+
+<span class="comment">// Labeled break (rare but valid)</span>
+outer:
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">5</span>; i++) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j < <span class="number">5</span>; j++) {
+        <span class="keyword">if</span> (i * j > <span class="number">6</span>) <span class="keyword">break</span> outer;
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Methods & Pass-by-Value Semantics</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Java is strictly <strong>pass-by-value</strong>. For objects, the value passed is the <em>reference copy</em>, not the object itself. The caller's reference cannot be reassigned inside the method.
+        </p>
+        <pre><code><span class="keyword">public class</span> <span class="type">Demo</span> {
+    <span class="keyword">void</span> <span class="function">swapFail</span>(<span class="type">StringBuilder</span> a, <span class="type">StringBuilder</span> b) {
+        <span class="type">StringBuilder</span> temp = a;
+        a = b;        <span class="comment">// Only local copies are reassigned</span>
+        b = temp;     <span class="comment">// Caller sees no change</span>
+    }
+
+    <span class="keyword">void</span> <span class="function">mutateSuccess</span>(<span class="type">StringBuilder</span> sb) {
+        sb.<span class="function">append</span>(<span class="string">" mutated"</span>);  <span class="comment">// Caller sees this — object state changed</span>
+    }
+}</code></pre>
+        <div class="info">
+            <div class="info-title">Method Overloading & Variable Scope</div>
+            <p>Same name, different parameter lists (type, count, or order). Return type alone is <strong>not</strong> sufficient for overloading.</p>
+            <p style="margin-top:0.5rem;"><strong>Scope:</strong> <span class="inline-code">local</span> (inside a method), <span class="inline-code">instance</span> (per object, non-static field), <span class="inline-code">class</span> (shared, static field). Local shadows instance if names collide — use <span class="inline-code">this.field</span> to disambiguate.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">The <code>var</code> Keyword (Java 10+)</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Local variable type inference. The compiler infers the type from the right-hand side initializer. Improves readability when the type is obvious from the right-hand side.
+        </p>
+        <pre><code><span class="keyword">var</span> list = <span class="keyword">new</span> <span class="type">ArrayList</span><<span class="type">String</span>>();  <span class="comment">// Inferred as ArrayList&lt;String&gt;</span>
+<span class="keyword">var</span> stream = list.<span class="function">stream</span>();           <span class="comment">// Inferred as Stream&lt;String&gt;</span>
+
+<span class="comment">// ILLEGAL:</span>
+<span class="comment">// var x;                    // No initializer</span>
+<span class="comment">// var y = null;             // Null has no type</span>
+<span class="comment">// public var field = 5;     // Not for fields</span>
+<span class="comment">// void method(var param) {} // Not for parameters</span></code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Number-Guessing Game + Palindrome Checker</div>
+        <ol>
+            <li><strong>Guessing Game:</strong> Use <span class="inline-code">java.util.Random</span> to pick 1–100. Loop until user guesses correctly. Provide "too high / too low" feedback. Count attempts.</li>
+            <li><strong>Palindrome:</strong> Write <span class="inline-code">boolean isPalindrome(String s)</span> ignoring case and non-alphanumeric characters. Use <span class="inline-code">StringBuilder.reverse()</span> for comparison.</li>
+            <li>Use <span class="inline-code">var</span> wherever the type is obvious from the right-hand side.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 3 -->
+<section class="hour-section" id="hour3">
+    <div class="hour-header">
+        <div class="hour-number">Hour 3</div>
+        <div class="hour-title">Classes, Objects & Constructors</div>
+        <div class="hour-goal">Blueprint vs. instance. Encapsulation and access control.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><code>this</code> Keyword & Constructor Chaining</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            <span class="inline-code">this</span> refers to the current object. Use it to disambiguate fields from parameters, and to chain constructors within the same class.
+        </p>
+        <ul>
+            <li><strong>Field disambiguation:</strong> <span class="inline-code">this.model = model;</span> — <span class="inline-code">this.model</span> is the field, <span class="inline-code">model</span> is the parameter.</li>
+            <li><strong>Constructor chaining:</strong> <span class="inline-code">this(model, 2024);</span> — calls another constructor in the same class. Must be the <em>first</em> statement.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Class Anatomy</div>
+        <pre><code><span class="keyword">public class</span> <span class="type">Car</span> {
+    <span class="comment">// Fields (instance variables)</span>
+    <span class="keyword">private</span> <span class="type">String</span> model;
+    <span class="keyword">private int</span> year;
+
+    <span class="comment">// Constructor</span>
+    <span class="keyword">public</span> <span class="function">Car</span>(<span class="type">String</span> model, <span class="keyword">int</span> year) {
+        <span class="keyword">this</span>.model = model;   <span class="comment">// this distinguishes field from parameter</span>
+        <span class="keyword">this</span>.year = year;
+    }
+
+    <span class="comment">// Constructor chaining</span>
+    <span class="keyword">public</span> <span class="function">Car</span>(<span class="type">String</span> model) {
+        <span class="keyword">this</span>(model, <span class="number">2024</span>);  <span class="comment">// Delegates to 2-arg constructor</span>
+    }
+
+    <span class="comment">// Behavior</span>
+    <span class="keyword">public void</span> <span class="function">drive</span>() {
+        <span class="type">System</span>.out.<span class="function">println</span>(model + <span class="string">" is driving."</span>);
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Encapsulation: Why Private Fields + Public Getters/Setters</div>
+        <ul>
+            <li><strong>Validation:</strong> A setter can reject <span class="inline-code">null</span> or negative values.</li>
+            <li><strong>Immutability:</strong> Omit the setter; the field becomes read-only from outside.</li>
+            <li><strong>Refactoring freedom:</strong> Change internal representation without breaking callers.</li>
+        </ul>
+        <pre><code><span class="keyword">public class</span> <span class="type">BankAccount</span> {
+    <span class="keyword">private double</span> balance;
+
+    <span class="keyword">public void</span> <span class="function">deposit</span>(<span class="keyword">double</span> amount) {
+        <span class="keyword">if</span> (amount <= <span class="number">0</span>) {
+            <span class="keyword">throw new</span> <span class="type">IllegalArgumentException</span>(<span class="string">"Amount must be positive"</span>);
+        }
+        <span class="keyword">this</span>.balance += amount;
+    }
+
+    <span class="keyword">public double</span> <span class="function">getBalance</span>() {
+        <span class="keyword">return</span> balance;
+    }
+    <span class="comment">// No setter — balance can only change via deposit/withdraw</span>
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Access Modifiers Matrix</div>
+        <table>
+            <tr><th>Modifier</th><th>Same Class</th><th>Same Package</th><th>Subclass</th><th>Anywhere</th></tr>
+            <tr><td><span class="inline-code">public</span></td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+            <tr><td><span class="inline-code">protected</span></td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10007;</td></tr>
+            <tr><td><em>default</em> (package-private)</td><td>&#10003;</td><td>&#10003;</td><td>&#10007;</td><td>&#10007;</td></tr>
+            <tr><td><span class="inline-code">private</span></td><td>&#10003;</td><td>&#10007;</td><td>&#10007;</td><td>&#10007;</td></tr>
+        </table>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Design a Student Class</div>
+        <ol>
+            <li>Fields: <span class="inline-code">id</span> (final), <span class="inline-code">name</span>, <span class="inline-code">gpa</span> (0.0–4.0).</li>
+            <li>Constructor chaining: no-arg defaults to "Unknown", 0.0.</li>
+            <li>Validate GPA in setter; throw <span class="inline-code">IllegalArgumentException</span> if out of range.</li>
+            <li>Make <span class="inline-code">id</span> immutable (no setter, assigned in constructor).</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 4 -->
+<section class="hour-section" id="hour4">
+    <div class="hour-header">
+        <div class="hour-number">Hour 4</div>
+        <div class="hour-title">Inheritance, Polymorphism & Abstraction</div>
+        <div class="hour-goal">Build hierarchies. Understand runtime dispatch and modern instanceof.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Inheritance & Method Overriding</div>
+        <pre><code><span class="keyword">public abstract class</span> <span class="type">Vehicle</span> {
+    <span class="keyword">protected</span> <span class="type">String</span> brand;
+    <span class="keyword">protected int</span> year;
+
+    <span class="keyword">public</span> <span class="function">Vehicle</span>(<span class="type">String</span> brand, <span class="keyword">int</span> year) {
+        <span class="keyword">this</span>.brand = brand;
+        <span class="keyword">this</span>.year = year;
+    }
+
+    <span class="keyword">public abstract void</span> <span class="function">move</span>();  <span class="comment">// Subclass MUST implement</span>
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="type">String</span> <span class="function">toString</span>() {
+        <span class="keyword">return</span> brand + <span class="string">" ("</span> + year + <span class="string">")"</span>;
+    }
+}
+
+<span class="keyword">public class</span> <span class="type">Car</span> <span class="keyword">extends</span> <span class="type">Vehicle</span> {
+    <span class="keyword">private int</span> trunkCapacity;
+
+    <span class="keyword">public</span> <span class="function">Car</span>(<span class="type">String</span> brand, <span class="keyword">int</span> year, <span class="keyword">int</span> trunkCapacity) {
+        <span class="keyword">super</span>(brand, year);  <span class="comment">// Must be first statement</span>
+        <span class="keyword">this</span>.trunkCapacity = trunkCapacity;
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public void</span> <span class="function">move</span>() {
+        <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Driving on road"</span>);
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Abstract Classes vs. Interfaces</div>
+        <table>
+            <tr><th>Feature</th><th>Abstract Class</th><th>Interface</th></tr>
+            <tr><td>State (fields)</td><td>Can have instance fields</td><td>Only <span class="inline-code">public static final</span> constants</td></tr>
+            <tr><td>Constructors</td><td>Yes</td><td>No</td></tr>
+            <tr><td>Multiple inheritance</td><td>Single only</td><td>A class can implement many</td></tr>
+            <tr><td>Default methods (Java 8+)</td><td>N/A (regular methods)</td><td><span class="inline-code">default</span> keyword provides body</td></tr>
+            <tr><td>Static methods</td><td>Yes</td><td>Yes (Java 8+)</td></tr>
+        </table>
+        <pre><code><span class="keyword">public interface</span> <span class="type">Refuelable</span> {
+    <span class="keyword">void</span> <span class="function">refuel</span>(<span class="keyword">double</span> liters);
+
+    <span class="keyword">default</span> <span class="type">String</span> <span class="function">fuelType</span>() {
+        <span class="keyword">return</span> <span class="string">"Gasoline"</span>;  <span class="comment">// Default implementation</span>
+    }
+
+    <span class="keyword">static</span> <span class="keyword">double</span> <span class="function">pricePerLiter</span>() {
+        <span class="keyword">return</span> <span class="number">1.50</span>;
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Pattern Matching for instanceof (Java 16+)</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Binds and casts in one step. No more manual casting after the check. Brief exposure; you will see this in modern codebases.
+        </p>
+        <pre><code><span class="keyword">void</span> <span class="function">describe</span>(<span class="type">Object</span> obj) {
+    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> <span class="type">Car</span> c) {       <span class="comment">// c is automatically cast to Car</span>
+        <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Trunk: "</span> + c.<span class="function">getTrunkCapacity</span>());
+    } <span class="keyword">else if</span> (obj <span class="keyword">instanceof</span> <span class="type">Bike</span> b) {
+        <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Gears: "</span> + b.<span class="function">getGearCount</span>());
+    }
+}</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Vehicle Hierarchy</div>
+        <ol>
+            <li>Create abstract class <span class="inline-code">Vehicle</span> with fields <span class="inline-code">brand</span>, <span class="inline-code">year</span>.</li>
+            <li>Create subclasses <span class="inline-code">Car</span>, <span class="inline-code">Bike</span>, <span class="inline-code">Truck</span> with unique fields.</li>
+            <li>Create interface <span class="inline-code">Refuelable</span> with <span class="inline-code">refuel()</span> and a default method.</li>
+            <li>Make <span class="inline-code">Car</span> and <span class="inline-code">Truck</span> implement <span class="inline-code">Refuelable</span>.</li>
+            <li>Populate <span class="inline-code">ArrayList&lt;Vehicle&gt;</span> with mixed types. Loop and call <span class="inline-code">move()</span> — observe runtime polymorphism.</li>
+            <li>Use pattern matching <span class="inline-code">instanceof</span> to print fuel capacity only for <span class="inline-code">Refuelable</span> instances.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 5 -->
+<section class="hour-section" id="hour5">
+    <div class="hour-header">
+        <div class="hour-number">Hour 5</div>
+        <div class="hour-title">Object Contracts — <code>equals()</code>, <code>hashCode()</code>, <code>toString()</code></div>
+        <div class="hour-goal">Fix broken collections. Understand the mathematical contracts.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Why This Matters</div>
+        <p style="color:var(--text-secondary);">
+            <span class="inline-code">HashMap</span> and <span class="inline-code">HashSet</span> are <strong>functionally broken</strong> without correct <span class="inline-code">equals()</span> and <span class="inline-code">hashCode()</span>. Two logically equal objects will appear as duplicates, or lookups will fail to find existing keys.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-title">The Contracts</div>
+        <ul>
+            <li><strong>equals():</strong> Reflexive, symmetric, transitive, consistent. Compare meaningful fields, not memory address.</li>
+            <li><strong>hashCode():</strong> If <span class="inline-code">a.equals(b)</span>, then <span class="inline-code">a.hashCode() == b.hashCode()</span> <strong>must</strong> hold. The reverse is not required but desirable.</li>
+            <li><strong>toString():</strong> Human-readable debugging output. Essential for log files and debugger inspection.</li>
+        </ul>
+        <pre><code><span class="keyword">public class</span> <span class="type">Car</span> <span class="keyword">extends</span> <span class="type">Vehicle</span> {
+    <span class="keyword">private</span> <span class="type">String</span> licensePlate;
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public boolean</span> <span class="function">equals</span>(<span class="type">Object</span> o) {
+        <span class="keyword">if</span> (<span class="keyword">this</span> == o) <span class="keyword">return true</span>;
+        <span class="keyword">if</span> (o == <span class="keyword">null</span> || <span class="function">getClass</span>() != o.<span class="function">getClass</span>()) <span class="keyword">return false</span>;
+        <span class="type">Car</span> car = (<span class="type">Car</span>) o;
+        <span class="keyword">return</span> year == car.year &&
+               <span class="type">Objects</span>.<span class="function">equals</span>(brand, car.brand) &&
+               <span class="type">Objects</span>.<span class="function">equals</span>(licensePlate, car.licensePlate);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public int</span> <span class="function">hashCode</span>() {
+        <span class="keyword">return</span> <span class="type">Objects</span>.<span class="function">hash</span>(brand, year, licensePlate);
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="type">String</span> <span class="function">toString</span>() {
+        <span class="keyword">return</span> <span class="string">"Car{"</span> + <span class="string">"brand='"</span> + brand + <span class="string">'\''</span> +
+               <span class="string">", year="</span> + year +
+               <span class="string">", plate='"</span> + licensePlate + <span class="string">'\''</span> + <span class="string">'}'</span>;
+    }
+}</code></pre>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title">Critical Pitfall: Mutable Fields in hashCode</div>
+        <p>Never use mutable fields in <span class="inline-code">hashCode()</span> if the object will be used as a <span class="inline-code">HashMap</span> key. Changing the field after insertion breaks the bucket location, making the key unfindable.</p>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Prove It Works</div>
+        <ol>
+            <li>Implement <span class="inline-code">equals()</span>, <span class="inline-code">hashCode()</span>, and <span class="inline-code">toString()</span> on your <span class="inline-code">Car</span> class.</li>
+            <li>Create two <span class="inline-code">Car</span> objects with identical field values.</li>
+            <li>Add both to a <span class="inline-code">HashSet&lt;Vehicle&gt;</span>. Assert the set size is <span class="inline-code">1</span> (duplicates rejected).</li>
+            <li>Use the same object as a <span class="inline-code">HashMap</span> key. Put a value. Look it up with the second equal object. Value must be found.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 6 -->
+<section class="hour-section" id="hour6">
+    <div class="hour-header">
+        <div class="hour-number">Hour 6</div>
+        <div class="hour-title">Anonymous Classes, Inner Classes & Java Records</div>
+        <div class="hour-goal">Understand the syntax lambdas will replace. Master inner classes and immutable data carriers.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Anonymous Classes</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            A class with no name, declared and instantiated in one expression. Verbose, but essential to understand before lambdas on Day 2.
+        </p>
+        <pre><code><span class="comment">// Anonymous implementation of Runnable</span>
+<span class="type">Runnable</span> r = <span class="keyword">new</span> <span class="type">Runnable</span>() {
+    <span class="annotation">@Override</span>
+    <span class="keyword">public void</span> <span class="function">run</span>() {
+        <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Running anonymously"</span>);
+    }
+};
+
+<span class="comment">// Anonymous Comparator (common use case)</span>
+<span class="type">Comparator</span><<span class="type">Car</span>> byYear = <span class="keyword">new</span> <span class="type">Comparator</span><<span class="type">Car</span>>() {
+    <span class="annotation">@Override</span>
+    <span class="keyword">public int</span> <span class="function">compare</span>(<span class="type">Car</span> c1, <span class="type">Car</span> c2) {
+        <span class="keyword">return</span> <span class="type">Integer</span>.<span class="function">compare</span>(c1.<span class="function">getYear</span>(), c2.<span class="function">getYear</span>());
+    }
+};</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Inner Classes & Static Nested Classes</div>
+        <ul>
+            <li><strong>Inner class:</strong> Defined inside another class. Has an implicit reference to the enclosing instance. Can access private members of the outer class.</li>
+            <li><strong>Static nested class:</strong> Defined inside another class with the <span class="inline-code">static</span> keyword. No reference to the enclosing instance. Behaves like a top-level class that happens to be nested for organization.</li>
+        </ul>
+        <pre><code><span class="keyword">public class</span> <span class="type">Outer</span> {
+    <span class="keyword">private int</span> x = <span class="number">10</span>;
+
+    <span class="comment">// Inner class — tied to an Outer instance</span>
+    <span class="keyword">class</span> <span class="type">Inner</span> {
+        <span class="keyword">void</span> <span class="function">show</span>() {
+            <span class="type">System</span>.out.<span class="function">println</span>(x); <span class="comment">// Can access outer private</span>
+        }
+    }
+
+    <span class="comment">// Static nested class — no outer instance needed</span>
+    <span class="keyword">static class</span> <span class="type">Nested</span> {
+        <span class="keyword">void</span> <span class="function">show</span>() {
+            <span class="comment">// Cannot access x directly — no enclosing instance</span>
+            <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Static nested"</span>);
+        }
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Java Records (Java 16+)</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Immutable data carriers. Auto-generates accessor methods (e.g., <span class="inline-code">name()</span>, <strong>not</strong> <span class="inline-code">getName()</span>), constructor, <span class="inline-code">equals()</span>, <span class="inline-code">hashCode()</span>, and <span class="inline-code">toString()</span>.
+        </p>
+        <pre><code><span class="keyword">public record</span> <span class="type">Employee</span>(<span class="type">String</span> name, <span class="keyword">double</span> salary, <span class="type">String</span> dept) {
+    <span class="comment">// Compact constructor for validation</span>
+    <span class="keyword">public</span> <span class="function">Employee</span> {
+        <span class="keyword">if</span> (salary < <span class="number">0</span>) {
+            <span class="keyword">throw new</span> <span class="type">IllegalArgumentException</span>(<span class="string">"Salary cannot be negative"</span>);
+        }
+        <span class="keyword">if</span> (name == <span class="keyword">null</span> || name.<span class="function">isBlank</span>()) {
+            <span class="keyword">throw new</span> <span class="type">IllegalArgumentException</span>(<span class="string">"Name required"</span>);
+        }
+    }
+}
+
+<span class="comment">// Usage</span>
+<span class="keyword">var</span> emp = <span class="keyword">new</span> <span class="type">Employee</span>(<span class="string">"Alice"</span>, <span class="number">85000.0</span>, <span class="string">"Engineering"</span>);
+<span class="type">System</span>.out.<span class="function">println</span>(emp.<span class="function">name</span>());     <span class="comment">// Accessor, not getName()</span>
+<span class="type">System</span>.out.<span class="function">println</span>(emp);          <span class="comment">// Auto toString</span></code></pre>
+        <div class="info">
+            <div class="info-title">Record Restrictions</div>
+            <ul>
+                <li>Cannot extend any class (implicitly extends <span class="inline-code">java.lang.Record</span>).</li>
+                <li>Can implement interfaces.</li>
+                <li>Components are <strong>final</strong> — no setters.</li>
+                <li>Cannot declare instance fields outside the record header (but static fields are allowed).</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Sealed Classes (Java 17+ — Brief Exposure)</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Restricts which classes can extend. Natural companion to records and pattern matching. Know they exist.
+        </p>
+        <pre><code><span class="keyword">public sealed class</span> <span class="type">Shape</span> <span class="keyword">permits</span> <span class="type">Circle</span>, <span class="type">Square</span>, <span class="type">Rectangle</span> {
+    <span class="keyword">public abstract double</span> <span class="function">area</span>();
+}
+
+<span class="keyword">public final class</span> <span class="type">Circle</span> <span class="keyword">extends</span> <span class="type">Shape</span> { ... }
+<span class="keyword">public final class</span> <span class="type">Square</span> <span class="keyword">extends</span> <span class="type">Shape</span> { ... }
+<span class="keyword">public non-sealed class</span> <span class="type">Rectangle</span> <span class="keyword">extends</span> <span class="type">Shape</span> { ... }</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Records + Anonymous Comparator</div>
+        <ol>
+            <li>Create <span class="inline-code">record Employee(String name, double salary, String dept)</span> with compact constructor validation — <strong>alongside</strong> (not replacing) your Vehicle hierarchy.</li>
+            <li>Create a <span class="inline-code">List&lt;Employee&gt;</span> with 5 sample records.</li>
+            <li>Sort by salary descending using an <strong>anonymous</strong> <span class="inline-code">Comparator&lt;Employee&gt;</span>.</li>
+            <li>Print the sorted list — observe the auto-generated <span class="inline-code">toString()</span>.</li>
+            <li>Sort again by department name, then by name within department (chained comparator).</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 7 -->
+<section class="hour-section" id="hour7">
+    <div class="hour-header">
+        <div class="hour-number">Hour 7</div>
+        <div class="hour-title"><code>Comparable</code> & <code>Comparator</code></div>
+        <div class="hour-goal">Natural ordering vs. external ordering. Chainable comparisons.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Comparable&lt;T&gt; — Natural Ordering</div>
+        <pre><code><span class="keyword">public class</span> <span class="type">Car</span> <span class="keyword">extends</span> <span class="type">Vehicle</span> <span class="keyword">implements</span> <span class="type">Comparable</span><<span class="type">Car</span>> {
+    <span class="annotation">@Override</span>
+    <span class="keyword">public int</span> <span class="function">compareTo</span>(<span class="type">Car</span> other) {
+        <span class="keyword">return</span> <span class="type">Integer</span>.<span class="function">compare</span>(<span class="keyword">this</span>.year, other.year);
+        <span class="comment">// Negative: this &lt; other, Zero: equal, Positive: this &gt; other</span>
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Comparator&lt;T&gt; — External Ordering</div>
+        <pre><code><span class="comment">// By fuel efficiency, then by price</span>
+<span class="type">Comparator</span><<span class="type">Car</span>> byEfficiencyThenPrice =
+    <span class="type">Comparator</span>.<span class="function">comparingInt</span>(<span class="type">Car</span>::<span class="function">getMpg</span>).<span class="function">reversed</span>()
+        .<span class="function">thenComparing</span>(<span class="type">Car</span>::<span class="function">getPrice</span>);
+
+<span class="comment">// Anonymous version (what you write today; lambda tomorrow on Day 2)</span>
+<span class="type">Comparator</span><<span class="type">Car</span>> byYearDesc = <span class="keyword">new</span> <span class="type">Comparator</span><<span class="type">Car</span>>() {
+    <span class="annotation">@Override</span>
+    <span class="keyword">public int</span> <span class="function">compare</span>(<span class="type">Car</span> c1, <span class="type">Car</span> c2) {
+        <span class="keyword">return</span> <span class="type">Integer</span>.<span class="function">compare</span>(c2.<span class="function">getYear</span>(), c1.<span class="function">getYear</span>());  <span class="comment">// Descending</span>
+    }
+};</code></pre>
+    </div>
+
+    <div class="info">
+        <div class="info-title">Comparator Factory Methods</div>
+        <table>
+            <tr><th>Method</th><th>Use</th></tr>
+            <tr><td><span class="inline-code">Comparator.comparing(Function)</span></td><td>Extract comparable key</td></tr>
+            <tr><td><span class="inline-code">.thenComparing(...)</span></td><td>Break ties with secondary key</td></tr>
+            <tr><td><span class="inline-code">.reversed()</span></td><td>Flip order</td></tr>
+            <tr><td><span class="inline-code">Comparator.naturalOrder()</span></td><td>For types already Comparable</td></tr>
+        </table>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Multi-Criteria Sorting</div>
+        <ol>
+            <li>Make <span class="inline-code">Vehicle</span> implement <span class="inline-code">Comparable&lt;Vehicle&gt;</span> by year ascending.</li>
+            <li>Create a <span class="inline-code">List&lt;Vehicle&gt;</span> with Cars, Bikes, Trucks of various years.</li>
+            <li>Sort using <span class="inline-code">Collections.sort()</span> (uses natural ordering).</li>
+            <li>Create a <span class="inline-code">Comparator&lt;Vehicle&gt;</span> that sorts by brand alphabetically, then by year descending.</li>
+            <li>Use <span class="inline-code">list.sort(comparator)</span> and print results.</li>
+        </ol>
+        <div class="info" style="margin-top: 0.75rem;">
+            <div class="info-title">Day 2 Preview</div>
+            <p>Use <strong>anonymous class syntax</strong> for your Comparators today. On Day 2, you will rewrite these as lambdas.</p>
+        </div>
+    </div>
+</section>
+
+<!-- HOUR 8 -->
+<section class="hour-section" id="hour8">
+    <div class="hour-header">
+        <div class="hour-number">Hour 8</div>
+        <div class="hour-title"><code>static</code>, <code>final</code>, Enums & Memory Introduction</div>
+        <div class="hour-goal">Class-level behavior. Immutability guarantees. JVM memory layout basics.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">The <code>static</code> Keyword</div>
+        <ul>
+            <li><strong>static field:</strong> One copy per class, shared by all instances.</li>
+            <li><strong>static method:</strong> Belongs to class; cannot access <span class="inline-code">this</span> or instance fields directly.</li>
+            <li><strong>static block:</strong> Runs once when class is loaded. Used for initialization of static resources.</li>
+            <li><strong>static import:</strong> Import static members directly: <span class="inline-code">import static java.lang.Math.PI;</span></li>
+        </ul>
+        <pre><code><span class="keyword">public class</span> <span class="type">Config</span> {
+    <span class="keyword">public static final</span> <span class="type">String</span> APP_NAME = <span class="string">"JavaBoot"</span>;
+    <span class="keyword">private static int</span> instanceCount = <span class="number">0</span>;
+
+    <span class="keyword">static</span> {
+        <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Config class loaded into JVM"</span>);
+    }
+
+    <span class="keyword">public</span> <span class="function">Config</span>() {
+        instanceCount++;
+    }
+
+    <span class="keyword">public static int</span> <span class="function">getInstanceCount</span>() {
+        <span class="keyword">return</span> instanceCount;
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">The <code>final</code> Keyword</div>
+        <table>
+            <tr><th>Context</th><th>Meaning</th></tr>
+            <tr><td><span class="inline-code">final</span> variable</td><td>Reference cannot change. For primitives: value is frozen. For objects: reference is frozen, but object state may still mutate.</td></tr>
+            <tr><td><span class="inline-code">final</span> method</td><td>Cannot be overridden by subclasses.</td></tr>
+            <tr><td><span class="inline-code">final</span> class</td><td>Cannot be extended (e.g., <span class="inline-code">String</span>, <span class="inline-code">Integer</span>).</td></tr>
+        </table>
+        <pre><code><span class="keyword">final</span> <span class="type">StringBuilder</span> sb = <span class="keyword">new</span> <span class="type">StringBuilder</span>(<span class="string">"Hello"</span>);
+sb.<span class="function">append</span>(<span class="string">" World"</span>);      <span class="comment">// OK — object state changes</span>
+<span class="comment">// sb = new StringBuilder(); // Compile error — reference is final</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Enums</div>
+        <pre><code><span class="keyword">public enum</span> <span class="type">Priority</span> {
+    LOW(<span class="number">1</span>, <span class="string">"Low priority"</span>),
+    MEDIUM(<span class="number">2</span>, <span class="string">"Standard"</span>),
+    HIGH(<span class="number">3</span>, <span class="string">"Urgent"</span>);
+
+    <span class="keyword">private final int</span> level;
+    <span class="keyword">private final</span> <span class="type">String</span> description;
+
+    <span class="function">Priority</span>(<span class="keyword">int</span> level, <span class="type">String</span> description) {
+        <span class="keyword">this</span>.level = level;
+        <span class="keyword">this</span>.description = description;
+    }
+
+    <span class="keyword">public int</span> <span class="function">getLevel</span>() { <span class="keyword">return</span> level; }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">JVM Memory Introduction</div>
+        <table>
+            <tr><th>Region</th><th>Stores</th><th>Lifetime</th></tr>
+            <tr><td><strong>Stack</strong></td><td>Method frames, local variables, reference variables</td><td>Method invocation</td></tr>
+            <tr><td><strong>Heap</strong></td><td>All objects and arrays</td><td>Until GC eligible</td></tr>
+            <tr><td><strong>Metaspace</strong> (Java 8+)</td><td>Class metadata, static fields, method code</td><td>Classloader lifetime</td></tr>
+        </table>
+        <div class="pitfall">
+            <div class="pitfall-title">Common Misconception</div>
+            <p>Static fields do <strong>not</strong> live on the stack. They live in the <strong>method area (metaspace)</strong>, which is separate from the heap's object space.</p>
+        </div>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Counter + Enum Config</div>
+        <ol>
+            <li>Create a <span class="inline-code">DatabaseConfig</span> class with static fields for URL, USER, PASSWORD initialized in a static block.</li>
+            <li>Create an enum <span class="inline-code">LogLevel</span> (DEBUG, INFO, WARN, ERROR) with a numeric severity field.</li>
+            <li>Write a method that accepts <span class="inline-code">LogLevel</span> and prints only if severity exceeds a threshold.</li>
+            <li>Create 3 instances of a class with a <span class="inline-code">static int count</span>. Verify the static counter is shared.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 9 -->
+<section class="hour-section" id="hour9">
+    <div class="hour-header">
+        <div class="hour-number">Hour 9</div>
+        <div class="hour-title">Strings, <code>==</code> vs <code>.equals()</code> & Wrappers</div>
+        <div class="hour-goal">Avoid the most common Java bugs: reference comparison and autoboxing traps.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">String Immutability & The String Pool</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Strings are immutable. The JVM maintains a <strong>String Pool</strong> in the heap. Literal strings are interned automatically.
+        </p>
+        <pre><code><span class="type">String</span> a = <span class="string">"hello"</span>;           <span class="comment">// Literal → pooled</span>
+<span class="type">String</span> b = <span class="string">"hello"</span>;           <span class="comment">// Reuses pool reference</span>
+<span class="type">String</span> c = <span class="keyword">new</span> <span class="type">String</span>(<span class="string">"hello"</span>); <span class="comment">// New heap object, NOT pooled</span>
+
+<span class="type">System</span>.out.<span class="function">println</span>(a == b);       <span class="comment">// true (same pool reference)</span>
+<span class="type">System</span>.out.<span class="function">println</span>(a == c);       <span class="comment">// false (different objects)</span>
+<span class="type">System</span>.out.<span class="function">println</span>(a.<span class="function">equals</span>(c));  <span class="comment">// true (same content)</span></code></pre>
+        <div class="info">
+            <div class="info-title">The Golden Rule</div>
+            <p>Always use <span class="inline-code">.equals()</span> for content comparison. Use <span class="inline-code">==</span> only for primitive values or when you explicitly want reference identity (rare).</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">StringBuilder vs. StringBuffer</div>
+        <table>
+            <tr><th>Feature</th><th>StringBuilder</th><th>StringBuffer</th></tr>
+            <tr><td>Thread-safe</td><td>No</td><td>Yes (synchronized)</td></tr>
+            <tr><td>Performance</td><td>Faster</td><td>Slower (locking overhead)</td></tr>
+            <tr><td>Use case</td><td><strong>Default choice</strong></td><td>Legacy / rare thread-safe need</td></tr>
+        </table>
+        <p style="margin-top:0.75rem;color:var(--text-secondary);">
+            Use <span class="inline-code">StringBuilder</span> unless you specifically need thread-safety — which in modern Java you would handle with other mechanisms anyway.
+        </p>
+        <pre><code><span class="type">StringBuilder</span> sb = <span class="keyword">new</span> <span class="type">StringBuilder</span>();
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">1000</span>; i++) {
+    sb.<span class="function">append</span>(i).<span class="function">append</span>(<span class="string">","</span>);
+}
+<span class="type">String</span> result = sb.<span class="function">toString</span>();  <span class="comment">// Efficient single allocation pattern</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Wrapper Classes & The Autoboxing Trap</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Wrappers cache values from <span class="inline-code">-128</span> to <span class="inline-code">127</span>. Outside that range, <span class="inline-code">==</span> compares different heap objects.
+        </p>
+        <pre><code><span class="type">Integer</span> a = <span class="number">127</span>;    <span class="comment">// Cached</span>
+<span class="type">Integer</span> b = <span class="number">127</span>;    <span class="comment">// Same cached object</span>
+<span class="type">System</span>.out.<span class="function">println</span>(a == b);      <span class="comment">// true</span>
+
+<span class="type">Integer</span> c = <span class="number">128</span>;    <span class="comment">// New object</span>
+<span class="type">Integer</span> d = <span class="number">128</span>;    <span class="comment">// Another new object</span>
+<span class="type">System</span>.out.<span class="function">println</span>(c == d);      <span class="comment">// false!</span>
+<span class="type">System</span>.out.<span class="function">println</span>(c.<span class="function">equals</span>(d)); <span class="comment">// true (always safe)</span></code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: String & Wrapper Traps</div>
+        <ol>
+            <li>Create two strings via literals and two via <span class="inline-code">new String()</span>. Demonstrate <span class="inline-code">==</span> vs <span class="inline-code">.equals()</span> differences.</li>
+            <li>Build a string in a loop using <span class="inline-code">+</span> concatenation (inefficient) vs. <span class="inline-code">StringBuilder</span>. Time both with <span class="inline-code">System.nanoTime()</span>.</li>
+            <li>Demonstrate the <span class="inline-code">Integer</span> cache surprise with values 127 and 128.</li>
+            <li>Write a method that safely compares two <span class="inline-code">Double</span> wrappers using <span class="inline-code">.equals()</span> and handles <span class="inline-code">null</span> gracefully.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 10 -->
+<section class="hour-section" id="hour10">
+    <div class="hour-header">
+        <div class="hour-number">Hour 10</div>
+        <div class="hour-title"><code>java.time</code> API & IDE Debugging Workshop</div>
+        <div class="hour-goal">Modern date/time handling. Essential debugger skills for Day 2 concurrency.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">java.time (JSR-310) — Never use Date/Calendar again</div>
+        <pre><code><span class="keyword">import</span> java.time.*;
+<span class="keyword">import</span> java.time.format.DateTimeFormatter;
+<span class="keyword">import</span> java.time.temporal.ChronoUnit;
+
+<span class="comment">// Current date and time</span>
+<span class="type">LocalDate</span> today = <span class="type">LocalDate</span>.<span class="function">now</span>();
+<span class="type">LocalDateTime</span> now = <span class="type">LocalDateTime</span>.<span class="function">now</span>();
+<span class="type">Instant</span> instant = <span class="type">Instant</span>.<span class="function">now</span>();  <span class="comment">// UTC timestamp</span>
+
+<span class="comment">// Manipulation (immutable — returns new instance)</span>
+<span class="type">LocalDate</span> future = today.<span class="function">plusDays</span>(<span class="number">30</span>);
+<span class="type">LocalDateTime</span> meeting = now.<span class="function">plusHours</span>(<span class="number">2</span>).<span class="function">minusMinutes</span>(<span class="number">15</span>);
+
+<span class="comment">// Formatting</span>
+<span class="type">DateTimeFormatter</span> fmt = <span class="type">DateTimeFormatter</span>.<span class="function">ofPattern</span>(<span class="string">"yyyy-MM-dd HH:mm"</span>);
+<span class="type">String</span> formatted = now.<span class="function">format</span>(fmt);
+
+<span class="comment">// Parsing</span>
+<span class="type">LocalDate</span> parsed = <span class="type">LocalDate</span>.<span class="function">parse</span>(<span class="string">"2026-05-20"</span>, <span class="type">DateTimeFormatter</span>.<span class="type">ISO_LOCAL_DATE</span>);
+
+<span class="comment">// Duration between instants</span>
+<span class="type">Instant</span> start = <span class="type">Instant</span>.<span class="function">now</span>();
+<span class="comment">// ... work ...</span>
+<span class="type">Instant</span> end = <span class="type">Instant</span>.<span class="function">now</span>();
+<span class="type">Duration</span> elapsed = <span class="type">Duration</span>.<span class="function">between</span>(start, end);
+<span class="type">System</span>.out.<span class="function">println</span>(elapsed.<span class="function">toMillis</span>() + <span class="string">" ms"</span>);</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">IDE Debugging Workshop (IntelliJ IDEA)</div>
+        <table>
+            <tr><th>Action</th><th>Shortcut</th><th>When to Use</th></tr>
+            <tr><td>Toggle Breakpoint</td><td>Ctrl+F8</td><td>Pause execution at this line</td></tr>
+            <tr><td>Step Over</td><td>F8</td><td>Execute current line, move to next (stay in current method)</td></tr>
+            <tr><td>Step Into</td><td>F7</td><td>Dive into method call on current line</td></tr>
+            <tr><td>Step Out</td><td>Shift+F8</td><td>Finish current method, return to caller</td></tr>
+            <tr><td>Resume</td><td>F9</td><td>Continue until next breakpoint</td></tr>
+            <tr><td>Evaluate Expression</td><td>Alt+F8</td><td>Execute arbitrary code in current context</td></tr>
+        </table>
+        <div class="info">
+            <div class="info-title">Concurrency Debugging Preview</div>
+            <p>On Day 2 you will debug race conditions. The debugger's <strong>Threads</strong> pane (Alt+Shift+7) lets you inspect the stack of every thread and identify which thread holds a monitor lock.</p>
+        </div>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Time & Debug</div>
+        <ol>
+            <li>Parse the string <span class="inline-code">"2026-05-20T14:30:00"</span> into a <span class="inline-code">LocalDateTime</span>.</li>
+            <li>Add 30 days, then format as <span class="inline-code">"Monday, 20 June 2026"</span> using a custom <span class="inline-code">DateTimeFormatter</span>.</li>
+            <li>Write a method with a loop. Set a breakpoint inside the loop. Use <strong>Step Over</strong> to watch the counter increment. Use <strong>Evaluate Expression</strong> to compute <span class="inline-code">i * 2</span> mid-flight.</li>
+            <li>Time a sorting operation using <span class="inline-code">Instant</span> and <span class="inline-code">Duration</span>. Print milliseconds.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 11 -->
+<section class="hour-section" id="hour11">
+    <div class="hour-header">
+        <div class="hour-number">Hour 11</div>
+        <div class="hour-title">Arrays & Generics Fundamentals</div>
+        <div class="hour-goal">Type-safe containers. Understanding type erasure.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Arrays</div>
+        <pre><code><span class="comment">// Declaration & initialization</span>
+<span class="keyword">int</span>[] nums = <span class="keyword">new int</span>[<span class="number">5</span>];           <span class="comment">// [0, 0, 0, 0, 0]</span>
+<span class="keyword">int</span>[] filled = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};    <span class="comment">// Literal syntax</span>
+<span class="keyword">int</span>[][] matrix = <span class="keyword">new int</span>[<span class="number">3</span>][<span class="number">3</span>];  <span class="comment">// Ragged arrays supported</span>
+
+<span class="comment">// Utility class</span>
+<span class="type">Arrays</span>.<span class="function">sort</span>(nums);
+<span class="type">Arrays</span>.<span class="function">binarySearch</span>(nums, <span class="number">3</span>);
+<span class="type">Arrays</span>.<span class="function">toString</span>(nums);  <span class="comment">// Handy for debugging</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Generics Deep Dive Part 1</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Generics provide compile-time type safety. At runtime, generic type information is <strong>erased</strong> (type erasure) for backward compatibility with pre-Java 5 code.
+        </p>
+        <pre><code><span class="comment">// Generic class</span>
+<span class="keyword">public class</span> <span class="type">Box</span><<span class="type">T</span>> {
+    <span class="keyword">private</span> <span class="type">T</span> content;
+    <span class="keyword">public void</span> <span class="function">set</span>(<span class="type">T</span> content) { <span class="keyword">this</span>.content = content; }
+    <span class="keyword">public</span> <span class="type">T</span> <span class="function">get</span>() { <span class="keyword">return</span> content; }
+}
+
+<span class="comment">// Generic method</span>
+<span class="keyword">public static</span> <<span class="type">T</span>> <span class="type">T</span> <span class="function">requireNonNull</span>(<span class="type">T</span> obj) {
+    <span class="keyword">if</span> (obj == <span class="keyword">null</span>) <span class="keyword">throw new</span> <span class="type">NullPointerException</span>();
+    <span class="keyword">return</span> obj;
+}
+
+<span class="comment">// Type erasure in action — this is illegal:</span>
+<span class="comment">// T[] array = new T[10]; // Compile error: cannot create generic array</span></code></pre>
+        <div class="pitfall">
+            <div class="pitfall-title">Raw Types are Dangerous</div>
+            <p>Using <span class="inline-code">List</span> instead of <span class="inline-code">List&lt;String&gt;</span> disables compile-time checks and can cause <span class="inline-code">ClassCastException</span> at runtime. Always specify type parameters.</p>
+        </div>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Generic Box + Array Utils</div>
+        <ol>
+            <li>Implement <span class="inline-code">class Box&lt;T&gt;</span> with <span class="inline-code">set</span>, <span class="inline-code">get</span>, and <span class="inline-code">isEmpty</span>.</li>
+            <li>Create <span class="inline-code">Box&lt;String&gt;</span>, <span class="inline-code">Box&lt;Integer&gt;</span>, and <span class="inline-code">Box&lt;Car&gt;</span>. Demonstrate type safety.</li>
+            <li>Write a generic method <span class="inline-code">&lt;T&gt; void swap(T[] arr, int i, int j)</span>.</li>
+            <li>Attempt to compile <span class="inline-code">new T[10]</span> inside a generic class. Observe the compile error and understand why type erasure forbids it.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 12 -->
+<section class="hour-section" id="hour12">
+    <div class="hour-header">
+        <div class="hour-number">Hour 12</div>
+        <div class="hour-title">PECS, Wildcards & Bounds</div>
+        <div class="hour-goal">Read from producers. Write to consumers. Master variance.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">The PECS Principle</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            <strong>P</strong>roducer <strong>E</strong>xtends, <strong>C</strong>onsumer <strong>S</strong>uper. This mnemonic determines which wildcard to use when reading from or writing to a generic collection.
+        </p>
+        <table>
+            <tr><th>Wildcard</th><th>Meaning</th><th>Use When</th></tr>
+            <tr><td><span class="inline-code">? extends T</span></td><td>Unknown subtype of T</td><td>Reading values (Producer)</td></tr>
+            <tr><td><span class="inline-code">? super T</span></td><td>Unknown supertype of T</td><td>Writing values (Consumer)</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Why <code>List&lt;Integer&gt;</code> is not a <code>List&lt;Object&gt;</code></div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Java generics are <strong>invariant</strong>. If <span class="inline-code">List&lt;Integer&gt;</span> were a <span class="inline-code">List&lt;Object&gt;</span>, you could insert a <span class="inline-code">String</span> into what was promised to be a list of integers — breaking type safety.
+        </p>
+        <pre><code><span class="comment">// Producer — reads from src</span>
+<span class="keyword">public static</span> <<span class="type">T</span>> <span class="keyword">void</span> <span class="function">copy</span>(<span class="type">List</span><<span class="keyword">? extends</span> <span class="type">T</span>> src, <span class="type">List</span><<span class="keyword">? super</span> <span class="type">T</span>> dst) {
+    <span class="keyword">for</span> (<span class="type">T</span> item : src) {
+        dst.<span class="function">add</span>(item);  <span class="comment">// Safe: dst accepts T or any supertype of T</span>
+    }
+}
+
+<span class="comment">// Usage</span>
+<span class="type">List</span><<span class="type">Integer</span>> ints = <span class="type">List</span>.<span class="function">of</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);
+<span class="type">List</span><<span class="type">Number</span>> nums = <span class="keyword">new</span> <span class="type">ArrayList</span><>();
+<span class="function">copy</span>(ints, nums);  <span class="comment">// Integer extends Number</span></code></pre>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title">Swapping Bounds Breaks Compilation</div>
+        <pre><code><span class="comment">// If you mistakenly write:</span>
+<span class="keyword">public static</span> <<span class="type">T</span>> <span class="keyword">void</span> <span class="function">badCopy</span>(<span class="type">List</span><<span class="keyword">? super</span> <span class="type">T</span>> src, <span class="type">List</span><<span class="keyword">? extends</span> <span class="type">T</span>> dst) {
+    <span class="keyword">for</span> (<span class="type">T</span> item : src) { ... }  <span class="comment">// Compile error: could be ANY supertype of T</span>
+    dst.<span class="function">add</span>(item);               <span class="comment">// Compile error: could be ANY subtype of T</span>
+}</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: PECS in Action</div>
+        <ol>
+            <li>Write <span class="inline-code">copy(List&lt;? extends T&gt; src, List&lt;? super T&gt; dst)</span> and prove it compiles with <span class="inline-code">Integer</span> → <span class="inline-code">Number</span>.</li>
+            <li>Swap the bounds and show the compiler errors.</li>
+            <li>Write a method <span class="inline-code">printAll(List&lt;?&gt; list)</span> that prints every element. Explain why <span class="inline-code">? extends Object</span> is redundant.</li>
+            <li>Write <span class="inline-code">addNumbers(List&lt;? super Integer&gt; list)</span> that adds 1, 2, 3. Call it with <span class="inline-code">List&lt;Number&gt;</span> and <span class="inline-code">List&lt;Object&gt;</span>.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 13 -->
+<section class="hour-section" id="hour13">
+    <div class="hour-header">
+        <div class="hour-number">Hour 13</div>
+        <div class="hour-title">Collections Framework</div>
+        <div class="hour-goal">Choose the right collection. Understand backing mechanisms.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">The Framework at a Glance</div>
+        <table>
+            <tr><th>Interface</th><th>Implementations</th><th>Key Characteristics</th></tr>
+            <tr><td><span class="inline-code">List</span></td><td><span class="inline-code">ArrayList</span>, <span class="inline-code">LinkedList</span></td><td>Ordered, indexed, allows duplicates</td></tr>
+            <tr><td><span class="inline-code">Set</span></td><td><span class="inline-code">HashSet</span>, <span class="inline-code">TreeSet</span>, <span class="inline-code">LinkedHashSet</span></td><td>Unique elements. HashSet uses hashCode/equals (Hour 5); TreeSet uses Comparable/Comparator (Hour 7); LinkedHashSet preserves insertion order</td></tr>
+            <tr><td><span class="inline-code">Map</span></td><td><span class="inline-code">HashMap</span>, <span class="inline-code">TreeMap</span></td><td>Key-value pairs. HashMap: O(1); TreeMap: sorted by key, O(log n)</td></tr>
+            <tr><td><span class="inline-code">Queue</span></td><td><span class="inline-code">PriorityQueue</span>, <span class="inline-code">ArrayDeque</span></td><td>PriorityQueue: heap-ordered; ArrayDeque: double-ended queue, preferred over Stack</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Iteration Patterns</div>
+        <pre><code><span class="type">List</span><<span class="type">String</span>> names = <span class="keyword">new</span> <span class="type">ArrayList</span><>();
+
+<span class="comment">// Enhanced for (most common)</span>
+<span class="keyword">for</span> (<span class="type">String</span> name : names) { ... }
+
+<span class="comment">// Iterator (safe removal during iteration)</span>
+<span class="type">Iterator</span><<span class="type">String</span>> it = names.<span class="function">iterator</span>();
+<span class="keyword">while</span> (it.<span class="function">hasNext</span>()) {
+    <span class="type">String</span> name = it.<span class="function">next</span>();
+    <span class="keyword">if</span> (name.<span class="function">startsWith</span>(<span class="string">"A"</span>)) it.<span class="function">remove</span>();  <span class="comment">// Safe</span>
+}
+
+<span class="comment">// ListIterator (bidirectional, replace/add)</span>
+<span class="type">ListIterator</span><<span class="type">String</span>> lit = names.<span class="function">listIterator</span>();
+<span class="keyword">while</span> (lit.<span class="function">hasNext</span>()) {
+    lit.<span class="function">set</span>(lit.<span class="function">next</span>().<span class="function">toUpperCase</span>());
+}</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: CSV Processing Pipeline</div>
+        <ol>
+            <li>Simulate a CSV as a single <span class="inline-code">String</span>: <span class="inline-code">"Alice,Bob,Charlie,Alice,Bob,David"</span>.</li>
+            <li>Split by comma into <span class="inline-code">ArrayList&lt;String&gt;</span>.</li>
+            <li>Remove duplicates by creating a <span class="inline-code">HashSet&lt;String&gt;</span> from the list.</li>
+            <li>Count frequencies using <span class="inline-code">HashMap&lt;String, Integer&gt;</span>.</li>
+            <li>Sort the unique names alphabetically using <span class="inline-code">TreeSet&lt;String&gt;</span>.</li>
+            <li>Print each step's output to verify behavior.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 14 -->
+<section class="hour-section" id="hour14">
+    <div class="hour-header">
+        <div class="hour-number">Hour 14</div>
+        <div class="hour-title">Exception Handling & File I/O</div>
+        <div class="hour-goal">Fail fast. Recover gracefully. Never swallow exceptions silently. Modern file handling with NIO.2.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Exception Hierarchy</div>
+        <pre><code><span class="type">Throwable</span>
+├── <span class="type">Error</span>              <span class="comment">// Unrecoverable: OutOfMemoryError, StackOverflowError</span>
+│                      <span class="comment">// Do NOT catch these.</span>
+└── <span class="type">Exception</span>
+    ├── <span class="type">RuntimeException</span> <span class="comment">// Unchecked: NullPointerException, IllegalArgumentException</span>
+    │                  <span class="comment">// Compiler does not force handling.</span>
+    └── [Other]        <span class="comment">// Checked: IOException, SQLException</span>
+                       <span class="comment">// Compiler forces try/catch or throws declaration.</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Modern Exception Handling</div>
+        <pre><code><span class="comment">// Multi-catch (Java 7+)</span>
+<span class="keyword">try</span> {
+    <span class="comment">// risky operation</span>
+} <span class="keyword">catch</span> (<span class="type">IOException</span> | <span class="type">SQLException</span> e) {
+    <span class="type">System</span>.err.<span class="function">println</span>(<span class="string">"Data access failed: "</span> + e.<span class="function">getMessage</span>());
+    <span class="keyword">throw new</span> <span class="type">AppException</span>(<span class="string">"Operation failed"</span>, e);  <span class="comment">// Wrap and rethrow</span>
+}
+
+<span class="comment">// try-with-resources (AutoCloseable)</span>
+<span class="keyword">try</span> (<span class="type">BufferedReader</span> br = <span class="keyword">new</span> <span class="type">BufferedReader</span>(<span class="keyword">new</span> <span class="type">FileReader</span>(<span class="string">"file.txt"</span>))) {
+    <span class="keyword">return</span> br.<span class="function">readLine</span>();
+} <span class="keyword">catch</span> (<span class="type">IOException</span> e) {
+    <span class="keyword">throw new</span> <span class="type">UncheckedIOException</span>(e);
+}
+
+<span class="comment">// Custom exception</span>
+<span class="keyword">public class</span> <span class="type">MathException</span> <span class="keyword">extends</span> <span class="type">Exception</span> {
+    <span class="keyword">public</span> <span class="function">MathException</span>(<span class="type">String</span> msg) { <span class="keyword">super</span>(msg); }
+}</code></pre>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title">Anti-Pattern: Catch-and-Swallow</div>
+        <pre><code><span class="keyword">try</span> {
+    <span class="comment">// operation</span>
+} <span class="keyword">catch</span> (<span class="type">Exception</span> e) {
+    <span class="comment">// EMPTY — never do this. The program continues in a corrupt state.</span>
+}</code></pre>
+        <p style="margin-top:0.5rem;color:var(--text-secondary);">Never catch <span class="inline-code">Exception</span> broadly unless logging and rethrowing. Fail fast.</p>
+    </div>
+
+    <div class="card">
+        <div class="card-title">File I/O — Classic & NIO.2</div>
+        <pre><code><span class="comment">// Classic I/O (legacy awareness — prefer NIO.2)</span>
+<span class="keyword">try</span> (<span class="type">BufferedReader</span> br = <span class="keyword">new</span> <span class="type">BufferedReader</span>(<span class="keyword">new</span> <span class="type">FileReader</span>(<span class="string">"notes.txt"</span>))) {
+    <span class="type">String</span> line;
+    <span class="keyword">while</span> ((line = br.<span class="function">readLine</span>()) != <span class="keyword">null</span>) {
+        <span class="type">System</span>.out.<span class="function">println</span>(line);
+    }
+}</code></pre>
+        <pre><code><span class="keyword">import</span> java.nio.file.*;
+
+<span class="comment">// NIO.2 (modern, preferred API)</span>
+<span class="type">Path</span> p = <span class="type">Paths</span>.<span class="function">get</span>(<span class="string">"data"</span>, <span class="string">"notes.txt"</span>);  <span class="comment">// Cross-platform</span>
+
+<span class="comment">// One-liner reads</span>
+<span class="type">List</span><<span class="type">String</span>> lines = <span class="type">Files</span>.<span class="function">readAllLines</span>(p);
+<span class="type">String</span> content = <span class="type">Files</span>.<span class="function">readString</span>(p);       <span class="comment">// Java 11+</span>
+
+<span class="comment">// One-liner writes</span>
+<span class="type">Files</span>.<span class="function">writeString</span>(p, <span class="string">"Hello, NIO.2!"</span>, <span class="type">StandardOpenOption</span>.<span class="type">APPEND</span>);
+
+<span class="comment">// Directory checks</span>
+<span class="keyword">boolean</span> exists = <span class="type">Files</span>.<span class="function">exists</span>(p);
+<span class="keyword">boolean</span> isDir  = <span class="type">Files</span>.<span class="function">isDirectory</span>(p);</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Safe Division + Note-Taking CLI</div>
+        <ol>
+            <li>Create <span class="inline-code">MathException extends Exception</span>.</li>
+            <li>Write <span class="inline-code">double divide(int a, int b) throws MathException</span>. Throw <span class="inline-code">MathException</span> if <span class="inline-code">b == 0</span>.</li>
+            <li>Write a caller that catches it, logs the error, and returns <span class="inline-code">Double.NaN</span>.</li>
+            <li>Build a note-taking CLI app that accepts commands: <span class="inline-code">add "Note text"</span>, <span class="inline-code">list</span>, <span class="inline-code">delete &lt;line&gt;</span>.</li>
+            <li>Save/read notes to <span class="inline-code">.txt</span> using NIO.2 with <span class="inline-code">try-with-resources</span>.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 15 -->
+<section class="hour-section" id="hour15">
+    <div class="hour-header">
+        <div class="hour-number">Hour 15</div>
+        <div class="hour-title">JVM Deep Dive, Compilation Pipeline & Maven</div>
+        <div class="hour-goal">Understand what happens after javac. Package for distribution. Master the build tool.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">JVM Memory Model Deep Dive</div>
+        <table>
+            <tr><th>Region</th><th>Contents</th><th>Managed By</th></tr>
+            <tr><td><strong>Stack</strong></td><td>Per-thread. Frames for each method call. Local primitives, object references.</td><td>Automatic (method return)</td></tr>
+            <tr><td><strong>Heap</strong></td><td>All objects, arrays, String pool</td><td>Garbage Collector</td></tr>
+            <tr><td><strong>Metaspace</strong></td><td>Class metadata, static fields, constant pool</td><td>GC (classloader unload)</td></tr>
+            <tr><td><strong>PC Register</strong></td><td>Current instruction address per thread</td><td>JVM</td></tr>
+            <tr><td><strong>Native Method Stack</strong></td><td>Native (C/C++) method calls</td><td>Automatic</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Garbage Collection Basics</div>
+        <ul>
+            <li><strong>Eden:</strong> New objects allocated here.</li>
+            <li><strong>Survivor Spaces (S0, S1):</strong> Objects surviving Eden GC get copied here.</li>
+            <li><strong>Old Generation:</strong> Long-lived objects promoted from Survivor.</li>
+            <li><strong>Eligibility:</strong> An object is eligible when no references point to it. Setting a reference to <span class="inline-code">null</span> or reassigning it can make the old object eligible.</li>
+        </ul>
+        <pre><code><span class="type">Object</span> heavy = <span class="keyword">new</span> <span class="type">Object</span>();
+<span class="comment">// ... use heavy ...</span>
+heavy = <span class="keyword">null</span>;  <span class="comment">// Old object is now eligible for GC (but not immediately collected)</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Compilation Pipeline</div>
+        <ol>
+            <li><strong>.java</strong> source file</li>
+            <li><strong>javac</strong> → bytecode <strong>.class</strong> files (platform-independent)</li>
+            <li><strong>JVM ClassLoader</strong> loads .class into Metaspace</li>
+            <li><strong>Interpreter</strong> executes bytecode initially</li>
+            <li><strong>JIT Compiler</strong> (HotSpot) compiles frequently executed bytecode to native machine code for performance</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <div class="card-title">JAR Packaging</div>
+        <pre><code><span class="comment">// Create runnable JAR</span>
+$ jar cvfe app.jar com.example.Main com/example/*.class
+
+<span class="comment">// c = create, v = verbose, f = file, e = entry point</span>
+
+<span class="comment">// Run it</span>
+$ java -jar app.jar
+
+<span class="comment">// Manifest inside JAR (auto-generated by -e flag):</span>
+Main-Class: com.example.Main</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Maven — The Build Tool</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Maven manages dependencies, compilation, testing, and packaging through a declarative <span class="inline-code">pom.xml</span> file.
+        </p>
+        <pre><code><span class="comment">&lt;!-- pom.xml minimum structure --&gt;</span>
+&lt;project&gt;
+    &lt;groupId&gt;com.example&lt;/groupId&gt;
+    &lt;artifactId&gt;my-app&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;21&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;21&lt;/maven.compiler.target&gt;
+    &lt;/properties&gt;
+&lt;/project&gt;</code></pre>
+        <table>
+            <tr><th>Concept</th><th>Explanation</th></tr>
+            <tr><td><span class="inline-code">groupId</span></td><td>Organization identifier (e.g., <span class="inline-code">com.example</span>)</td></tr>
+            <tr><td><span class="inline-code">artifactId</span></td><td>Project name (e.g., <span class="inline-code">my-app</span>)</td></tr>
+            <tr><td><span class="inline-code">version</span></td><td>Semantic version (e.g., <span class="inline-code">1.0-SNAPSHOT</span>)</td></tr>
+            <tr><td><span class="inline-code">packaging</span></td><td><span class="inline-code">jar</span> (default) or <span class="inline-code">pom</span></td></tr>
+        </table>
+        <div class="card-title" style="margin-top:1.25rem;">Directory Layout</div>
+        <pre><code>my-app/
+├── pom.xml
+├── src/
+│   ├── main/
+│   │   ├── java/       ← your .java files
+│   │   └── resources/  ← config, CSV, logback.xml
+│   └── test/
+│       └── java/       ← JUnit test files</code></pre>
+        <div class="card-title" style="margin-top:1.25rem;">Maven Lifecycle</div>
+        <table>
+            <tr><th>Phase</th><th>What Happens</th></tr>
+            <tr><td><span class="inline-code">validate</span></td><td>Validate project structure</td></tr>
+            <tr><td><span class="inline-code">compile</span></td><td>Compile <span class="inline-code">src/main/java</span></td></tr>
+            <tr><td><span class="inline-code">test</span></td><td>Run <span class="inline-code">src/test/java</span></td></tr>
+            <tr><td><span class="inline-code">package</span></td><td>Produce JAR/WAR</td></tr>
+            <tr><td><span class="inline-code">verify</span></td><td>Run integration checks</td></tr>
+            <tr><td><span class="inline-code">install</span></td><td>Install to local repo (~/.m2)</td></tr>
+        </table>
+        <div class="card-title" style="margin-top:1.25rem;">Adding Dependencies</div>
+        <pre><code><span class="comment">&lt;!-- Example: JUnit 5 dependency --&gt;</span>
+&lt;dependency&gt;
+    &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;
+    &lt;artifactId&gt;junit-jupiter&lt;/artifactId&gt;
+    &lt;version&gt;5.10.2&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+        <div class="card-title" style="margin-top:1.25rem;">Dependency Scopes</div>
+        <table>
+            <tr><th>Scope</th><th>Available At</th><th>Use Case</th></tr>
+            <tr><td><span class="inline-code">compile</span> (default)</td><td>Compile + runtime</td><td>Main application code</td></tr>
+            <tr><td><span class="inline-code">test</span></td><td>Test runs only</td><td>JUnit, Mockito</td></tr>
+            <tr><td><span class="inline-code">provided</span></td><td>Compile only (not packaged)</td><td>Servlet API (server provides it)</td></tr>
+        </table>
+        <div class="info">
+            <div class="info-title">Transitive Dependencies & Maven Central</div>
+            <p>When you declare a dependency, Maven also pulls in <strong>its</strong> dependencies (transitive). All artifacts are resolved from <strong>Maven Central</strong> (repo.maven.apache.org) unless you configure additional repositories.</p>
+        </div>
+        <div class="card-title" style="margin-top:1.25rem;">Compiler Plugin (Java 21)</div>
+        <pre><code><span class="comment">&lt;!-- Set Java 21 source/target --&gt;</span>
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.12.1&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;source&gt;21&lt;/source&gt;
+                &lt;target&gt;21&lt;/target&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Maven Project</div>
+        <ol>
+            <li>Compile your note-taking app from Hour 14 with <span class="inline-code">javac -d out</span>.</li>
+            <li>Package into a runnable JAR with <span class="inline-code">jar cvfe notes.jar com.example.Main com/example/*.class</span>.</li>
+            <li>Run with <span class="inline-code">java -jar notes.jar</span> and verify functionality.</li>
+            <li>Convert the project to a Maven structure: create <span class="inline-code">pom.xml</span>, move sources to <span class="inline-code">src/main/java</span>.</li>
+            <li>Add a dependency (e.g., JUnit 5). Build with <span class="inline-code">mvn package</span>.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 16 -->
+<section class="hour-section" id="hour16">
+    <div class="hour-header">
+        <div class="hour-number">Hour 16</div>
+        <div class="hour-title">Day 1 Review & Validation</div>
+        <div class="hour-goal">Prove mastery before advancing to functional programming and concurrency.</div>
+    </div>
+
+    <div class="checklist">
+        <h3>Validation Checklist — Must Pass Before Day 2</h3>
+        <ol>
+            <li>Compile and run a multi-package project from the terminal using <span class="inline-code">javac</span> and <span class="inline-code">java</span> without any IDE assistance.</li>
+            <li>Explain why <span class="inline-code">==</span> fails for String comparison and why <span class="inline-code">.equals()</span> works, including the String Pool mechanism.</li>
+            <li>Implement <span class="inline-code">equals()</span>, <span class="inline-code">hashCode()</span>, and <span class="inline-code">Comparable</span> on a custom class and prove it works correctly in a <span class="inline-code">TreeSet</span>.</li>
+            <li>Explain PECS with a real example: <span class="inline-code">copy(List&lt;? extends T&gt; src, List&lt;? super T&gt; dst)</span> — why extends is for reading and super is for writing.</li>
+            <li>Build and package a project with Maven.</li>
+            <li>Use IntelliJ's debugger to set a breakpoint, step through code (F7/F8), inspect a variable at runtime, and evaluate an expression mid-execution.</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Self-Assessment Questions</div>
+        <ul>
+            <li>What happens if <span class="inline-code">hashCode()</span> is inconsistent with <span class="inline-code">equals()</span> in a <span class="inline-code">HashMap</span> key?</li>
+            <li>Why can't you create a generic array like <span class="inline-code">new T[10]</span>?</li>
+            <li>What's the difference between <span class="inline-code">final</span> on a reference variable vs. a primitive?</li>
+            <li>When should you use <span class="inline-code">LinkedList</span> over <span class="inline-code">ArrayList</span>?</li>
+            <li>Where do static fields live in the JVM? (Not the stack, not the heap's object space.)</li>
+            <li>Why is <span class="inline-code">StringBuilder</span> preferred over <span class="inline-code">StringBuffer</span>?</li>
+            <li>What is type erasure and why does it exist?</li>
+        </ul>
+    </div>
+
+    <div class="info">
+        <div class="info-title">Ready for Day 2?</div>
+        <p>Day 2 assumes complete fluency with everything above. You will rewrite anonymous inner classes as lambdas, stream over collections that require correct <span class="inline-code">equals()/hashCode()</span>, and debug race conditions using the IDE skills practiced in Hour 10. Do not proceed until all 6 validation items are checked.</p>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>Day 1: Core Java, OOP & Foundations</p>
+    <p style="margin-top: 0.5rem; font-size: 0.875rem;">Part of the 3-Day Intensive Java Syllabus — Java 21 LTS</p>
+    <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--border);">
+        Prerequisite: Basic programming logic (variables, conditionals, loops) from any other language.
+    </p>
+</footer>
+
+<script>
+    const sections = document.querySelectorAll('.hour-section');
+    const navBtns = document.querySelectorAll('.nav-btn');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (scrollY >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('href') === '#' + current) {
+                btn.classList.add('active');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

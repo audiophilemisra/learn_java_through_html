@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2: Functional Programming & Concurrency — 16-Hour Intensive Syllabus</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --code-bg: #0d1117;
+            --code-text: #e6edf3;
+            --border: #475569;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+            padding: 3rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 600;
+            position: relative;
+        }
+
+        .hero .meta {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0 0.25rem;
+        }
+
+        .badge-java { background: var(--accent); color: var(--bg-primary); }
+        .badge-lts { background: var(--success); color: white; }
+        .badge-time { background: var(--warning); color: var(--bg-primary); }
+
+        .nav-container {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-scroll {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--bg-secondary);
+        }
+
+        .nav-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .nav-scroll::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .nav-btn {
+            flex-shrink: 0;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .hour-section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 5rem;
+        }
+
+        .hour-header {
+            background: linear-gradient(90deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border-left: 5px solid var(--accent);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hour-number {
+            font-size: 0.875rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+
+        .hour-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .hour-goal {
+            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-title svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        li strong {
+            color: var(--text-primary);
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid #30363d;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        pre::before {
+            content: 'java';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-family: monospace;
+            border-bottom-left-radius: 0.5rem;
+            border-top-right-radius: 0.75rem;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .inline-code {
+            background: var(--code-bg);
+            color: var(--accent);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.85em;
+            border: 1px solid #30363d;
+        }
+
+        .keyword { color: #ff7b72; }
+        .type { color: #ffa657; }
+        .string { color: #a5d6ff; }
+        .comment { color: #8b949e; font-style: italic; }
+        .function { color: #d2a8ff; }
+        .number { color: #79c0ff; }
+        .annotation { color: #ff7b72; }
+
+        .practice {
+            background: linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(34,197,94,0.05) 100%);
+            border: 1px solid var(--success);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .practice-title {
+            color: var(--success);
+            font-weight: 800;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pitfall {
+            background: linear-gradient(135deg, rgba(239,68,68,0.1) 0%, rgba(239,68,68,0.05) 100%);
+            border: 1px solid var(--danger);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .pitfall-title {
+            color: var(--danger);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .info {
+            background: linear-gradient(135deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.05) 100%);
+            border: 1px solid var(--accent);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .info-title {
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .strategy {
+            background: linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(245,158,11,0.05) 100%);
+            border: 1px solid var(--warning);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .strategy-title {
+            color: var(--warning);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-card);
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:hover {
+            background: rgba(56,189,248,0.05);
+        }
+
+        .checklist {
+            background: var(--bg-secondary);
+            border: 2px solid var(--success);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .checklist h3 {
+            color: var(--success);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .checklist ol {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            counter-reset: checklist;
+        }
+
+        .checklist li {
+            counter-increment: checklist;
+            padding: 0.75rem 0 0.75rem 3rem;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .checklist li::before {
+            content: counter(checklist);
+            position: absolute;
+            left: 0;
+            top: 0.75rem;
+            width: 2rem;
+            height: 2rem;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.875rem;
+        }
+
+        .break-schedule {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .break-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .break-time {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--warning);
+        }
+
+        .break-after {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        @media print {
+            .nav-container { display: none; }
+            .hero { background: white; color: black; }
+            body { background: white; color: black; }
+            .card, .hour-header { break-inside: avoid; }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 1.75rem; }
+            .hour-title { font-size: 1.25rem; }
+            pre { padding: 0.75rem; font-size: 0.8rem; }
+        }
+
+        .hour-section {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hour-section:nth-child(1) { animation-delay: 0.1s; }
+        .hour-section:nth-child(2) { animation-delay: 0.2s; }
+        .hour-section:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>Day 2: Functional Programming & Concurrency</h1>
+    <div class="subtitle">16-Hour Intensive Syllabus</div>
+    <div class="meta">
+        <span class="badge badge-java">Java 21 LTS</span>
+        <span class="badge badge-lts">Production Ready</span>
+        <span class="badge badge-time">16 Hours + Breaks</span>
+    </div>
+    <div class="meta" style="margin-top: 0.75rem; font-style: italic;">
+        Goal: Master lambdas, streams, and modern concurrent programming.
+    </div>
+    <div class="meta" style="margin-top: 0.5rem; font-style: italic; font-size: 0.9rem;">
+        Prerequisite: Complete mastery of Day 1 content. Every prerequisite was taught on Day 1.
+    </div>
+</header>
+
+<nav class="nav-container">
+    <div class="nav-scroll">
+        <a href="#hour1" class="nav-btn">H1: Lambdas</a>
+        <a href="#hour2" class="nav-btn">H2: Func Interfaces</a>
+        <a href="#hour3" class="nav-btn">H3: Optional</a>
+        <a href="#hour4" class="nav-btn">H4: Streams</a>
+        <a href="#hour5" class="nav-btn">H5: flatMap</a>
+        <a href="#hour6" class="nav-btn">H6: reduce/collect</a>
+        <a href="#hour7" class="nav-btn">H7: Collectors</a>
+        <a href="#hour8" class="nav-btn">H8: Parallel Streams</a>
+        <a href="#hour9" class="nav-btn">H9: Thread Model</a>
+        <a href="#hour10" class="nav-btn">H10: synchronized</a>
+        <a href="#hour11" class="nav-btn">H11: JMM/Interrupt</a>
+        <a href="#hour12" class="nav-btn">H12: wait/notify</a>
+        <a href="#hour13" class="nav-btn">H13: Executors</a>
+        <a href="#hour14" class="nav-btn">H14: Concurrent Coll.</a>
+        <a href="#hour15" class="nav-btn">H15: Locks/Atomics</a>
+        <a href="#hour16" class="nav-btn">H16: CompletableFuture</a>
+    </div>
+</nav>
+
+<main class="container">
+
+<!-- IDE STRATEGY -->
+<div class="strategy" style="margin-bottom: 2rem;">
+    <div class="strategy-title">IDE Strategy</div>
+    <p><strong>All hours:</strong> Use <strong>IntelliJ IDEA Community Edition</strong> (or VS Code with Java extensions). Day 1 foundations are complete. You need refactoring, debugging, and code navigation throughout Day 2.</p>
+</div>
+
+<!-- BREAK SCHEDULE -->
+<section class="card" style="margin-bottom: 2rem;">
+    <div class="card-title">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Break Schedule
+    </div>
+    <div class="break-schedule">
+        <div class="break-card">
+            <div class="break-time">30 min</div>
+            <div class="break-after">After Hour 4</div>
+        </div>
+        <div class="break-card">
+            <div class="break-time">45 min</div>
+            <div class="break-after">After Hour 8 (Meal)</div>
+        </div>
+        <div class="break-card">
+            <div class="break-time">30 min</div>
+            <div class="break-after">After Hour 12</div>
+        </div>
+    </div>
+</section>
+
+<!-- HOUR 1 -->
+<section class="hour-section" id="hour1">
+    <div class="hour-header">
+        <div class="hour-number">Hour 1</div>
+        <div class="hour-title">Lambdas, Method References & The Checked Exception Trap</div>
+        <div class="hour-goal">Rewrite Day 1's anonymous classes. Survive checked exceptions in streams.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Functional Interfaces & The SAM Rule</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            A <strong>functional interface</strong> has exactly one abstract method (SAM — Single Abstract Method). The <span class="inline-code">@FunctionalInterface</span> annotation is optional but declares intent.
+        </p>
+        <pre><code><span class="annotation">@FunctionalInterface</span>
+<span class="keyword">public interface</span> <span class="type">StringProcessor</span> {
+    <span class="type">String</span> <span class="function">process</span>(<span class="type">String</span> input);
+}
+
+<span class="comment">// Day 1 anonymous class:</span>
+<span class="type">StringProcessor</span> upper = <span class="keyword">new</span> <span class="type">StringProcessor</span>() {
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="type">String</span> <span class="function">process</span>(<span class="type">String</span> input) {
+        <span class="keyword">return</span> input.<span class="function">toUpperCase</span>();
+    }
+};
+
+<span class="comment">// Day 2 lambda — same interface, 80% less code:</span>
+<span class="type">StringProcessor</span> upper = input -> input.<span class="function">toUpperCase</span>();</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Lambda Syntax Variants</div>
+        <pre><code><span class="comment">// Parameter inference (most common)</span>
+(<span class="type">String</span> s) -> s.<span class="function">length</span>()
+
+<span class="comment">// Type inferred (shorter)</span>
+s -> s.<span class="function">length</span>()
+
+<span class="comment">// Multi-line body with curly braces</span>
+(x, y) -> {
+    <span class="keyword">double</span> result = x + y;
+    <span class="keyword">return</span> result;
+}
+
+<span class="comment">// No parameters</span>
+() -> <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Hello"</span>)</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Variable Capture & Effectively Final</div>
+        <p style="margin-bottom:1rem;color:var(--text-secondary);">
+            Lambdas can capture local variables, but the variable must be <strong>effectively final</strong> — never reassigned after initialization. This is the closure trap.
+        </p>
+        <pre><code><span class="type">String</span> prefix = <span class="string">"Hello "</span>;  <span class="comment">// effectively final</span>
+<span class="type">Predicate</span><<span class="type">String</span>> startsWithHello = s -> s.<span class="function">startsWith</span>(prefix); <span class="comment">// OK</span>
+
+<span class="comment">// prefix = "Hi";  // Compile error: variable used in lambda must be final or effectively final</span>
+
+<span class="comment">// The closure trap: modifying a local variable inside a lambda does NOT</span>
+<span class="comment">// affect the outer variable. Use Atomic types or reduction for shared state.</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Method References — Four Kinds</div>
+        <table>
+            <tr><th>Kind</th><th>Syntax</th><th>Example</th></tr>
+            <tr><td>Static method</td><td><span class="inline-code">Class::staticMethod</span></td><td><span class="inline-code">Math::abs</span></td></tr>
+            <tr><td>Instance method of particular object</td><td><span class="inline-code">obj::instanceMethod</span></td><td><span class="inline-code">System.out::println</span></td></tr>
+            <tr><td>Instance method of parameter</td><td><span class="inline-code">Class::instanceMethod</span></td><td><span class="inline-code">String::toUpperCase</span></td></tr>
+            <tr><td>Constructor</td><td><span class="inline-code">Class::new</span></td><td><span class="inline-code">ArrayList::new</span></td></tr>
+        </table>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title">The #1 Pain Point: Checked Exceptions Inside Lambdas</div>
+        <p style="margin-bottom:0.75rem;">You <strong>cannot</strong> throw <span class="inline-code">IOException</span> from <span class="inline-code">Stream.map()</span> — functional interfaces don't declare checked exceptions.</p>
+        <p style="margin-bottom:0.5rem;"><strong>Survival Pattern 1: Do I/O before the stream.</strong></p>
+        <pre><code><span class="comment">// Read everything first, then stream the in-memory list</span>
+<span class="type">List</span><<span class="type">String</span>> lines = <span class="type">Files</span>.<span class="function">readAllLines</span>(path);  <span class="comment">// IOException handled here</span>
+lines.<span class="function">stream</span>()
+     .<span class="function">filter</span>(line -> !line.<span class="function">isBlank</span>())
+     .<span class="function">forEach</span>(<span class="type">System</span>.out::<span class="function">println</span>);</code></pre>
+        <p style="margin-top:0.75rem;margin-bottom:0.5rem;"><strong>Survival Pattern 2: Wrapper functions.</strong></p>
+        <pre><code><span class="comment">// Convert checked to unchecked</span>
+<span class="keyword">public static</span> <<span class="type">T</span>> <span class="type">Supplier</span><<span class="type">T</span>> <span class="function">unchecked</span>(<span class="type">CheckedSupplier</span><<span class="type">T</span>> supplier) {
+    <span class="keyword">return</span> () -> {
+        <span class="keyword">try</span> { <span class="keyword">return</span> supplier.<span class="function">get</span>(); }
+        <span class="keyword">catch</span> (<span class="type">Exception</span> e) { <span class="keyword">throw new</span> <span class="type">RuntimeException</span>(e); }
+    };
+}</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Rewrite Day 1 Anonymous Classes</div>
+        <ol>
+            <li>Rewrite the <span class="inline-code">Runnable</span> anonymous class from Day 1 Hour 6 as a lambda.</li>
+            <li>Rewrite the <span class="inline-code">Comparator&lt;Car&gt;</span> anonymous class from Day 1 Hour 6 as a lambda, then as a method reference.</li>
+            <li>Sort your <span class="inline-code">List&lt;Employee&gt;</span> by salary using <span class="inline-code">Comparator.comparing(Employee::salary)</span>.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 2 -->
+<section class="hour-section" id="hour2">
+    <div class="hour-header">
+        <div class="hour-number">Hour 2</div>
+        <div class="hour-title">Built-in Functional Interfaces</div>
+        <div class="hour-goal">Know every functional interface you'll encounter in the wild.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Core Functional Interfaces</div>
+        <table>
+            <tr><th>Interface</th><th>Method</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td><span class="inline-code">Predicate&lt;T&gt;</span></td><td><span class="inline-code">test(T)</span></td><td>Filter / test a condition</td><td><span class="inline-code">s -> s.isEmpty()</span></td></tr>
+            <tr><td><span class="inline-code">Function&lt;T,R&gt;</span></td><td><span class="inline-code">apply(T)</span></td><td>Transform T → R</td><td><span class="inline-code">s -> s.length()</span></td></tr>
+            <tr><td><span class="inline-code">Consumer&lt;T&gt;</span></td><td><span class="inline-code">accept(T)</span></td><td>Perform action, return nothing</td><td><span class="inline-code">s -> System.out.println(s)</span></td></tr>
+            <tr><td><span class="inline-code">Supplier&lt;T&gt;</span></td><td><span class="inline-code">get()</span></td><td>Provide a value, take nothing</td><td><span class="inline-code">() -> Math.random()</span></td></tr>
+            <tr><td><span class="inline-code">UnaryOperator&lt;T&gt;</span></td><td><span class="inline-code">apply(T)</span></td><td>T → T (same type in/out)</td><td><span class="inline-code">s -> s.toUpperCase()</span></td></tr>
+            <tr><td><span class="inline-code">BinaryOperator&lt;T&gt;</span></td><td><span class="inline-code">apply(T,T)</span></td><td>T, T → T (combine two)</td><td><span class="inline-code">(a, b) -> a + b</span></td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Predicate Composition</div>
+        <pre><code><span class="type">Predicate</span><<span class="type">String</span>> isNonEmpty = s -> !s.<span class="function">isEmpty</span>();
+<span class="type">Predicate</span><<span class="type">String</span>> isShort    = s -> s.<span class="function">length</span>() < <span class="number">10</span>;
+
+<span class="comment">// Compose with and(), or(), negate()</span>
+<span class="type">Predicate</span><<span class="type">String</span>> valid = isNonEmpty.<span class="function">and</span>(isShort);  <span class="comment">// both must hold</span>
+<span class="type">Predicate</span><<span class="type">String</span>> invalid = valid.<span class="function">negate</span>();              <span class="comment">// logical NOT</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Function Composition</div>
+        <pre><code><span class="type">Function</span><<span class="type">String</span>, <span class="type">Integer</span>> length = <span class="type">String</span>::<span class="function">length</span>;
+<span class="type">Function</span><<span class="type">Integer</span>, <span class="type">String</span>> toHex  = i -> <span class="type">Integer</span>.<span class="function">toHexString</span>(i);
+
+<span class="comment">// andThen: apply this first, then the argument</span>
+<span class="type">Function</span><<span class="type">String</span>, <span class="type">String</span>> lengthThenHex = length.<span class="function">andThen</span>(toHex);
+
+<span class="comment">// compose: apply argument first, then this</span>
+<span class="type">Function</span><<span class="type">String</span>, <span class="type">String</span>> hexOfLength = toHex.<span class="function">compose</span>(length);
+
+<span class="type">System</span>.out.<span class="function">println</span>(lengthThenHex.<span class="function">apply</span>(<span class="string">"Hello"</span>)); <span class="comment">// "5"</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Primitive Specializations</div>
+        <p style="margin-bottom:0.75rem;color:var(--text-secondary);">
+            Autoboxing has a real cost in streams. Primitive specializations avoid it.
+        </p>
+        <table>
+            <tr><th>Generic</th><th>Primitive Version</th><th>Why</th></tr>
+            <tr><td><span class="inline-code">Predicate&lt;Integer&gt;</span></td><td><span class="inline-code">IntPredicate</span></td><td>Avoid boxing <span class="inline-code">int</span> → <span class="inline-code">Integer</span></td></tr>
+            <tr><td><span class="inline-code">Function&lt;Integer,R&gt;</span></td><td><span class="inline-code">IntFunction&lt;R&gt;</span></td><td>Avoid boxing input</td></tr>
+            <tr><td><span class="inline-code">Function&lt;T,Integer&gt;</span></td><td><span class="inline-code">ToIntFunction&lt;T&gt;</span></td><td>Avoid boxing output</td></tr>
+        </table>
+        <div class="info">
+            <div class="info-title">Why This Matters for Hour 8</div>
+            <p><span class="inline-code">IntStream</span>, <span class="inline-code">LongStream</span>, and <span class="inline-code">DoubleStream</span> (Hour 8) use these specializations to avoid creating millions of wrapper objects during numeric operations.</p>
+        </div>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Filter Utility with Predicate</div>
+        <ol>
+            <li>Write a generic method <span class="inline-code">List&lt;T&gt; filter(List&lt;T&gt; list, Predicate&lt;T&gt; predicate)</span>.</li>
+            <li>Use it to filter: empty strings, strings longer than 5, strings starting with "A".</li>
+            <li>Chain <span class="inline-code">.and()</span> and <span class="inline-code">.negate()</span> to create compound predicates.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 3 -->
+<section class="hour-section" id="hour3">
+    <div class="hour-header">
+        <div class="hour-number">Hour 3</div>
+        <div class="hour-title"><code>Optional&lt;T&gt;</code> — Null Safety</div>
+        <div class="hour-goal">Eliminate null checks. Use Optional correctly.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Creating Optionals</div>
+        <pre><code><span class="comment">// Of a non-null value (throws NullPointerException if null)</span>
+<span class="type">Optional</span><<span class="type">String</span>> present = <span class="type">Optional</span>.<span class="function">of</span>(<span class="string">"Hello"</span>);
+
+<span class="comment">// Of a potentially null value (returns Optional.empty if null)</span>
+<span class="type">Optional</span><<span class="type">String</span>> maybe = <span class="type">Optional</span>.<span class="function">ofNullable</span>(<span class="keyword">null</span>);
+
+<span class="comment">// Explicitly empty</span>
+<span class="type">Optional</span><<span class="type">String</span>> empty = <span class="type">Optional</span>.<span class="function">empty</span>();</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Pipeline Operations</div>
+        <pre><code><span class="type">Optional</span><<span class="type">String</span>> name = <span class="type">Optional</span>.<span class="function">of</span>(<span class="string">"Alice"</span>);
+
+<span class="comment">// map — transform the value inside</span>
+<span class="type">Optional</span><<span class="type">Integer</span>> length = name.<span class="function">map</span>(<span class="type">String</span>::<span class="function">length</span>);
+
+<span class="comment">// filter — keep only if condition holds</span>
+<span class="type">Optional</span><<span class="type">String</span>> longName = name.<span class="function">filter</span>(s -> s.<span class="function">length</span>() > <span class="number">3</span>);
+
+<span class="comment">// flatMap — nested Optional unwraps one level</span>
+<span class="type">Optional</span><<span class="type">String</span>> city = user.<span class="function">flatMap</span>(<span class="type">User</span>::<span class="function">getAddress</span>).<span class="function">map</span>(<span class="type">Address</span>::<span class="function">getCity</span>);</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Extraction Methods</div>
+        <table>
+            <tr><th>Method</th><th>Returns</th><th>When Value Absent</th></tr>
+            <tr><td><span class="inline-code">ifPresent(Consumer)</span></td><td><span class="inline-code">void</span></td><td>Does nothing</td></tr>
+            <tr><td><span class="inline-code">orElse(T)</span></td><td><span class="inline-code">T</span></td><td>Returns the specified default</td></tr>
+            <tr><td><span class="inline-code">orElseGet(Supplier)</span></td><td><span class="inline-code">T</span></td><td>Lazy — only computes default if needed</td></tr>
+            <tr><td><span class="inline-code">orElseThrow()</span></td><td><span class="inline-code">T</span></td><td>Throws <span class="inline-code">NoSuchElementException</span></td></tr>
+            <tr><td><span class="inline-code">orElseThrow(Supplier)</span></td><td><span class="inline-code">T</span></td><td>Throws specified exception</td></tr>
+        </table>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title">Anti-Patterns: Never Do This</div>
+        <ul>
+            <li>Never use <span class="inline-code">Optional</span> as a <strong>field</strong> in a class — use a nullable field instead.</li>
+            <li>Never use <span class="inline-code">Optional</span> as a <strong>method parameter</strong> — use method overloading or nullable.</li>
+            <li>Never use <span class="inline-code">Optional</span> in <strong>collections</strong> — use <span class="inline-code">Map.getOrDefault()</span> or empty collections.</li>
+            <li>Never call <span class="inline-code">.get()</span> without checking <span class="inline-code">.isPresent()</span> — prefer <span class="inline-code">orElse()</span>.</li>
+        </ul>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Rewrite Null-Chain with Optional</div>
+        <ol>
+            <li>Rewrite <span class="inline-code">user.getAddress().getCity()</span> null-chain using <span class="inline-code">Optional</span> pipeline with <span class="inline-code">flatMap</span> and <span class="inline-code">map</span>.</li>
+            <li>Provide a default city using <span class="inline-code">orElse("Unknown")</span>.</li>
+            <li>Throw a custom exception using <span class="inline-code">orElseThrow()</span> when address is missing.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 4 -->
+<section class="hour-section" id="hour4">
+    <div class="hour-header">
+        <div class="hour-number">Hour 4</div>
+        <div class="hour-title">Stream Fundamentals</div>
+        <div class="hour-goal">Understand what streams are, how to create them, and lazy evaluation.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">What Streams Are (And Aren't)</div>
+        <table>
+            <tr><th>Property</th><th>Stream</th><th>Collection</th></tr>
+            <tr><td>Storage</td><td>No storage — computes on demand</td><td>Stores elements</td></tr>
+            <tr><td>Functional</td><td>Operations produce new streams; source unchanged</td><td>Methods modify/add</td></tr>
+            <tr><td>Single-use</td><td>Can only be consumed once</td><td>Can iterate many times</td></tr>
+            <tr><td>Laziness</td><td>Intermediate ops don't execute until terminal</td><td>Eager — all operations run immediately</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Creating Streams</div>
+        <pre><code><span class="comment">// From Collection</span>
+list.<span class="function">stream</span>()
+
+<span class="comment">// From values</span>
+<span class="type">Stream</span>.<span class="function">of</span>(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>)
+
+<span class="comment">// From array</span>
+<span class="type">Arrays</span>.<span class="function">stream</span>(<span class="keyword">new int</span>[]{<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>})
+
+<span class="comment">// Infinite streams</span>
+<span class="type">Stream</span>.<span class="function">iterate</span>(<span class="number">0</span>, n -> n + <span class="number">2</span>)    <span class="comment">// Must use limit()</span>
+<span class="type">Stream</span>.<span class="function">generate</span>(() -> <span class="type">Math</span>.<span class="function">random</span>())  <span class="comment">// Must use limit()</span>
+
+<span class="comment">// Range</span>
+<span class="type">IntStream</span>.<span class="function">range</span>(<span class="number">1</span>, <span class="number">100</span>)  <span class="comment">// 1..99</span>
+
+<span class="comment">// From file (throws IOException — checked!)</span>
+<span class="type">Files</span>.<span class="function">lines</span>(path)  <span class="comment">// See survival patterns from Hour 1</span></code></pre>
+        <div class="info">
+            <div class="info-title">Files.lines() & Checked Exceptions</div>
+            <p><span class="inline-code">Files.lines()</span> throws <span class="inline-code">IOException</span> (checked). See the survival patterns from <strong>Hour 1</strong>, or use <span class="inline-code">Files.readAllLines()</span> first and then stream the resulting list.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Pipeline Anatomy & Lazy Evaluation</div>
+        <pre><code><span class="comment">// Source → Intermediate Operations → Terminal Operation</span>
+list.<span class="function">stream</span>()                    <span class="comment">// Source</span>
+    .<span class="function">filter</span>(s -> s.<span class="function">length</span>() > <span class="number">3</span>)   <span class="comment">// Intermediate (lazy)</span>
+    .<span class="function">map</span>(<span class="type">String</span>::<span class="function">toUpperCase</span>)      <span class="comment">// Intermediate (lazy)</span>
+    .<span class="function">forEach</span>(<span class="type">System</span>.out::<span class="function">println</span>); <span class="comment">// Terminal — triggers execution</span></code></pre>
+        <p style="margin-top:0.75rem;color:var(--text-secondary);">
+            <strong>Lazy evaluation:</strong> Intermediate operations fuse together and nothing runs until a terminal operation is called. A stream with no terminal does nothing.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Intermediate Operations</div>
+        <table>
+            <tr><th>Operation</th><th>Type</th><th>Note</th></tr>
+            <tr><td><span class="inline-code">filter()</span></td><td>Stateless</td><td>Retain elements matching predicate</td></tr>
+            <tr><td><span class="inline-code">map()</span></td><td>Stateless</td><td>Transform each element</td></tr>
+            <tr><td><span class="inline-code">distinct()</span></td><td>Stateful</td><td>Removes duplicates (uses <span class="inline-code">equals</span>)</td></tr>
+            <tr><td><span class="inline-code">sorted()</span></td><td>Stateful</td><td>Needs <span class="inline-code">Comparable</span> (Day 1 Hour 7)</td></tr>
+            <tr><td><span class="inline-code">peek()</span></td><td>Stateless</td><td>Debug only — do not use for logic</td></tr>
+            <tr><td><span class="inline-code">limit()</span></td><td>Stateful</td><td>Short-circuit: takes first N</td></tr>
+            <tr><td><span class="inline-code">skip()</span></td><td>Stateful</td><td>Skip first N elements</td></tr>
+        </table>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Find Top 3 Highest-Paid</div>
+        <ol>
+            <li>Using your <span class="inline-code">Employee</span> record from Day 1, create a <span class="inline-code">List&lt;Employee&gt;</span> with 10 entries.</li>
+            <li>Use a stream to filter employees in "Engineering" department.</li>
+            <li>Sort by salary descending, limit to top 3, collect to list.</li>
+            <li>Print names and salaries.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 5 -->
+<section class="hour-section" id="hour5">
+    <div class="hour-header">
+        <div class="hour-number">Hour 5</div>
+        <div class="hour-title"><code>flatMap</code>, Stateful Ops & Short-Circuiting</div>
+        <div class="hour-goal">Flatten nested structures. Understand stateful vs. stateless. Stop pipelines early.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">flatMap — One-to-Many Mapping</div>
+        <pre><code><span class="comment">// Flattening nested lists</span>
+<span class="type">List</span><<span class="type">List</span><<span class="type">String</span>>> nested = <span class="type">List</span>.<span class="function">of</span>(
+    <span class="type">List</span>.<span class="function">of</span>(<span class="string">"a"</span>, <span class="string">"b"</span>),
+    <span class="type">List</span>.<span class="function">of</span>(<span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>)
+);
+
+<span class="comment">// Without flatMap — nested Stream&lt;Stream&lt;String&gt;&gt;</span>
+<span class="comment">// With flatMap — flattened Stream&lt;String&gt;</span>
+<span class="type">List</span><<span class="type">String</span>> flat = nested.<span class="function">stream</span>()
+    .<span class="function">flatMap</span>(<span class="type">Collection</span>::<span class="function">stream</span>)
+    .<span class="function">toList</span>();  <span class="comment">// ["a", "b", "c", "d", "e"]</span>
+
+<span class="comment">// Optional.flatMap — unwrap nested Optional</span>
+<span class="type">Optional</span><<span class="type">String</span>> city = user.<span class="function">flatMap</span>(<span class="type">User</span>::<span class="function">getAddress</span>).<span class="function">map</span>(<span class="type">Address</span>::<span class="function">getCity</span>);</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Stateful vs. Stateless Operations</div>
+        <table>
+            <tr><th>Type</th><th>Operations</th><th>Why It Matters</th></tr>
+            <tr><td><strong>Stateless</strong></td><td><span class="inline-code">filter</span>, <span class="inline-code">map</span>, <span class="inline-code">flatMap</span>, <span class="inline-code">peek</span></td><td>Each element processed independently. Safe for parallel streams.</td></tr>
+            <tr><td><strong>Stateful</strong></td><td><span class="inline-code">sorted</span>, <span class="inline-code">distinct</span>, <span class="inline-code">limit</span>, <span class="inline-code">skip</span></td><td>Must see all/many elements before producing output. Expensive in parallel — requires buffering.</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Short-Circuiting Operations</div>
+        <p style="margin-bottom:0.75rem;color:var(--text-secondary);">
+            These stop the pipeline as soon as the answer is known — no need to process remaining elements.
+        </p>
+        <table>
+            <tr><th>Operation</th><th>Returns</th><th>Stops When</th></tr>
+            <tr><td><span class="inline-code">findFirst()</span></td><td><span class="inline-code">Optional&lt;T&gt;</span></td><td>First matching element found</td></tr>
+            <tr><td><span class="inline-code">findAny()</span></td><td><span class="inline-code">Optional&lt;T&gt;</span></td><td>Any element (faster in parallel)</td></tr>
+            <tr><td><span class="inline-code">anyMatch()</span></td><td><span class="inline-code">boolean</span></td><td>One element matches</td></tr>
+            <tr><td><span class="inline-code">allMatch()</span></td><td><span class="inline-code">boolean</span></td><td>One element fails predicate</td></tr>
+            <tr><td><span class="inline-code">noneMatch()</span></td><td><span class="inline-code">boolean</span></td><td>One element matches predicate</td></tr>
+        </table>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Flatten Nested Customer Emails</div>
+        <ol>
+            <li>Create <span class="inline-code">List&lt;List&lt;Customer&gt;&gt;</span> (customers per store), where <span class="inline-code">Customer</span> is a record with an <span class="inline-code">email</span> field.</li>
+            <li>Use <span class="inline-code">flatMap</span> to extract all unique email addresses into a <span class="inline-code">Set&lt;String&gt;</span>.</li>
+            <li>Use <span class="inline-code">anyMatch</span> to check if any customer has a <span class="inline-code">.org</span> email.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 6 -->
+<section class="hour-section" id="hour6">
+    <div class="hour-header">
+        <div class="hour-number">Hour 6</div>
+        <div class="hour-title">Terminal Operations — <code>reduce()</code> & <code>collect()</code></div>
+        <div class="hour-goal">Reduce and collect stream results. Never mutate shared state.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">forEach vs. forEachOrdered</div>
+        <pre><code><span class="comment">// forEach — no order guarantee (especially in parallel)</span>
+list.<span class="function">parallelStream</span>().<span class="function">forEach</span>(<span class="type">System</span>.out::<span class="function">println</span>);
+
+<span class="comment">// forEachOrdered — preserves encounter order</span>
+list.<span class="function">parallelStream</span>().<span class="function">forEachOrdered</span>(<span class="type">System</span>.out::<span class="function">println</span>);</code></pre>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title">Never Mutate Shared State Inside forEach()</div>
+        <pre><code><span class="comment">// WRONG — race condition in parallel</span>
+<span class="type">ArrayList</span><<span class="type">Integer</span>> results = <span class="keyword">new</span> <span class="type">ArrayList</span><>();
+list.<span class="function">parallelStream</span>().<span class="function">forEach</span>(results::<span class="function">add</span>); <span class="comment">// UNSAFE!</span>
+
+<span class="comment">// CORRECT — use collect()</span>
+<span class="type">List</span><<span class="type">Integer</span>> results = list.<span class="function">parallelStream</span>()
+    .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">toList</span>());</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">reduce() — Immutable Reduction</div>
+        <pre><code><span class="comment">// Identity, accumulator, combiner</span>
+<span class="keyword">int</span> sum = numbers.<span class="function">stream</span>()
+    .<span class="function">reduce</span>(
+        <span class="number">0</span>,                           <span class="comment">// Identity: starting value</span>
+        (<span class="keyword">int</span> a, <span class="keyword">int</span> b) -> a + b,     <span class="comment">// Accumulator: combine two elements</span>
+        <span class="type">Integer</span>::<span class="function">sum</span>              <span class="comment">// Combiner: merge partial results (parallel)</span>
+    );
+
+<span class="comment">// Associativity requirement: (a op b) op c == a op (b op c)</span>
+<span class="comment">// The combiner is only used in parallel streams, but always provide it.</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">collect() — Mutable Reduction</div>
+        <p style="margin-bottom:0.75rem;color:var(--text-secondary);">
+            <span class="inline-code">collect()</span> uses a <span class="inline-code">Collector&lt;T,A,R&gt;</span> to accumulate elements into a mutable container. The framework handles thread safety in parallel.
+        </p>
+        <pre><code><span class="comment">// Common patterns</span>
+<span class="type">List</span><<span class="type">String</span>> names = employees.<span class="function">stream</span>()
+    .<span class="function">map</span>(<span class="type">Employee</span>::<span class="function">name</span>)
+    .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">toList</span>());
+
+<span class="type">Set</span><<span class="type">String</span>> depts = employees.<span class="function">stream</span>()
+    .<span class="function">map</span>(<span class="type">Employee</span>::<span class="function">dept</span>)
+    .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">toSet</span>());</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">min(), max() & count()</div>
+        <pre><code><span class="comment">// min/max return Optional — the stream could be empty</span>
+<span class="type">Optional</span><<span class="type">Employee</span>> highestPaid = employees.<span class="function">stream</span>()
+    .<span class="function">max</span>(<span class="type">Comparator</span>.<span class="function">comparingDouble</span>(<span class="type">Employee</span>::<span class="function">salary</span>));  <span class="comment">// From Day 1 Hour 7</span>
+
+<span class="type">long</span> count = employees.<span class="function">stream</span>()
+    .<span class="function">filter</span>(e -> e.<span class="function">dept</span>().<span class="function">equals</span>(<span class="string">"Engineering"</span>))
+    .<span class="function">count</span>();</code></pre>
+        <div class="info">
+            <div class="info-title">Day 1 Cross-Reference</div>
+            <p><span class="inline-code">min()</span> and <span class="inline-code">max()</span> use <span class="inline-code">Comparator</span> — the same interface you mastered in Day 1 Hour 7.</p>
+        </div>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Revenue Calculation</div>
+        <ol>
+            <li>Create a record <span class="inline-code">Order(String id, double amount, String category)</span> and a list of orders.</li>
+            <li>Calculate total revenue using <span class="inline-code">reduce()</span>.</li>
+            <li>Calculate total revenue using <span class="inline-code">Collectors.summingDouble(Order::amount)</span>.</li>
+            <li>Find the most expensive order using <span class="inline-code">max()</span>.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 7 -->
+<section class="hour-section" id="hour7">
+    <div class="hour-header">
+        <div class="hour-number">Hour 7</div>
+        <div class="hour-title">The <code>Collectors</code> Framework</div>
+        <div class="hour-goal">Master every common collector. Generate reports from data.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Basic Collectors</div>
+        <pre><code><span class="comment">// toList, toSet, toCollection</span>
+<span class="type">List</span><<span class="type">String</span>> names = stream.<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">toList</span>());
+<span class="type">Set</span><<span class="type">String</span>> unique = stream.<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">toSet</span>());
+<span class="type">TreeSet</span><<span class="type">String</span>> sorted = stream.<span class="function">collect</span>(
+    <span class="type">Collectors</span>.<span class="function">toCollection</span>(<span class="type">TreeSet</span>::<span class="keyword">new</span>));
+
+<span class="comment">// toMap with merge function (resolve duplicate keys)</span>
+<span class="type">Map</span><<span class="type">String</span>, <span class="type">Employee</span>> byName = employees.<span class="function">stream</span>()
+    .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">toMap</span>(
+        <span class="type">Employee</span>::<span class="function">name</span>,
+        e -> e,
+        (<span class="type">Employee</span> existing, <span class="type">Employee</span> replacement) -> replacement  <span class="comment">// on duplicate</span>
+    ));</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">groupingBy — Classification + Downstream</div>
+        <pre><code><span class="comment">// Simple grouping</span>
+<span class="type">Map</span><<span class="type">String</span>, <span class="type">List</span><<span class="type">Employee</span>>> byDept = employees.<span class="function">stream</span>()
+    .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">groupingBy</span>(<span class="type">Employee</span>::<span class="function">dept</span>));
+
+<span class="comment">// Grouping with downstream collectors</span>
+<span class="type">Map</span><<span class="type">String</span>, <span class="type">Long</span>> countByDept = employees.<span class="function">stream</span>()
+    .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">groupingBy</span>(
+        <span class="type">Employee</span>::<span class="function">dept</span>,
+        <span class="type">Collectors</span>.<span class="function">counting</span>()
+    ));
+
+<span class="comment">// Nested: average salary per department</span>
+<span class="type">Map</span><<span class="type">String</span>, <span class="type">Double</span>> avgSalaryByDept = employees.<span class="function">stream</span>()
+    .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">groupingBy</span>(
+        <span class="type">Employee</span>::<span class="function">dept</span>,
+        <span class="type">Collectors</span>.<span class="function">averagingDouble</span>(<span class="type">Employee</span>::<span class="function">salary</span>)
+    ));</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">partitioningBy, joining & summarizing</div>
+        <pre><code><span class="comment">// Boolean grouping — two buckets</span>
+<span class="type">Map</span><<span class="type">Boolean</span>, <span class="type">List</span><<span class="type">Employee</span>>> highLow = employees.<span class="function">stream</span>()
+    .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">partitioningBy</span>(e -> e.<span class="function">salary</span>() > <span class="number">75000</span>));
+
+<span class="comment">// Joining with delimiter, prefix, suffix</span>
+<span class="type">String</span> csv = names.<span class="function">stream</span>()
+    .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">joining</span>(<span class="string">", "</span>, <span class="string">"["</span>, <span class="string">"]"</span>));
+<span class="comment">// Result: "[Alice, Bob, Charlie]"</span>
+
+<span class="comment">// Statistical summary</span>
+<span class="type">IntSummaryStatistics</span> stats = employees.<span class="function">stream</span>()
+    .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">summarizingInt</span>(e -> (<span class="keyword">int</span>) e.<span class="function">salary</span>()));
+stats.<span class="function">getCount</span>();    <span class="comment">// count</span>
+stats.<span class="function">getAverage</span>();  <span class="comment">// average</span>
+stats.<span class="function">getMax</span>();      <span class="comment">// max</span></code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Generate a Transaction Report</div>
+        <ol>
+            <li>Create a record <span class="inline-code">Transaction(String month, double amount, String name)</span> with 15+ entries.</li>
+            <li>Group transactions by month, sum amounts per month using <span class="inline-code">groupingBy</span> + <span class="inline-code">summingDouble</span>.</li>
+            <li>Find the maximum transaction using <span class="inline-code">maxBy</span> downstream collector.</li>
+            <li>Join all names into a CSV string using <span class="inline-code">joining</span>.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 8 -->
+<section class="hour-section" id="hour8">
+    <div class="hour-header">
+        <div class="hour-number">Hour 8</div>
+        <div class="hour-title">Primitive Streams & Parallel Streams</div>
+        <div class="hour-goal">Avoid boxing. Know when parallel helps — and when it hurts.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Primitive Streams</div>
+        <p style="margin-bottom:0.75rem;color:var(--text-secondary);">
+            Avoid <span class="inline-code">Stream&lt;Integer&gt;</span> boxing. Use primitive specializations for numeric operations.
+        </p>
+        <table>
+            <tr><th>Stream Type</th><th>Mapping To</th><th>Mapping From</th></tr>
+            <tr><td><span class="inline-code">IntStream</span></td><td><span class="inline-code">mapToInt()</span></td><td><span class="inline-code">mapToObj()</span>, <span class="inline-code">boxed()</span></td></tr>
+            <tr><td><span class="inline-code">LongStream</span></td><td><span class="inline-code">mapToLong()</span></td><td><span class="inline-code">asLongStream()</span></td></tr>
+            <tr><td><span class="inline-code">DoubleStream</span></td><td><span class="inline-code">mapToDouble()</span></td><td><span class="inline-code">mapToObj()</span></td></tr>
+        </table>
+        <pre><code><span class="comment">// IntStream avoids boxing</span>
+<span class="keyword">int</span> sum = employees.<span class="function">stream</span>()
+    .<span class="function">mapToInt</span>(<span class="type">Employee</span>::<span class="function">salary</span>)   <span class="comment">// Primitive stream — no Integer objects</span>
+    .<span class="function">sum</span>();
+
+<span class="comment">// Range</span>
+<span class="type">IntStream</span>.<span class="function">range</span>(<span class="number">1</span>, <span class="number">101</span>).<span class="function">forEach</span>(<span class="type">System</span>.out::<span class="function">println</span>);</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Parallel Streams</div>
+        <pre><code><span class="comment">// Uses ForkJoinPool.commonPool() — threads = CPU cores</span>
+<span class="type">long</span> count = list.<span class="function">parallelStream</span>()
+    .<span class="function">filter</span>(s -> s.<span class="function">length</span>() > <span class="number">5</span>)
+    .<span class="function">count</span>();</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">When NOT to Parallel</div>
+        <table>
+            <tr><th>Scenario</th><th>Why Parallel Hurts</th></tr>
+            <tr><td>Small datasets (&lt;10K elements)</td><td>Thread overhead exceeds computation savings</td></tr>
+            <tr><td>Ordered requirements</td><td>Ordering forces synchronization</td></tr>
+            <tr><td>Wrong sources (<span class="inline-code">LinkedList</span>, <span class="inline-code">Stream.iterate</span>)</td><td>Poor splitting; work distributed unevenly</td></tr>
+            <tr><td>Boxing-heavy operations</td><td><span class="inline-code">Stream&lt;Integer&gt;</span> creates millions of wrapper objects</td></tr>
+            <tr><td>I/O-blocking operations</td><td>Threads block waiting, pool starves</td></tr>
+        </table>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title">Thread-Safety in Parallel Streams</div>
+        <p>Never use <span class="inline-code">synchronized</span>, <span class="inline-code">ReentrantLock</span>, or shared mutable variables inside stream operations. Use <strong>reduction</strong> instead.</p>
+        <pre><code><span class="comment">// BROKEN — shared mutable state</span>
+<span class="type">AtomicInteger</span> count = <span class="keyword">new</span> <span class="type">AtomicInteger</span>();  <span class="comment">// Even Atomic is wrong pattern here</span>
+list.<span class="function">parallelStream</span>().<span class="function">forEach</span>(x -> count.<span class="function">incrementAndGet</span>());  <span class="comment">// Wrong tool</span>
+
+<span class="comment">// CORRECT — use reduction or collectors</span>
+<span class="keyword">long</span> count = list.<span class="function">parallelStream</span>().<span class="function">count</span>();  <span class="comment">// Framework handles parallelism</span></code></pre>
+    </div>
+
+    <div class="strategy">
+        <div class="strategy-title">Bridge to Concurrency</div>
+        <p>The race condition you just observed in parallel streams is <strong>not</strong> a Stream-specific problem — it is a <strong>fundamental concurrency problem</strong>. The rest of today will teach you how to reason about and control shared mutable state across threads. If you can see <em>why</em> <span class="inline-code">forEach</span> with shared state is broken, you already understand the core challenge of concurrent programming.</p>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Parallel Benchmark & Race Condition</div>
+        <ol>
+            <li>Generate 10 million integers. Benchmark <span class="inline-code">parallelStream().sum()</span> vs. <span class="inline-code">stream().sum()</span> using <span class="inline-code">Instant</span> and <span class="inline-code">Duration</span>.</li>
+            <li>Increment a shared <span class="inline-code">int</span> counter inside <span class="inline-code">parallelStream().forEach()</span> using 10 threads, 1000 increments each. Print the result — it will be wrong.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 9 -->
+<section class="hour-section" id="hour9">
+    <div class="hour-header">
+        <div class="hour-number">Hour 9</div>
+        <div class="hour-title">The Thread Model</div>
+        <div class="hour-goal">Understand threads. See race conditions firsthand.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Process vs. Thread</div>
+        <table>
+            <tr><th>Property</th><th>Process</th><th>Thread</th></tr>
+            <tr><td>Memory</td><td>Separate address space</td><td>Shared heap, separate stacks</td></tr>
+            <tr><td>Creation cost</td><td>Heavy (OS-level)</td><td>Light (JVM-managed)</td></tr>
+            <tr><td>Communication</td><td>IPC (pipes, sockets)</td><td>Shared memory (direct access)</td></tr>
+            <tr><td>Failure</td><td>One crash = one process dead</td><td>One thread crash can corrupt shared state for all</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Creating Threads — Three Ways</div>
+        <pre><code><span class="comment">// 1. extends Thread (bad — cannot extend anything else)</span>
+<span class="keyword">class</span> <span class="type">MyThread</span> <span class="keyword">extends</span> <span class="type">Thread</span> {
+    <span class="keyword">public void</span> <span class="function">run</span>() { <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Thread: "</span> + <span class="function">getName</span>()); }
+}
+
+<span class="comment">// 2. implements Runnable (good — can implement other interfaces)</span>
+<span class="type">Runnable</span> task = () -> <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Runnable: "</span> + <span class="type">Thread</span>.<span class="function">currentThread</span>().<span class="function">getName</span>());
+<span class="keyword">new</span> <span class="type">Thread</span>(task).<span class="function">start</span>();
+
+<span class="comment">// 3. Lambda (most concise — same as #2)</span>
+<span class="keyword">new</span> <span class="type">Thread</span>(() -> <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Lambda: "</span> + <span class="type">Thread</span>.<span class="function">currentThread</span>().<span class="function">getName</span>()))
+    .<span class="function">start</span>();</code></pre>
+        <div class="pitfall">
+            <div class="pitfall-title">Always call start(), not run()</div>
+            <p>Calling <span class="inline-code">thread.run()</span> executes on the <strong>current</strong> thread, not a new one. Always use <span class="inline-code">thread.start()</span>.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Runnable vs. Callable&lt;T&gt;</div>
+        <table>
+            <tr><th>Property</th><th>Runnable</th><th>Callable&lt;T&gt;</th></tr>
+            <tr><td>Return type</td><td><span class="inline-code">void</span></td><td><span class="inline-code">T</span> (generic)</td></tr>
+            <tr><td>Checked exceptions</td><td>Cannot throw</td><td>Can throw checked exceptions</td></tr>
+            <tr><td>Use with</td><td><span class="inline-code">Thread</span>, <span class="inline-code">execute()</span></td><td><span class="inline-code">submit()</span> → <span class="inline-code">Future&lt;T&gt;</span></td></tr>
+        </table>
+        <div class="info">
+            <div class="info-title">Critical for Hour 13</div>
+            <p>This <span class="inline-code">Runnable</span> vs. <span class="inline-code">Callable</span> distinction becomes critical when you learn <span class="inline-code">ExecutorService</span> in Hour 13. <span class="inline-code">submit(Callable)</span> returns a <span class="inline-code">Future&lt;T&gt;</span>; <span class="inline-code">execute(Runnable)</span> does not.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Thread Lifecycle</div>
+        <pre><code>NEW → RUNNABLE → BLOCKED / WAITING / TIMED_WAITING → TERMINATED
+
+<span class="comment">// Key methods</span>
+thread.<span class="function">start</span>()    <span class="comment">// Begin execution (NOT run())</span>
+<span class="type">Thread</span>.<span class="function">sleep</span>(ms) <span class="comment">// Pause current thread</span>
+thread.<span class="function">join</span>()     <span class="comment">// Wait for thread to finish</span>
+<span class="type">Thread</span>.<span class="function">yield</span>()    <span class="comment">// Suggest other threads run</span>
+thread.<span class="function">setDaemon</span>(<span class="keyword">true</span>) <span class="comment">// JVM exits when only daemons remain</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">The Problem: Race Conditions</div>
+        <pre><code><span class="keyword">class</span> <span class="type">Counter</span> {
+    <span class="keyword">int</span> count = <span class="number">0</span>;
+    <span class="keyword">void</span> <span class="function">increment</span>() { count++; }  <span class="comment">// NOT atomic: read → modify → write</span>
+}
+
+<span class="comment">// Two threads increment 1000 times each</span>
+<span class="comment">// Expected: 2000. Actual: ~1200–1800 (varies every run)</span></code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Observe the Race Condition</div>
+        <ol>
+            <li>Create a <span class="inline-code">Counter</span> class with a shared <span class="inline-code">int count</span> and <span class="inline-code">increment()</span> method.</li>
+            <li>Launch 10 threads, each calling <span class="inline-code">increment()</span> 1000 times.</li>
+            <li>Print the final count — it will be less than 10,000. Run multiple times to see variation.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 10 -->
+<section class="hour-section" id="hour10">
+    <div class="hour-header">
+        <div class="hour-number">Hour 10</div>
+        <div class="hour-title">Synchronization & <code>volatile</code></div>
+        <div class="hour-goal">Fix race conditions. Understand visibility vs. atomicity.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><code>synchronized</code> — Intrinsic Lock (Monitor)</div>
+        <pre><code><span class="comment">// Method-level synchronization</span>
+<span class="keyword">public synchronized void</span> <span class="function">increment</span>() {
+    count++;  <span class="comment">// Only one thread at a time</span>
+}
+
+<span class="comment">// Block-level synchronization (finer-grained)</span>
+<span class="keyword">public void</span> <span class="function">increment</span>() {
+    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) {  <span class="comment">// Lock on this object</span>
+        count++;
+    }
+}</code></pre>
+        <p style="margin-top:0.75rem;color:var(--text-secondary);">
+            <strong>Lock granularity:</strong> Synchronize on the smallest scope that protects the data. Method-level is simpler but creates a bottleneck if only one field needs protection.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><code>volatile</code> — Visibility Guarantee</div>
+        <pre><code><span class="keyword">private volatile boolean</span> running = <span class="keyword">true</span>;
+
+<span class="keyword">public void</span> <span class="function">stop</span>() {
+    running = <span class="keyword">false</span>;  <span class="comment">// Visible to all threads immediately</span>
+}
+
+<span class="keyword">public void</span> <span class="function">run</span>() {
+    <span class="keyword">while</span> (running) {
+        <span class="comment">// Do work</span>
+    }
+    <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Stopped cleanly"</span>);
+}</code></pre>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title">volatile Does NOT Make Increment Atomic</div>
+        <p><span class="inline-code">volatile</span> guarantees <strong>visibility</strong> — writes are flushed to main memory. It does <strong>NOT</strong> guarantee atomicity. <span class="inline-code">count++</span> is still read-modify-write (three operations). For atomic increment, use <span class="inline-code">AtomicInteger</span> (Hour 15).</p>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Fix the Broken Counter</div>
+        <ol>
+            <li>Rewrite your <span class="inline-code">Counter</span> from Hour 9 with <span class="inline-code">synchronized</span> blocks. Run 10 threads × 1000 increments. Result must be 10,000.</li>
+            <li>Create a <span class="inline-code">volatile boolean running</span> flag. Control a worker loop from a <strong>main</strong> thread — call <span class="inline-code">running = false</span> to stop it cleanly.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 11 -->
+<section class="hour-section" id="hour11">
+    <div class="hour-header">
+        <div class="hour-number">Hour 11</div>
+        <div class="hour-title">Java Memory Model & Thread Interruption</div>
+        <div class="hour-goal">Understand happens-before. Master the interruption contract.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Java Memory Model — Happens-Before</div>
+        <ul>
+            <li><strong>Atomicity:</strong> Which operations cannot be interleaved?</li>
+            <li><strong>Visibility:</strong> When does one thread see another's writes?</li>
+            <li><strong>Ordering:</strong> Can the compiler/CPU reorder statements?</li>
+        </ul>
+        <p style="margin:0.75rem 0;color:var(--text-secondary);">
+            <strong>Happens-before</strong> guarantees: a write to a <span class="inline-code">volatile</span> field happens-before every subsequent read of that field. A <span class="inline-code">synchronized</span> block exit happens-before the entry of the next <span class="inline-code">synchronized</span> block on the same monitor.
+        </p>
+        <div class="info">
+            <div class="info-title">Why volatile Is Not Enough for Increment</div>
+            <p><span class="inline-code">count++</span> is <strong>read-modify-write</strong>: three operations. <span class="inline-code">volatile</span> ensures the read sees the latest write, but another thread can write between the read and the write. You need <span class="inline-code">synchronized</span> or <span class="inline-code">AtomicInteger</span>.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Thread Interruption Contract (Critical)</div>
+        <pre><code><span class="comment">// The canonical worker loop pattern</span>
+<span class="keyword">while</span> (!<span class="type">Thread</span>.<span class="function">currentThread</span>().<span class="function">isInterrupted</span>()) {
+    <span class="keyword">try</span> {
+        <span class="comment">// Do work</span>
+        <span class="type">Thread</span>.<span class="function">sleep</span>(<span class="number">100</span>);
+    } <span class="keyword">catch</span> (<span class="type">InterruptedException</span> e) {
+        <span class="type">Thread</span>.<span class="function">currentThread</span>().<span class="function">interrupt</span>();  <span class="comment">// RESTORE THE FLAG!</span>
+        <span class="keyword">break</span>;  <span class="comment">// Exit gracefully</span>
+    }
+}</code></pre>
+        <div class="pitfall">
+            <div class="pitfall-title">Why Catching InterruptedException Must Restore the Flag</div>
+            <p>When <span class="inline-code">InterruptedException</span> is thrown, the thread's interrupt status is <strong>cleared</strong>. If you swallow the exception without restoring the flag, higher-level code cannot detect the interruption. Always call <span class="inline-code">Thread.currentThread().interrupt()</span> in the catch block before breaking.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">ThreadLocal — Per-Thread Storage</div>
+        <pre><code><span class="keyword">private static final</span> <span class="type">ThreadLocal</span><<span class="type">String</span>> requestId =
+    <span class="type">ThreadLocal</span>.<span class="function">withInitial</span>(() -> <span class="string">"REQ-"</span> + <span class="type">ThreadLocalRandom</span>.<span class="function">current</span>().<span class="function">nextInt</span>(<span class="number">1000</span>));
+
+<span class="comment">// Each thread gets its own copy</span>
+<span class="type">System</span>.out.<span class="function">println</span>(requestId.<span class="function">get</span>());  <span class="comment">// Thread-safe, no synchronization needed</span></code></pre>
+        <div class="info">
+            <div class="info-title">DateTimeFormatter Is Already Thread-Safe</div>
+            <p><span class="inline-code">DateTimeFormatter</span> from Day 1 is immutable and thread-safe. It does <strong>not</strong> need <span class="inline-code">ThreadLocal</span>. Use <span class="inline-code">ThreadLocal</span> for per-thread state like request context, random number generators, or connection handles.</p>
+        </div>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Worker Loop & ThreadLocal</div>
+        <ol>
+            <li>Implement the canonical worker loop with proper <span class="inline-code">InterruptedException</span> handling. Start the thread, work for 2 seconds, then call <span class="inline-code">thread.interrupt()</span> from main. Verify clean shutdown.</li>
+            <li>Use <span class="inline-code">ThreadLocal</span> to give each of 5 threads its own unique request ID. Print each thread's ID from inside its <span class="inline-code">run()</span> method.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 12 -->
+<section class="hour-section" id="hour12">
+    <div class="hour-header">
+        <div class="hour-number">Hour 12</div>
+        <div class="hour-title">Inter-Thread Communication & Classic Problems</div>
+        <div class="hour-goal">Low-level coordination. Understand deadlock.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">wait() / notify() / notifyAll()</div>
+        <ul>
+            <li><strong>Must own the monitor</strong> — call inside <span class="inline-code">synchronized</span> block on the same object.</li>
+            <li><strong>Always use <span class="inline-code">while</span> loops</strong> — not <span class="inline-code">if</span> — to guard against <strong>spurious wakeups</strong>.</li>
+            <li><span class="inline-code">notify()</span> wakes one waiting thread; <span class="inline-code">notifyAll()</span> wakes all. Prefer <span class="inline-code">notifyAll()</span> unless you are sure only one thread should proceed.</li>
+        </ul>
+        <pre><code><span class="keyword">synchronized</span> (lock) {
+    <span class="keyword">while</span> (!condition) {   <span class="comment">// ALWAYS while, never if</span>
+        lock.<span class="function">wait</span>();         <span class="comment">// Releases lock, waits for notify</span>
+    }
+    <span class="comment">// Condition is now true — proceed</span>
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Producer-Consumer with wait/notify</div>
+        <pre><code><span class="keyword">class</span> <span class="type">BoundedBuffer</span><<span class="type">T</span>> {
+    <span class="keyword">private final</span> <span class="type">Queue</span><<span class="type">T</span>> queue = <span class="keyword">new</span> <span class="type">LinkedList</span><>();
+    <span class="keyword">private final int</span> capacity;
+
+    <span class="keyword">public synchronized void</span> <span class="function">put</span>(<span class="type">T</span> item) <span class="keyword">throws</span> <span class="type">InterruptedException</span> {
+        <span class="keyword">while</span> (queue.<span class="function">size</span>() == capacity) <span class="keyword">wait</span>();
+        queue.<span class="function">add</span>(item);
+        <span class="function">notifyAll</span>();
+    }
+
+    <span class="keyword">public synchronized</span> <span class="type">T</span> <span class="function">take</span>() <span class="keyword">throws</span> <span class="type">InterruptedException</span> {
+        <span class="keyword">while</span> (queue.<span class="function">isEmpty</span>()) <span class="keyword">wait</span>();
+        <span class="type">T</span> item = queue.<span class="function">poll</span>();
+        <span class="function">notifyAll</span>();
+        <span class="keyword">return</span> item;
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Deadlock</div>
+        <pre><code><span class="comment">// Thread 1 locks A then B. Thread 2 locks B then A.</span>
+<span class="comment">// Both wait forever. Prevention: always lock in the same order.</span>
+<span class="keyword">synchronized</span> (lockA) {     <span class="comment">// Thread 1 holds A</span>
+    <span class="keyword">synchronized</span> (lockB) { <span class="comment">// Waits for B (held by Thread 2)</span>
+        <span class="comment">// Deadlock!</span>
+    }
+}
+
+<span class="comment">// Detection: thread dump (jstack, VisualVM, IntelliJ debugger).</span></code></pre>
+        <p style="margin-top:0.75rem;color:var(--text-secondary);">
+            <strong>Livelock:</strong> Threads keep reacting to each other but make no progress. <strong>Starvation:</strong> A thread never gets CPU time due to greedy peers. Both are brief exposure topics.
+        </p>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: BoundedBuffer with wait/notify</div>
+        <ol>
+            <li>Implement <span class="inline-code">BoundedBuffer&lt;T&gt;</span> with <span class="inline-code">synchronized</span>, <span class="inline-code">wait()</span>, <span class="inline-code">notifyAll()</span>.</li>
+            <li>Create one producer thread that puts 20 items, sleeping between each.</li>
+            <li>Create one consumer thread that takes 20 items, printing each.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 13 -->
+<section class="hour-section" id="hour13">
+    <div class="hour-header">
+        <div class="hour-number">Hour 13</div>
+        <div class="hour-title"><code>java.util.concurrent</code> — Executors</div>
+        <div class="hour-goal">Replace raw threads with managed thread pools.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Why Raw Threads Are Bad</div>
+        <ul>
+            <li><strong>Expensive:</strong> Each thread consumes ~1MB stack memory and OS resources.</li>
+            <li><strong>No reuse:</strong> Threads are created and destroyed for each task.</li>
+            <li><strong>Unbounded:</strong> Creating too many threads crashes the JVM with <span class="inline-code">OutOfMemoryError</span>.</li>
+        </ul>
+        <p style="margin-top:0.5rem;color:var(--text-secondary);">Solution: <strong>Thread pools</strong> — reuse a fixed set of threads for many tasks.</p>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Executor Framework Hierarchy</div>
+        <pre><code><span class="type">Executor</span>               <span class="comment">// void execute(Runnable)</span>
+  └── <span class="type">ExecutorService</span>      <span class="comment">// submit(), shutdown(), invokeAll()</span>
+        └── <span class="type">ScheduledExecutorService</span> <span class="comment">// schedule(), scheduleAtFixedRate()</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Thread Pool Types</div>
+        <table>
+            <tr><th>Factory Method</th><th>Behavior</th><th>When to Use</th></tr>
+            <tr><td><span class="inline-code">newFixedThreadPool(n)</span></td><td>n threads, fixed. Tasks queue if all busy.</td><td>General purpose. Most common choice.</td></tr>
+            <tr><td><span class="inline-code">newCachedThreadPool()</span></td><td>Creates threads on demand, reuses idle threads.</td><td>Short-lived, async tasks. Beware unbounded growth.</td></tr>
+            <tr><td><span class="inline-code">newSingleThreadExecutor()</span></td><td>One thread. Tasks executed sequentially.</td><td>When order must be preserved.</td></tr>
+            <tr><td><span class="inline-code">newScheduledThreadPool(n)</span></td><td>n threads for delayed/periodic tasks.</td><td>Cron-like scheduling, retry delays.</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Submitting Tasks & Getting Results</div>
+        <pre><code><span class="type">ExecutorService</span> pool = <span class="type">Executors</span>.<span class="function">newFixedThreadPool</span>(<span class="number">4</span>);
+
+<span class="comment">// execute — fire and forget (Runnable)</span>
+pool.<span class="function">execute</span>(() -> <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Task ran"</span>));
+
+<span class="comment">// submit — returns Future&lt;T&gt; (Callable)</span>
+<span class="type">Future</span><<span class="type">Integer</span>> future = pool.<span class="function">submit</span>(() -> {
+    <span class="keyword">return</span> <span class="number">42</span>;  <span class="comment">// Callable returns a value</span>
+});
+<span class="type">System</span>.out.<span class="function">println</span>(future.<span class="function">get</span>());  <span class="comment">// Blocks until result available</span></code></pre>
+        <div class="info">
+            <div class="info-title">Runnable vs. Callable — Recall from Hour 9</div>
+            <p><span class="inline-code">execute(Runnable)</span> returns void. <span class="inline-code">submit(Callable&lt;T&gt;)</span> returns <span class="inline-code">Future&lt;T&gt;</span> — the same Runnable vs. Callable distinction from Hour 9.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Shutting Down Properly</div>
+        <pre><code>pool.<span class="function">shutdown</span>();  <span class="comment">// No new tasks. Finish submitted tasks.</span>
+
+<span class="comment">// If tasks won't finish:</span>
+<span class="keyword">if</span> (!pool.<span class="function">awaitTermination</span>(<span class="number">60</span>, <span class="type">TimeUnit</span>.<span class="type">SECONDS</span>)) {
+    pool.<span class="function">shutdownNow</span>();  <span class="comment">// Force interrupt (Hour 11 pattern)</span>
+}</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Submit 50 Callable Tasks</div>
+        <ol>
+            <li>Create a fixed thread pool with 4 threads.</li>
+            <li>Submit 50 <span class="inline-code">Callable&lt;Integer&gt;</span> tasks, each returning a random number 1–100.</li>
+            <li>Collect all <span class="inline-code">Future&lt;Integer&gt;</span> results and compute the sum.</li>
+            <li>Shut down the pool properly: <span class="inline-code">shutdown()</span> then <span class="inline-code">awaitTermination()</span>.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 14 -->
+<section class="hour-section" id="hour14">
+    <div class="hour-header">
+        <div class="hour-number">Hour 14</div>
+        <div class="hour-title">Concurrent Collections & Blocking Queues</div>
+        <div class="hour-goal">Use thread-safe collections. Build better producer-consumer.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">ConcurrentHashMap</div>
+        <pre><code><span class="type">ConcurrentHashMap</span><<span class="type">String</span>, <span class="type">Integer</span>> map = <span class="keyword">new</span> <span class="type">ConcurrentHashMap</span><>();
+
+<span class="comment">// Atomic compute — no race conditions</span>
+map.<span class="function">computeIfAbsent</span>(<span class="string">"key"</span>, k -> <span class="number">0</span>);
+map.<span class="function">merge</span>(<span class="string">"key"</span>, <span class="number">1</span>, <span class="type">Integer</span>::<span class="function">sum</span>);  <span class="comment">// If key exists, sum; if not, set 1</span>
+
+<span class="comment">// Thread-safe iteration</span>
+map.<span class="function">forEach</span>(<span class="number">1000</span>, (k, v) -> <span class="type">System</span>.out.<span class="function">println</span>(k + <span class="string">"="</span> + v));</code></pre>
+        <p style="margin-top:0.5rem;color:var(--text-secondary);">
+            Uses <strong>lock striping / CAS</strong> — multiple threads can read and write concurrently without locking the entire map. Beats <span class="inline-code">Collections.synchronizedMap()</span> which locks the whole map on every operation.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-title">CopyOnWriteArrayList / CopyOnWriteArraySet</div>
+        <div class="info">
+            <div class="info-title">Use Only When Reads Vastly Outnumber Writes</div>
+            <p>Every write copies the <strong>entire array</strong> — expensive but lock-free for readers. Ideal for event listener lists or configuration that rarely changes.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">BlockingQueue</div>
+        <table>
+            <tr><th>Implementation</th><th>Bounded?</th><th>Use Case</th></tr>
+            <tr><td><span class="inline-code">ArrayBlockingQueue</span></td><td>Yes (fixed capacity)</td><td>Best for bounded producer-consumer</td></tr>
+            <tr><td><span class="inline-code">LinkedBlockingQueue</span></td><td>Optional</td><td>General purpose, optionally bounded</td></tr>
+            <tr><td><span class="inline-code">PriorityBlockingQueue</span></td><td>No</td><td>Priority-based processing</td></tr>
+            <tr><td><span class="inline-code">SynchronousQueue</span></td><td>Zero capacity</td><td>Direct handoff (Exchanger-like)</td></tr>
+        </table>
+        <pre><code><span class="type">BlockingQueue</span><<span class="type">String</span>> queue = <span class="keyword">new</span> <span class="type">ArrayBlockingQueue</span><>(<span class="number">10</span>);
+
+<span class="comment">// Producer: blocks if queue is full</span>
+queue.<span class="function">put</span>(<span class="string">"item"</span>);
+
+<span class="comment">// Consumer: blocks if queue is empty</span>
+<span class="type">String</span> item = queue.<span class="function">take</span>();</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Producer-Consumer Revisited — ArrayBlockingQueue</div>
+        <pre><code><span class="comment">// Hour 12: ~40 lines with synchronized + wait/notify</span>
+<span class="comment">// Hour 14: ~8 lines with ArrayBlockingQueue</span>
+
+<span class="type">BlockingQueue</span><<span class="type">String</span>> queue = <span class="keyword">new</span> <span class="type">ArrayBlockingQueue</span><>(<span class="number">10</span>);
+
+<span class="comment">// Producer</span>
+(<span class="keyword">new</span> <span class="type">Thread</span>(() -> {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">20</span>; i++) queue.<span class="function">put</span>(<span class="string">"Item-"</span> + i);
+})).<span class="function">start</span>();
+
+<span class="comment">// Consumer</span>
+(<span class="keyword">new</span> <span class="type">Thread</span>(() -> {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">20</span>; i++) <span class="type">System</span>.out.<span class="function">println</span>(queue.<span class="function">take</span>());
+})).<span class="function">start</span>();</code></pre>
+        <p style="margin-top:0.5rem;color:var(--text-secondary);"><strong>Code shrinks ~80%.</strong> No synchronized, no wait, no notify — the queue handles everything.</p>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Multi-Threaded Log Processor</div>
+        <ol>
+            <li>Create an <span class="inline-code">ArrayBlockingQueue&lt;String&gt;</span> with capacity 50.</li>
+            <li>Start 3 producer threads that enqueue simulated log lines (sleep between enqueues).</li>
+            <li>Start 2 consumer threads that take lines and print them to console (simulating disk writes).</li>
+            <li>Use <span class="inline-code">CountDownLatch</span> (preview from Hour 15) or a poison pill to signal shutdown.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 15 -->
+<section class="hour-section" id="hour15">
+    <div class="hour-header">
+        <div class="hour-number">Hour 15</div>
+        <div class="hour-title">Locks, Atomics & Synchronization Utilities</div>
+        <div class="hour-goal">Advanced concurrency primitives. From locks to latches.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">ReentrantLock — Explicit Locking</div>
+        <pre><code><span class="type">ReentrantLock</span> lock = <span class="keyword">new</span> <span class="type">ReentrantLock</span>();
+
+lock.<span class="function">lock</span>();
+<span class="keyword">try</span> {
+    <span class="comment">// Critical section</span>
+} <span class="keyword">finally</span> {
+    lock.<span class="function">unlock</span>();  <span class="comment">// ALWAYS in finally</span>
+}
+
+<span class="comment">// Benefits over synchronized:</span>
+<span class="comment">// tryLock()        — non-blocking attempt</span>
+<span class="comment">// tryLock(timeout) — timed attempt</span>
+<span class="comment">// lockInterruptibly() — interruptible</span>
+<span class="comment">// newCondition()   — Condition variables (like wait/notify but better)</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">ReadWriteLock — Many Readers, One Writer</div>
+        <pre><code><span class="type">ReadWriteLock</span> rwLock = <span class="keyword">new</span> <span class="type">ReentrantReadWriteLock</span>();
+
+<span class="comment">// Multiple threads can read simultaneously</span>
+rwLock.<span class="function">readLock</span>().<span class="function">lock</span>();
+<span class="keyword">try</span> { <span class="comment">// read data</span> } <span class="keyword">finally</span> { rwLock.<span class="function">readLock</span>().<span class="function">unlock</span>(); }
+
+<span class="comment">// Only one thread can write; blocks all readers</span>
+rwLock.<span class="function">writeLock</span>().<span class="function">lock</span>();
+<span class="keyword">try</span> { <span class="comment">// write data</span> } <span class="keyword">finally</span> { rwLock.<span class="function">writeLock</span>().<span class="function">unlock</span>(); }</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Atomic Classes & CAS</div>
+        <pre><code><span class="type">AtomicInteger</span> counter = <span class="keyword">new</span> <span class="type">AtomicInteger</span>(<span class="number">0</span>);
+counter.<span class="function">incrementAndGet</span>();    <span class="comment">// Atomic ++</span>
+counter.<span class="function">compareAndSet</span>(<span class="number">5</span>, <span class="number">10</span>); <span class="comment">// If current==5, set to 10</span>
+
+<span class="type">AtomicReference</span><<span class="type">String</span>> ref = <span class="keyword">new</span> <span class="type">AtomicReference</span><>(<span class="string">"initial"</span>);
+ref.<span class="function">compareAndSet</span>(<span class="string">"initial"</span>, <span class="string">"updated"</span>);  <span class="comment">// CAS</span></code></pre>
+        <div class="info">
+            <div class="info-title">CAS (Compare-And-Swap)</div>
+            <p>A <strong>hardware primitive</strong> that atomically compares a value and swaps it only if it matches the expected value. All <span class="inline-code">Atomic*</span> classes use CAS under the hood — no locks needed. The <strong>ABA problem</strong> (value changes A→B→A, CAS thinks nothing changed) exists but is rare in practice.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">LongAdder & LongAccumulator</div>
+        <p style="margin-bottom:0.75rem;color:var(--text-secondary);">
+            <span class="inline-code">LongAdder</span> is a high-contention optimization over <span class="inline-code">AtomicLong</span>. Each thread maintains its own counter; the sum is computed on read.
+        </p>
+        <pre><code><span class="type">LongAdder</span> hitCounter = <span class="keyword">new</span> <span class="type">LongAdder</span>();
+
+<span class="comment">// Each thread increments independently — no CAS contention</span>
+hitCounter.<span class="function">increment</span>();
+
+<span class="comment">// Read the sum (adds all thread-local counters)</span>
+<span class="keyword">long</span> total = hitCounter.<span class="function">sum</span>();</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Synchronization Utilities</div>
+        <table>
+            <tr><th>Utility</th><th>Purpose</th><th>One-shot?</th></tr>
+            <tr><td><span class="inline-code">CountDownLatch</span></td><td>Main thread waits for N workers to finish</td><td>Yes (cannot reset)</td></tr>
+            <tr><td><span class="inline-code">CyclicBarrier</span></td><td>All threads wait at a rendezvous point</td><td>No (reusable)</td></tr>
+            <tr><td><span class="inline-code">Semaphore</span></td><td>Control access to finite resources</td><td>No (reusable)</td></tr>
+        </table>
+        <pre><code><span class="comment">// CountDownLatch: 4 workers load data, main aggregates</span>
+<span class="type">CountDownLatch</span> latch = <span class="keyword">new</span> <span class="type">CountDownLatch</span>(<span class="number">4</span>);
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">4</span>; i++) {
+    pool.<span class="function">submit</span>(() -> {
+        <span class="function">loadData</span>();
+        latch.<span class="function">countDown</span>();
+    });
+}
+latch.<span class="function">await</span>();  <span class="comment">// Main blocks until all 4 finish</span>
+<span class="function">aggregate</span>();
+
+<span class="comment">// Semaphore: limit to 3 concurrent requests</span>
+<span class="type">Semaphore</span> permits = <span class="keyword">new</span> <span class="type">Semaphore</span>(<span class="number">3</span>);
+permits.<span class="function">acquire</span>();
+<span class="keyword">try</span> { <span class="function">makeHttpRequest</span>(); } <span class="keyword">finally</span> { permits.<span class="function">release</span>(); }</code></pre>
+        <div class="info">
+            <div class="info-title">Know They Exist</div>
+            <p><span class="inline-code">Exchanger</span> (two-thread data swap) and <span class="inline-code">Phaser</span> (flexible barrier with dynamic parties) are available for advanced use cases.</p>
+        </div>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Atomics, LongAdder, Latches & Semaphores</div>
+        <ol>
+            <li>Rewrite the Hour 9 shared counter using <span class="inline-code">AtomicInteger.incrementAndGet()</span>. Verify the result is correct.</li>
+            <li>Build a hit counter with <span class="inline-code">LongAdder</span>. Spawn 10 threads, each incrementing 100,000 times. Print <span class="inline-code">sum()</span>.</li>
+            <li><span class="inline-code">CountDownLatch</span>: 4 worker threads "load data" (sleep 1s each). Main thread awaits all, then prints "All loaded."</li>
+            <li><span class="inline-code">Semaphore</span>: Limit a web scraper to 3 concurrent requests out of 10 total.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 16 -->
+<section class="hour-section" id="hour16">
+    <div class="hour-header">
+        <div class="hour-number">Hour 16</div>
+        <div class="hour-title"><code>CompletableFuture</code> — Async Java</div>
+        <div class="hour-goal">Compose asynchronous operations without blocking.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Why CompletableFuture? The Future Limitation</div>
+        <pre><code><span class="type">Future</span><<span class="type">Integer</span>> future = pool.<span class="function">submit</span>(() -> <span class="function">compute</span>());
+<span class="keyword">int</span> result = future.<span class="function">get</span>();  <span class="comment">// BLOCKS until done. Cannot chain.</span></code></pre>
+        <p style="margin-top:0.5rem;color:var(--text-secondary);">
+            <span class="inline-code">Future.get()</span> is blocking. <span class="inline-code">CompletableFuture</span> lets you chain, combine, and compose async operations without ever calling <span class="inline-code">get()</span> until you need the result.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Creation</div>
+        <pre><code><span class="comment">// Run async, return a value</span>
+<span class="type">CompletableFuture</span><<span class="type">String</span>> cf = <span class="type">CompletableFuture</span>.<span class="function">supplyAsync</span>(() -> {
+    <span class="keyword">return</span> <span class="function">fetchUserProfile</span>();  <span class="comment">// Runs in ForkJoinPool.commonPool()</span>
+});
+
+<span class="comment">// Run async, no return value</span>
+<span class="type">CompletableFuture</span><<span class="type">Void</span>> cf = <span class="type">CompletableFuture</span>.<span class="function">runAsync</span>(() -> {
+    <span class="function">sendEmail</span>();
+});</code></pre>
+        <div class="info">
+            <div class="info-title">Custom Executor for I/O Tasks</div>
+            <p><span class="inline-code">supplyAsync()</span> uses <span class="inline-code">ForkJoinPool.commonPool()</span> by default — the same pool used by parallel streams. <strong>Pass a custom <span class="inline-code">Executor</span></strong> for blocking I/O tasks so you don't starve CPU-bound work.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Transformation</div>
+        <pre><code><span class="comment">// thenApply — transform the result (T → R)</span>
+cf.<span class="function">thenApply</span>(profile -> profile.<span class="function">getName</span>())
+
+<span class="comment">// thenAccept — consume the result (T → void)</span>
+cf.<span class="function">thenAccept</span>(name -> <span class="type">System</span>.out.<span class="function">println</span>(name))
+
+<span class="comment">// thenRun — execute after completion (no input)</span>
+cf.<span class="function">thenRun</span>(() -> <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Done"</span>))</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Composition & Combination</div>
+        <pre><code><span class="comment">// thenCompose — dependent async call (flatMap for futures)</span>
+<span class="type">CompletableFuture</span><<span class="type">List</span><<span class="type">Order</span>>> orders = <span class="function">fetchUser</span>(userId)
+    .<span class="function">thenCompose</span>(user -> <span class="function">fetchOrders</span>(user.<span class="function">getId</span>()));
+
+<span class="comment">// thenCombine — independent async calls, merge results</span>
+<span class="type">CompletableFuture</span><<span class="type">Double</span>> total = <span class="function">fetchPrice</span>()
+    .<span class="function">thenCombine</span>(<span class="function">fetchTax</span>(), (price, tax) -> price + tax);
+
+<span class="comment">// allOf — wait for all futures</span>
+<span class="type">CompletableFuture</span>.<span class="function">allOf</span>(cf1, cf2, cf3).<span class="function">join</span>();
+
+<span class="comment">// anyOf — proceed on first completion</span>
+<span class="type">CompletableFuture</span>.<span class="function">anyOf</span>(cf1, cf2, cf3).<span class="function">thenAccept</span>(result -> ...);</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Error Handling</div>
+        <pre><code><span class="comment">// exceptionally — handle specific error</span>
+cf.<span class="function">exceptionally</span>(ex -> {
+    <span class="type">System</span>.err.<span class="function">println</span>(<span class="string">"Failed: "</span> + ex.<span class="function">getMessage</span>());
+    <span class="keyword">return</span> <span class="string">"default"</span>;  <span class="comment">// Fallback value</span>
+});
+
+<span class="comment">// handle — both success and failure</span>
+cf.<span class="function">handle</span>((result, ex) -> {
+    <span class="keyword">if</span> (ex != <span class="keyword">null</span>) <span class="keyword">return</span> <span class="string">"fallback"</span>;
+    <span class="keyword">return</span> result;
+});</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Async Order Pipeline</div>
+        <ol>
+            <li><span class="inline-code">supplyAsync</span> → fetch user profile.</li>
+            <li><span class="inline-code">thenCompose</span> → fetch order history by user ID.</li>
+            <li><span class="inline-code">thenCombine</span> → fetch inventory in parallel.</li>
+            <li><span class="inline-code">thenApply</span> → calculate shipping cost.</li>
+            <li><span class="inline-code">exceptionally</span> → return default estimate on failure.</li>
+            <li>Print the final result. Verify that steps 2 and 3 execute concurrently.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- VALIDATION CHECKLIST -->
+<section class="hour-section">
+    <div class="checklist">
+        <h3>Day 2 Validation Checklist — Must Pass Before Day 3</h3>
+        <ol>
+            <li>Rewrite any <span class="inline-code">for</span> loop as a Stream pipeline with proper collectors.</li>
+            <li>Explain why <span class="inline-code">synchronized</span> on a method is a bottleneck and how <span class="inline-code">ConcurrentHashMap</span> fixes it.</li>
+            <li>Build producer-consumer with <span class="inline-code">BlockingQueue</span> + <span class="inline-code">ExecutorService</span>.</li>
+            <li>Chain 3+ async calls with <span class="inline-code">CompletableFuture</span> without blocking.</li>
+            <li>Identify exactly when parallel streams improve vs. degrade performance.</li>
+            <li>Implement the canonical thread interruption pattern and explain why catching <span class="inline-code">InterruptedException</span> must restore the flag.</li>
+        </ol>
+    </div>
+
+    <div class="info">
+        <div class="info-title">Ready for Day 3?</div>
+        <p>Day 3 is pure integration: Maven, JUnit, JDBC, logging, and the capstone project. You will apply every concept from Days 1 and 2. Do not proceed until all 6 validation items are checked.</p>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>Day 2: Functional Programming & Concurrency</p>
+    <p style="margin-top: 0.5rem; font-size: 0.875rem;">Part of the 3-Day Intensive Java Syllabus — Java 21 LTS</p>
+    <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--border);">
+        Prerequisite: Complete mastery of Day 1 content.
+    </p>
+</footer>
+
+<script>
+    const sections = document.querySelectorAll('.hour-section');
+    const navBtns = document.querySelectorAll('.nav-btn');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (scrollY >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('href') === '#' + current) {
+                btn.classList.add('active');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

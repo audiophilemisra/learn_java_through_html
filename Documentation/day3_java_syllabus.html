@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3: Engineering, Integration & Capstone — 16-Hour Intensive Syllabus</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --code-bg: #0d1117;
+            --code-text: #e6edf3;
+            --border: #475569;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --capstone: #a78bfa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+            padding: 3rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 600;
+            position: relative;
+        }
+
+        .hero .meta {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0 0.25rem;
+        }
+
+        .badge-java { background: var(--accent); color: var(--bg-primary); }
+        .badge-lts { background: var(--success); color: white; }
+        .badge-time { background: var(--warning); color: var(--bg-primary); }
+
+        .nav-container {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-scroll {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--bg-secondary);
+        }
+
+        .nav-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .nav-scroll::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .nav-btn {
+            flex-shrink: 0;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .hour-section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 5rem;
+        }
+
+        .hour-header {
+            background: linear-gradient(90deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border-left: 5px solid var(--accent);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hour-number {
+            font-size: 0.875rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+
+        .hour-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .hour-goal {
+            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-title svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        li strong {
+            color: var(--text-primary);
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid #30363d;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        pre::before {
+            content: 'java';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-family: monospace;
+            border-bottom-left-radius: 0.5rem;
+            border-top-right-radius: 0.75rem;
+        }
+
+        pre.sql::before {
+            content: 'sql';
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .inline-code {
+            background: var(--code-bg);
+            color: var(--accent);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.85em;
+            border: 1px solid #30363d;
+        }
+
+        .keyword { color: #ff7b72; }
+        .type { color: #ffa657; }
+        .string { color: #a5d6ff; }
+        .comment { color: #8b949e; font-style: italic; }
+        .function { color: #d2a8ff; }
+        .number { color: #79c0ff; }
+        .annotation { color: #ff7b72; }
+        .sql-keyword { color: #ff7b72; }
+        .sql-string { color: #a5d6ff; }
+        .sql-number { color: #79c0ff; }
+
+        .practice {
+            background: linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(34,197,94,0.05) 100%);
+            border: 1px solid var(--success);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .practice-title {
+            color: var(--success);
+            font-weight: 800;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pitfall {
+            background: linear-gradient(135deg, rgba(239,68,68,0.1) 0%, rgba(239,68,68,0.05) 100%);
+            border: 1px solid var(--danger);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .pitfall-title {
+            color: var(--danger);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .info {
+            background: linear-gradient(135deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.05) 100%);
+            border: 1px solid var(--accent);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .info-title {
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .strategy {
+            background: linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(245,158,11,0.05) 100%);
+            border: 1px solid var(--warning);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .strategy-title {
+            color: var(--warning);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .capstone-badge {
+            display: inline-block;
+            background: var(--capstone);
+            color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .capstone-header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, #2d1b69 100%);
+            padding: 2rem;
+            border-radius: 1rem;
+            border-left: 5px solid var(--capstone);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .capstone-header .hour-title {
+            font-size: 1.75rem;
+        }
+
+        .requirement-card {
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--capstone);
+            box-shadow: var(--shadow);
+        }
+
+        .requirement-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            background: var(--capstone);
+            color: white;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.9rem;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .requirement-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .day-ref {
+            display: inline-block;
+            background: var(--bg-card);
+            color: var(--accent);
+            padding: 0.1rem 0.4rem;
+            border-radius: 0.2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.25rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-card);
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:hover {
+            background: rgba(56,189,248,0.05);
+        }
+
+        .checklist {
+            background: var(--bg-secondary);
+            border: 2px solid var(--success);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .checklist h3 {
+            color: var(--success);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .checklist ol {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            counter-reset: checklist;
+        }
+
+        .checklist li {
+            counter-increment: checklist;
+            padding: 0.75rem 0 0.75rem 3rem;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .checklist li::before {
+            content: counter(checklist);
+            position: absolute;
+            left: 0;
+            top: 0.75rem;
+            width: 2rem;
+            height: 2rem;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.875rem;
+        }
+
+        .break-schedule {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .break-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .break-time {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--warning);
+        }
+
+        .break-after {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        @media print {
+            .nav-container { display: none; }
+            .hero { background: white; color: black; }
+            body { background: white; color: black; }
+            .card, .hour-header { break-inside: avoid; }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 1.75rem; }
+            .hour-title { font-size: 1.25rem; }
+            pre { padding: 0.75rem; font-size: 0.8rem; }
+        }
+
+        .hour-section {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hour-section:nth-child(1) { animation-delay: 0.1s; }
+        .hour-section:nth-child(2) { animation-delay: 0.2s; }
+        .hour-section:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>Day 3: Engineering, Integration & Capstone</h1>
+    <div class="subtitle">16-Hour Intensive Syllabus</div>
+    <div class="meta">
+        <span class="badge badge-java">Java 21 LTS</span>
+        <span class="badge badge-lts">Production Ready</span>
+        <span class="badge badge-time">16 Hours + Breaks</span>
+    </div>
+    <div class="meta" style="margin-top: 0.75rem; font-style: italic;">
+        Goal: Stop writing scripts. Start building applications. Bridge to professional Java development.
+    </div>
+    <div class="meta" style="margin-top: 0.5rem; font-style: italic; font-size: 0.9rem;">
+        Prerequisite: Complete mastery of Day 1 and Day 2 content.
+    </div>
+</header>
+
+<nav class="nav-container">
+    <div class="nav-scroll">
+        <a href="#hour1" class="nav-btn">H1: Maven</a>
+        <a href="#hour2" class="nav-btn">H2: Project Structure</a>
+        <a href="#hour3" class="nav-btn">H3: JUnit 5</a>
+        <a href="#hour4" class="nav-btn">H4: Adv. JUnit</a>
+        <a href="#hour5" class="nav-btn">H5: JDBC/SQL</a>
+        <a href="#hour6" class="nav-btn">H6: DAO Pattern</a>
+        <a href="#hour7" class="nav-btn">H7: Logging</a>
+        <a href="#hour8" class="nav-btn">H8: Integration</a>
+        <a href="#capstone" class="nav-btn">H9–16: Capstone</a>
+    </div>
+</nav>
+
+<main class="container">
+
+<!-- IDE STRATEGY -->
+<div class="strategy" style="margin-bottom: 2rem;">
+    <div class="strategy-title">IDE Strategy</div>
+    <p><strong>All hours:</strong> Use <strong>IntelliJ IDEA Community Edition</strong> (or VS Code with Java extensions). Maven integration, debugging, and refactoring are essential throughout Day 3.</p>
+</div>
+
+<!-- BREAK SCHEDULE -->
+<section class="card" style="margin-bottom: 2rem;">
+    <div class="card-title">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Break Schedule
+    </div>
+    <div class="break-schedule">
+        <div class="break-card">
+            <div class="break-time">30 min</div>
+            <div class="break-after">After Hour 4</div>
+        </div>
+        <div class="break-card">
+            <div class="break-time">45 min</div>
+            <div class="break-after">After Hour 8 (Meal)</div>
+        </div>
+        <div class="break-card">
+            <div class="break-time">30 min</div>
+            <div class="break-after">After Hour 12</div>
+        </div>
+    </div>
+</section>
+
+<!-- HOUR 1 -->
+<section class="hour-section" id="hour1">
+    <div class="hour-header">
+        <div class="hour-number">Hour 1</div>
+        <div class="hour-title">Maven Mastery</div>
+        <div class="hour-goal">Deep dive into dependency management, lifecycle, and plugins.</div>
+    </div>
+
+    <div class="info" style="margin-bottom: 1rem;">
+        <div class="info-title">Builds on Day 1 Hour 15</div>
+        <p>You were introduced to Maven basics (GAV, directory layout, lifecycle) on Day 1. This hour goes deeper into dependency scopes, transitive dependencies, and plugin configuration.</p>
+    </div>
+
+    <div class="card">
+        <div class="card-title">pom.xml Deep Dive</div>
+        <pre><code><span class="comment">&lt;!-- Minimal POM with all essentials --&gt;</span>
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.example&lt;/groupId&gt;
+    &lt;artifactId&gt;order-processor&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;21&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;21&lt;/maven.compiler.target&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;!-- JUnit 5 (test scope) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;
+            &lt;artifactId&gt;junit-jupiter&lt;/artifactId&gt;
+            &lt;version&gt;5.10.2&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- H2 Database --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+            &lt;artifactId&gt;h2&lt;/artifactId&gt;
+            &lt;version&gt;2.2.224&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- SLF4J API --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+            &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+            &lt;version&gt;2.0.12&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/project&gt;</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Dependency Scopes</div>
+        <table>
+            <tr><th>Scope</th><th>Available At</th><th>Use Case</th></tr>
+            <tr><td><span class="inline-code">compile</span> (default)</td><td>Compile + runtime + test</td><td>Main application code (H2, SLF4J)</td></tr>
+            <tr><td><span class="inline-code">test</span></td><td>Test runs only</td><td>JUnit, Mockito</td></tr>
+            <tr><td><span class="inline-code">provided</span></td><td>Compile only (not packaged)</td><td>Servlet API (server provides it at runtime)</td></tr>
+        </table>
+        <div class="info">
+            <div class="info-title">Transitive Dependencies & Maven Central</div>
+            <p>When you declare a dependency, Maven also pulls in <strong>its</strong> dependencies (transitive). All artifacts are resolved from <strong>Maven Central</strong> (repo.maven.apache.org) unless you configure additional repositories. Use <span class="inline-code">mvn dependency:tree</span> to inspect the full dependency graph.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Maven Lifecycle</div>
+        <table>
+            <tr><th>Phase</th><th>What Happens</th></tr>
+            <tr><td><span class="inline-code">validate</span></td><td>Validate project structure and POM</td></tr>
+            <tr><td><span class="inline-code">compile</span></td><td>Compile <span class="inline-code">src/main/java</span></td></tr>
+            <tr><td><span class="inline-code">test</span></td><td>Run tests in <span class="inline-code">src/test/java</span></td></tr>
+            <tr><td><span class="inline-code">package</span></td><td>Produce JAR/WAR</td></tr>
+            <tr><td><span class="inline-code">verify</span></td><td>Run integration checks</td></tr>
+            <tr><td><span class="inline-code">install</span></td><td>Install to local repo (~/.m2)</td></tr>
+        </table>
+        <pre><code># Common commands
+$ mvn clean compile        <span class="comment"># Compile only</span>
+$ mvn test                 <span class="comment"># Run tests</span>
+$ mvn clean package        <span class="comment"># Compile, test, package JAR</span>
+$ mvn dependency:tree      <span class="comment"># Show dependency graph</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Compiler Plugin (Java 21)</div>
+        <pre><code>&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.12.1&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;source&gt;21&lt;/source&gt;
+                &lt;target&gt;21&lt;/target&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Create a Maven Project from Scratch</div>
+        <ol>
+            <li>Create a new Maven project: <span class="inline-code">mvn archetype:generate</span> or create <span class="inline-code">pom.xml</span> manually.</li>
+            <li>Add dependencies for JUnit 5, H2 Database, and SLF4J API.</li>
+            <li>Create <span class="inline-code">src/main/java/com/example/App.java</span> with a <span class="inline-code">main</span> method.</li>
+            <li>Run <span class="inline-code">mvn clean compile</span> and verify it compiles.</li>
+            <li>Run <span class="inline-code">mvn dependency:tree</span> and inspect the transitive dependencies.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 2 -->
+<section class="hour-section" id="hour2">
+    <div class="hour-header">
+        <div class="hour-number">Hour 2</div>
+        <div class="hour-title">Project Structure & Resources</div>
+        <div class="hour-goal">Enforce standard layout. Load configuration from classpath.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Standard Directory Layout</div>
+        <pre><code>order-processor/
+├── pom.xml
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/example/
+│   │   │       ├── App.java
+│   │   │       ├── dao/
+│   │   │       │   └── EmployeeDao.java
+│   │   │       └── model/
+│   │   │           └── Employee.java
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       ├── orders.csv
+│   │       └── logback.xml
+│   └── test/
+│       └── java/
+│           └── com/example/
+│               └── AppTest.java</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Reading Resources from Classpath</div>
+        <pre><code><span class="comment">// Inside a class in src/main/java</span>
+<span class="type">InputStream</span> is = <span class="function">getClass</span>().<span class="function">getResourceAsStream</span>(<span class="string">"/orders.csv"</span>);
+<span class="comment">// Leading '/' = absolute path from root of classpath</span>
+<span class="comment">// No '/' = relative to the class's package</span>
+
+<span class="comment">// Read all lines (NIO.2 from Day 1)</span>
+<span class="type">Path</span> path = <span class="type">Paths</span>.<span class="function">get</span>(<span class="function">getClass</span>().<span class="function">getResource</span>(<span class="string">"/orders.csv"</span>).<span class="function">toURI</span>());
+<span class="type">List</span><<span class="type">String</span>> lines = <span class="type">Files</span>.<span class="function">readAllLines</span>(path);</code></pre>
+        <div class="info">
+            <div class="info-title">Why Resources Matter</div>
+            <p>Config files, CSV data, and <span class="inline-code">logback.xml</span> live in <span class="inline-code">src/main/resources</span>. Maven copies them to the JAR's classpath at build time. Never hardcode file paths — use <span class="inline-code">getResourceAsStream()</span> for portability.</p>
+        </div>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Migrate Day 1 Note App to Maven</div>
+        <ol>
+            <li>Move your Day 1 note-taking app into the Maven directory structure.</li>
+            <li>Move the notes file to <span class="inline-code">src/main/resources/</span> and read it with <span class="inline-code">getResourceAsStream()</span>.</li>
+            <li>Create <span class="inline-code">application.properties</span> in resources with a <span class="inline-code">notes.file</span> property.</li>
+            <li>Build with <span class="inline-code">mvn clean package</span> and verify the JAR runs.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 3 -->
+<section class="hour-section" id="hour3">
+    <div class="hour-header">
+        <div class="hour-number">Hour 3</div>
+        <div class="hour-title">JUnit 5 Fundamentals</div>
+        <div class="hour-goal">Write structured, repeatable tests. Prove your code works.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Core Annotations & Assertions</div>
+        <pre><code><span class="keyword">import static</span> org.junit.jupiter.api.Assertions.*;
+<span class="keyword">import</span> org.junit.jupiter.api.*;
+
+<span class="keyword">class</span> <span class="type">BankAccountTest</span> {
+
+    <span class="keyword">private</span> <span class="type">BankAccount</span> account;
+
+    <span class="annotation">@BeforeEach</span>
+    <span class="keyword">void</span> <span class="function">setUp</span>() {
+        account = <span class="keyword">new</span> <span class="type">BankAccount</span>(<span class="number">100.0</span>);
+    }
+
+    <span class="annotation">@AfterEach</span>
+    <span class="keyword">void</span> <span class="function">tearDown</span>() {
+        account = <span class="keyword">null</span>;
+    }
+
+    <span class="annotation">@Test</span>
+    <span class="annotation">@DisplayName</span>(<span class="string">"Deposit increases balance"</span>)
+    <span class="keyword">void</span> <span class="function">depositIncreasesBalance</span>() {
+        account.<span class="function">deposit</span>(<span class="number">50.0</span>);
+        <span class="function">assertEquals</span>(<span class="number">150.0</span>, account.<span class="function">getBalance</span>());
+    }
+
+    <span class="annotation">@Test</span>
+    <span class="keyword">void</span> <span class="function">withdrawValidAmount</span>() {
+        account.<span class="function">withdraw</span>(<span class="number">30.0</span>);
+        <span class="function">assertEquals</span>(<span class="number">70.0</span>, account.<span class="function">getBalance</span>());
+    }
+
+    <span class="annotation">@Test</span>
+    <span class="keyword">void</span> <span class="function">withdrawMoreThanBalanceThrows</span>() {
+        <span class="function">assertThrows</span>(<span class="type">IllegalArgumentException</span>.<span class="keyword">class</span>, () -> {
+            account.<span class="function">withdraw</span>(<span class="number">200.0</span>);
+        });
+    }
+}</code></pre>
+        <table>
+            <tr><th>Assertion</th><th>Purpose</th></tr>
+            <tr><td><span class="inline-code">assertEquals(expected, actual)</span></td><td>Value equality</td></tr>
+            <tr><td><span class="inline-code">assertTrue(condition)</span></td><td>Boolean assertion</td></tr>
+            <tr><td><span class="inline-code">assertFalse(condition)</span></td><td>Negative boolean</td></tr>
+            <tr><td><span class="inline-code">assertThrows(Exception.class, executable)</span></td><td>Exception expected</td></tr>
+            <tr><td><span class="inline-code">assertNotNull(object)</span></td><td>Object is not null</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Testing Day 1 Exceptions</div>
+        <pre><code><span class="annotation">@Test</span>
+<span class="keyword">void</span> <span class="function">divideByZeroThrows</span>() {
+    <span class="type">Calculator</span> calc = <span class="keyword">new</span> <span class="type">Calculator</span>();
+    <span class="function">assertThrows</span>(<span class="type">MathException</span>.<span class="keyword">class</span>, () -> {
+        calc.<span class="function">divide</span>(<span class="number">1</span>, <span class="number">0</span>);
+    });
+}</code></pre>
+        <div class="info">
+            <div class="info-title">Day 1 Cross-Reference</div>
+            <p><span class="inline-code">MathException</span> is the custom exception you created in Day 1 Hour 14. Now you can prove it works correctly with <span class="inline-code">assertThrows</span>.</p>
+        </div>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: JUnit 5 Tests</div>
+        <ol>
+            <li>Write tests for <span class="inline-code">BankAccount</span>: verify balance never goes negative, <span class="inline-code">deposit</span> increases balance, <span class="inline-code">withdraw</span> throws on insufficient funds.</li>
+            <li>Write tests for <span class="inline-code">Vehicle.equals()</span> and <span class="inline-code">hashCode()</span>: create two equal <span class="inline-code">Car</span> objects, assert they are equal, assert <span class="inline-code">HashSet</span> contains only one.</li>
+            <li>Test your <span class="inline-code">MathException</span> from Day 1 with <span class="inline-code">assertThrows</span>.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 4 -->
+<section class="hour-section" id="hour4">
+    <div class="hour-header">
+        <div class="hour-number">Hour 4</div>
+        <div class="hour-title">Advanced JUnit — Parameterized & Concurrent Tests</div>
+        <div class="hour-goal">Write data-driven tests. Test concurrent code reliably.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Parameterized Tests</div>
+        <pre><code><span class="annotation">@ParameterizedTest</span>
+<span class="annotation">@ValueSource</span>(strings = {<span class="string">"racecar"</span>, <span class="string">"madam"</span>, <span class="string">"level"</span>, <span class="string">"a"</span>})
+<span class="keyword">void</span> <span class="function">palindromeCheck</span>(<span class="type">String</span> input) {
+    <span class="function">assertTrue</span>(<span class="type">StringUtils</span>.<span class="function">isPalindrome</span>(input));
+}
+
+<span class="annotation">@ParameterizedTest</span>
+<span class="annotation">@CsvSource</span>({
+    <span class="string">"10, 0, IllegalArgumentException"</span>,
+    <span class="string">"10, 2, 5"</span>,
+    <span class="string">"9, 3, 3"</span>
+})
+<span class="keyword">void</span> <span class="function">divideTest</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="type">String</span> expected) {
+    <span class="keyword">if</span> (b == <span class="number">0</span>) {
+        <span class="function">assertThrows</span>(<span class="type">IllegalArgumentException</span>.<span class="keyword">class</span>, () -> calc.<span class="function">divide</span>(a, b));
+    } <span class="keyword">else</span> {
+        <span class="function">assertEquals</span>(<span class="type">Integer</span>.<span class="function">parseInt</span>(expected), calc.<span class="function">divide</span>(a, b));
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Testing Concurrent Code</div>
+        <pre><code><span class="annotation">@Test</span>
+<span class="keyword">void</span> <span class="function">concurrentIncrementDoesNotLoseData</span>() <span class="keyword">throws</span> <span class="type">InterruptedException</span> {
+    <span class="type">AtomicInteger</span> counter = <span class="keyword">new</span> <span class="type">AtomicInteger</span>(<span class="number">0</span>);
+    <span class="keyword">int</span> threadCount = <span class="number">10</span>;
+    <span class="type">CountDownLatch</span> startGate = <span class="keyword">new</span> <span class="type">CountDownLatch</span>(<span class="number">1</span>);
+    <span class="type">CountDownLatch</span> endGate = <span class="keyword">new</span> <span class="type">CountDownLatch</span>(threadCount);
+
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < threadCount; i++) {
+        <span class="keyword">new</span> <span class="type">Thread</span>(() -> {
+            <span class="keyword">try</span> { startGate.<span class="function">await</span>(); } <span class="keyword">catch</span> (<span class="type">InterruptedException</span> e) { <span class="type">Thread</span>.<span class="function">currentThread</span>().<span class="function">interrupt</span>(); }
+            counter.<span class="function">incrementAndGet</span>();
+            endGate.<span class="function">countDown</span>();
+        }).<span class="function">start</span>();
+    }
+
+    startGate.<span class="function">countDown</span>();  <span class="comment">// All threads start simultaneously</span>
+    endGate.<span class="function">await</span>();          <span class="comment">// Wait for all to finish</span>
+    <span class="function">assertEquals</span>(threadCount, counter.<span class="function">get</span>());
+}</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Test Concurrent Data Structures</div>
+        <ol>
+            <li>Test your <span class="inline-code">BoundedBuffer</span> from Day 2 Hour 12 with 10 producers + 10 consumers.</li>
+            <li>Rewrite the test using <span class="inline-code">ArrayBlockingQueue</span> (Day 2 Hour 14). Assert no data loss.</li>
+            <li>Write a parameterized test for <span class="inline-code">MathException</span> covering <span class="inline-code">divide(a, 0)</span> with multiple values of <span class="inline-code">a</span>.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 5 -->
+<section class="hour-section" id="hour5">
+    <div class="hour-header">
+        <div class="hour-number">Hour 5</div>
+        <div class="hour-title">JDBC & SQL Primer</div>
+        <div class="hour-goal">Connect Java to a database. Write SQL. Use transactions.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">JDBC Fundamentals</div>
+        <pre><code><span class="comment">// H2 in-memory connection</span>
+<span class="type">String</span> url = <span class="string">"jdbc:h2:mem:testdb"</span>;
+
+<span class="keyword">try</span> (<span class="type">Connection</span> conn = <span class="type">DriverManager</span>.<span class="function">getConnection</span>(url);
+     <span class="type">PreparedStatement</span> stmt = conn.<span class="function">prepareStatement</span>(<span class="string">"SELECT * FROM employees WHERE dept = ?"</span>)) {
+
+    stmt.<span class="function">setString</span>(<span class="number">1</span>, <span class="string">"Engineering"</span>);
+    <span class="keyword">try</span> (<span class="type">ResultSet</span> rs = stmt.<span class="function">executeQuery</span>()) {
+        <span class="keyword">while</span> (rs.<span class="function">next</span>()) {
+            <span class="type">System</span>.out.<span class="function">println</span>(rs.<span class="function">getString</span>(<span class="string">"name"</span>) + <span class="string">": $"</span> + rs.<span class="function">getDouble</span>(<span class="string">"salary"</span>));
+        }
+    }
+} <span class="comment">// Auto-close conn, stmt, rs via try-with-resources</span></code></pre>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title">Never Use Statement — Always Use PreparedStatement</div>
+        <pre><code><span class="comment">// NEVER: vulnerable to SQL injection</span>
+<span class="type">Statement</span> stmt = conn.<span class="function">createStatement</span>();
+stmt.<span class="function">executeQuery</span>(<span class="string">"SELECT * FROM users WHERE name = '"</span> + userInput + <span class="string">"'"</span>);
+
+<span class="comment">// ALWAYS: parameterized, safe from injection</span>
+<span class="type">PreparedStatement</span> stmt = conn.<span class="function">prepareStatement</span>(<span class="string">"SELECT * FROM users WHERE name = ?"</span>);
+stmt.<span class="function">setString</span>(<span class="number">1</span>, userInput);</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">SQL Survival Kit</div>
+        <pre class="sql"><code><span class="sql-keyword">CREATE TABLE</span> employees (
+    id    <span class="sql-keyword">INT</span> <span class="sql-keyword">PRIMARY KEY AUTO_INCREMENT</span>,
+    name  <span class="sql-keyword">VARCHAR</span>(<span class="sql-number">100</span>) <span class="sql-keyword">NOT NULL</span>,
+    salary <span class="sql-keyword">DOUBLE NOT NULL</span>,
+    dept  <span class="sql-keyword">VARCHAR</span>(<span class="sql-number">50</span>)
+);
+
+<span class="sql-keyword">INSERT INTO</span> employees (name, salary, dept) <span class="sql-keyword">VALUES</span> (<span class="sql-string">'Alice'</span>, <span class="sql-number">85000</span>, <span class="sql-string">'Engineering'</span>);
+
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> employees <span class="sql-keyword">WHERE</span> dept = <span class="sql-string">'Engineering'</span>;
+
+<span class="sql-keyword">UPDATE</span> employees <span class="sql-keyword">SET</span> salary = <span class="sql-number">90000</span> <span class="sql-keyword">WHERE</span> name = <span class="sql-string">'Alice'</span>;
+
+<span class="sql-keyword">DELETE FROM</span> employees <span class="sql-keyword">WHERE</span> id = <span class="sql-number">5</span>;</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">SQL Aggregation</div>
+        <pre class="sql"><code><span class="sql-keyword">SELECT</span> dept, <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">AS</span> count, <span class="sql-keyword">SUM</span>(salary) <span class="sql-keyword">AS</span> total, <span class="sql-keyword">AVG</span>(salary) <span class="sql-keyword">AS</span> avg_salary
+<span class="sql-keyword">FROM</span> employees
+<span class="sql-keyword">GROUP BY</span> dept;</code></pre>
+        <div class="info">
+            <div class="info-title">Let the Database Do the Work</div>
+            <p>Know what <span class="inline-code">GROUP BY</span>, <span class="inline-code">COUNT()</span>, <span class="inline-code">SUM()</span>, and <span class="inline-code">AVG()</span> can do. Don't re-implement in Java what SQL handles natively. Fetch aggregated results from the database rather than pulling all rows and computing in Java.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Transactions</div>
+        <pre><code><span class="keyword">try</span> (<span class="type">Connection</span> conn = <span class="type">DriverManager</span>.<span class="function">getConnection</span>(url)) {
+    conn.<span class="function">setAutoCommit</span>(<span class="keyword">false</span>);  <span class="comment">// Start transaction</span>
+
+    <span class="keyword">try</span> {
+        <span class="comment">// Multiple operations as one unit</span>
+        <span class="function">insertOrder</span>(conn, order);
+        <span class="function">updateInventory</span>(conn, order);
+        conn.<span class="function">commit</span>();           <span class="comment">// All succeed → commit</span>
+    } <span class="keyword">catch</span> (<span class="type">Exception</span> e) {
+        conn.<span class="function">rollback</span>();          <span class="comment">// Any failure → undo everything</span>
+        <span class="keyword">throw</span> e;
+    }
+}</code></pre>
+        <div class="pitfall">
+            <div class="pitfall-title">Without Explicit Transactions, Every Statement Auto-Commits</div>
+            <p>This is <strong>dangerous in concurrent code</strong>. If your application crashes between two operations (e.g., after inserting an order but before updating inventory), your data is inconsistent. Always group related operations inside a transaction block with <span class="inline-code">setAutoCommit(false)</span>.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Text Blocks (Java 15+) — Cleaner SQL</div>
+        <pre><code><span class="type">String</span> sql = <span class="string">"""
+    SELECT e.name, e.salary
+    FROM employees e
+    WHERE e.dept = ?
+    """</span>;
+
+<span class="comment">// Much cleaner than string concatenation:</span>
+<span class="comment">// String sql = "SELECT e.name, e.salary " +</span>
+<span class="comment">//              "FROM employees e " +</span>
+<span class="comment">//              "WHERE e.dept = ?";</span></code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Try-with-Resources Revisited</div>
+        <p style="color:var(--text-secondary);">
+            <span class="inline-code">Connection</span>, <span class="inline-code">PreparedStatement</span>, and <span class="inline-code">ResultSet</span> all implement <span class="inline-code">AutoCloseable</span>. Nest them in try-with-resources to guarantee cleanup.
+        </p>
+        <pre><code><span class="keyword">try</span> (<span class="type">Connection</span> conn = <span class="type">DriverManager</span>.<span class="function">getConnection</span>(url);
+     <span class="type">PreparedStatement</span> stmt = conn.<span class="function">prepareStatement</span>(sql);
+     <span class="type">ResultSet</span> rs = stmt.<span class="function">executeQuery</span>()) {
+    <span class="comment">// All three auto-closed when block exits</span>
+} <span class="keyword">catch</span> (<span class="type">SQLException</span> e) {
+    <span class="keyword">throw new</span> <span class="type">RuntimeException</span>(<span class="string">"Database error"</span>, e);
+}</code></pre>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: H2 Database CRUD</div>
+        <ol>
+            <li>Connect to H2 in-memory database: <span class="inline-code">jdbc:h2:mem:testdb</span>.</li>
+            <li>Create an <span class="inline-code">employees</span> table with columns: <span class="inline-code">id</span> (auto-increment), <span class="inline-code">name</span>, <span class="inline-code">salary</span>, <span class="inline-code">dept</span>.</li>
+            <li>Insert your Day 1 <span class="inline-code">Employee</span> records inside a transaction.</li>
+            <li>Select all employees and print them. Run an aggregation query (<span class="inline-code">GROUP BY</span> dept).</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 6 -->
+<section class="hour-section" id="hour6">
+    <div class="hour-header">
+        <div class="hour-number">Hour 6</div>
+        <div class="hour-title">The DAO Pattern</div>
+        <div class="hour-goal">Separate data access from business logic. Test your persistence.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Data Access Object — The Abstraction</div>
+        <pre><code><span class="keyword">public interface</span> <span class="type">EmployeeDao</span> {
+    <span class="type">Employee</span> <span class="function">save</span>(<span class="type">Employee</span> employee);
+    <span class="type">Optional</span><<span class="type">Employee</span>> <span class="function">findById</span>(<span class="keyword">int</span> id);
+    <span class="type">List</span><<span class="type">Employee</span>> <span class="function">findAll</span>();
+    <span class="keyword">void</span> <span class="function">delete</span>(<span class="keyword">int</span> id);
+}</code></pre>
+        <p style="margin-top:0.75rem;color:var(--text-secondary);">
+            The DAO pattern separates <strong>what</strong> data operations exist (interface) from <strong>how</strong> they're implemented (H2, PostgreSQL, etc.). Your business code depends on the interface, not the implementation.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-title">H2EmployeeDao Implementation</div>
+        <pre><code><span class="keyword">public class</span> <span class="type">H2EmployeeDao</span> <span class="keyword">implements</span> <span class="type">EmployeeDao</span> {
+    <span class="keyword">private final</span> <span class="type">Connection</span> connection;
+
+    <span class="keyword">public</span> <span class="function">H2EmployeeDao</span>(<span class="type">Connection</span> connection) {
+        <span class="keyword">this</span>.connection = connection;
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public</span> <span class="type">Employee</span> <span class="function">save</span>(<span class="type">Employee</span> employee) {
+        <span class="type">String</span> sql = <span class="string">"""
+            INSERT INTO employees (name, salary, dept)
+            VALUES (?, ?, ?)
+            """</span>;
+        <span class="keyword">try</span> (<span class="type">PreparedStatement</span> stmt = connection.<span class="function">prepareStatement</span>(sql,
+                <span class="type">Statement</span>.<span class="type">RETURN_GENERATED_KEYS</span>)) {
+            stmt.<span class="function">setString</span>(<span class="number">1</span>, employee.<span class="function">name</span>());
+            stmt.<span class="function">setDouble</span>(<span class="number">2</span>, employee.<span class="function">salary</span>());
+            stmt.<span class="function">setString</span>(<span class="number">3</span>, employee.<span class="function">dept</span>());
+            stmt.<span class="function">executeUpdate</span>();
+            <span class="keyword">try</span> (<span class="type">ResultSet</span> rs = stmt.<span class="function">getGeneratedKeys</span>()) {
+                <span class="keyword">if</span> (rs.<span class="function">next</span>()) {
+                    <span class="keyword">return new</span> <span class="type">Employee</span>(rs.<span class="function">getString</span>(<span class="string">"name"</span>),
+                        rs.<span class="function">getDouble</span>(<span class="string">"salary"</span>), rs.<span class="function">getString</span>(<span class="string">"dept"</span>));
+                }
+            }
+        } <span class="keyword">catch</span> (<span class="type">SQLException</span> e) {
+            <span class="keyword">throw new</span> <span class="type">RuntimeException</span>(e);
+        }
+        <span class="keyword">return</span> employee;
+    }
+
+    <span class="comment">// findById, findAll, delete follow the same pattern</span>
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">DAO in Tests</div>
+        <pre><code><span class="annotation">@Test</span>
+<span class="keyword">void</span> <span class="function">saveAndFindById</span>() {
+    <span class="type">EmployeeDao</span> dao = <span class="keyword">new</span> <span class="type">H2EmployeeDao</span>(connection);  <span class="comment">// H2 in-memory</span>
+    <span class="type">Employee</span> saved = dao.<span class="function">save</span>(<span class="keyword">new</span> <span class="type">Employee</span>(<span class="string">"Alice"</span>, <span class="number">85000</span>, <span class="string">"Engineering"</span>));
+    <span class="type">Employee</span> found = dao.<span class="function">findById</span>(saved.<span class="function">id</span>());
+    <span class="function">assertEquals</span>(saved, found);  <span class="comment">// Round-trip verified</span>
+}</code></pre>
+        <div class="info">
+            <div class="info-title">Connection Pooling (Conceptual)</div>
+            <p>In production, you would use a connection pool (e.g., <strong>HikariCP</strong>) instead of creating a new <span class="inline-code">DriverManager.getConnection()</span> per operation. Creating connections is expensive — pools maintain a set of reusable connections. For this course, H2's in-memory mode is sufficient, but know that connection pools are the production standard.</p>
+        </div>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: EmployeeDao Round-Trip</div>
+        <ol>
+            <li>Implement <span class="inline-code">H2EmployeeDao</span> with <span class="inline-code">save</span>, <span class="inline-code">findById</span>, <span class="inline-code">findAll</span>, <span class="inline-code">delete</span>.</li>
+            <li>Write JUnit 5 tests: save an employee, find by ID, assert the fields match.</li>
+            <li>Test <span class="inline-code">findAll</span> returns all saved employees.</li>
+            <li>Test <span class="inline-code">delete</span> removes the employee and <span class="inline-code">findById</span> returns empty.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 7 -->
+<section class="hour-section" id="hour7">
+    <div class="hour-header">
+        <div class="hour-number">Hour 7</div>
+        <div class="hour-title">Logging with SLF4J + Logback</div>
+        <div class="hour-goal">Replace System.out.println forever. Observe thread behavior in logs.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Why Logging Matters</div>
+        <ul>
+            <li><strong>Levels:</strong> Filter by severity — trace in development, warn in production.</li>
+            <li><strong>Context:</strong> Timestamps, thread names, class names — everything <span class="inline-code">System.out.println</span> lacks.</li>
+            <li><strong>Performance:</strong> Parameterized logging skips string concatenation when the level is disabled.</li>
+            <li><strong>Destination:</strong> Console, file, remote — configurable without changing code.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Log Levels</div>
+        <table>
+            <tr><th>Level</th><th>When to Use</th><th>Example</th></tr>
+            <tr><td><span class="inline-code">TRACE</span></td><td>Finest-grained debugging</td><td>Method entry/exit, variable values</td></tr>
+            <tr><td><span class="inline-code">DEBUG</span></td><td>Development debugging</td><td>SQL queries, decision branches</td></tr>
+            <tr><td><span class="inline-code">INFO</span></td><td>Important business events</td><td>"Order 123 processed", "Server started"</td></tr>
+            <tr><td><span class="inline-code">WARN</span></td><td>Potential problems</td><td>"Connection pool 80% full"</td></tr>
+            <tr><td><span class="inline-code">ERROR</span></td><td>Failures needing attention</td><td>"Failed to connect to database"</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Using SLF4J in Code</div>
+        <pre><code><span class="keyword">import</span> org.slf4j.Logger;
+<span class="keyword">import</span> org.slf4j.LoggerFactory;
+
+<span class="keyword">public class</span> <span class="type">OrderProcessor</span> {
+    <span class="keyword">private static final</span> <span class="type">Logger</span> log = <span class="type">LoggerFactory</span>.<span class="function">getLogger</span>(<span class="type">OrderProcessor</span>.<span class="keyword">class</span>);
+
+    <span class="keyword">public void</span> <span class="function">process</span>(<span class="type">Order</span> order) {
+        log.<span class="function">info</span>(<span class="string">"Processing order {}"</span>, order.<span class="function">id</span>());  <span class="comment">// Parameterized — no string concat</span>
+        log.<span class="function">debug</span>(<span class="string">"Order details: amount={}, product={}"</span>, order.<span class="function">amount</span>(), order.<span class="function">product</span>());
+
+        <span class="keyword">try</span> {
+            <span class="function">persistOrder</span>(order);
+        } <span class="keyword">catch</span> (<span class="type">SQLException</span> e) {
+            log.<span class="function">error</span>(<span class="string">"Failed to persist order {}"</span>, order.<span class="function">id</span>(), e);  <span class="comment">// Exception appended</span>
+        }
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-title">logback.xml Configuration</div>
+        <pre><code><span class="comment">&lt;!-- src/main/resources/logback.xml --&gt;</span>
+&lt;configuration&gt;
+    &lt;appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;appender name="FILE" class="ch.qos.logback.core.FileAppender"&gt;
+        &lt;file&gt;logs/application.log&lt;/file&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;root level="INFO"&gt;
+        &lt;appender-ref ref="CONSOLE" /&gt;
+        &lt;appender-ref ref="FILE" /&gt;
+    &lt;/root&gt;
+    &lt;logger name="com.example" level="DEBUG" /&gt;
+&lt;/configuration&gt;</code></pre>
+    </div>
+
+    <div class="info">
+        <div class="info-title">Parameterized Logging Avoids String Concat Overhead</div>
+        <p><span class="inline-code">logger.info("Processing order {}")</span> — the <span class="inline-code">{}</span> is only replaced if INFO level is enabled. No string concatenation cost when the level is disabled. Never use <span class="inline-code">logger.info("Processing " + order.getId())</span> — that concatenation runs regardless of log level.</p>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Add Logging to Day 2 Log Processor</div>
+        <ol>
+            <li>Add SLF4J + Logback dependencies to your Maven project.</li>
+            <li>Replace all <span class="inline-code">System.out.println</span> calls in your Day 2 multi-threaded log processor with parameterized SLF4J logging.</li>
+            <li>Configure <span class="inline-code">logback.xml</span> with console and file appenders.</li>
+            <li>Run with 3 producer threads and 2 consumer threads. Observe the <span class="inline-code">[%thread]</span> names in log output.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- HOUR 8 -->
+<section class="hour-section" id="hour8">
+    <div class="hour-header">
+        <div class="hour-number">Hour 8</div>
+        <div class="hour-title">Integration Architecture</div>
+        <div class="hour-goal">See how all the pieces connect into a real application.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">How the Pieces Connect</div>
+        <table>
+            <tr><th>Component</th><th>Role</th><th>Learned</th></tr>
+            <tr><td><strong>Maven</strong></td><td>Dependency management, build, packaging</td><td>Day 1 H15 + Day 3 H1</td></tr>
+            <tr><td><strong>JUnit 5</strong></td><td>Verify correctness at every layer</td><td>Day 3 H3–H4</td></tr>
+            <tr><td><strong>JDBC</strong></td><td>Persist state to H2 database</td><td>Day 3 H5</td></tr>
+            <tr><td><strong>DAO Pattern</strong></td><td>Abstract data access from business logic</td><td>Day 3 H6</td></tr>
+            <tr><td><strong>SLF4J + Logback</strong></td><td>Observe behavior across threads</td><td>Day 3 H7</td></tr>
+            <tr><td><strong>Streams</strong></td><td>Parse, filter, transform data</td><td>Day 2 H4–H7</td></tr>
+            <tr><td><strong>Concurrency</strong></td><td>Process data in parallel, submit tasks</td><td>Day 2 H9–H15</td></tr>
+            <tr><td><strong>CompletableFuture</strong></td><td>Compose async operations</td><td>Day 2 H16</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="card-title">The Integration Flow</div>
+        <pre><code>orders.csv  ──►  Stream&lt;Order&gt;  ──►  Validate  ──►  Parse
+     │                                              │
+     │ (NIO.2)                              (Predicate)
+     │                                              │
+     ▼                                              ▼
+ src/main/resources                      ExecutorService + DAO
+     │                                    (persist in transactions)
+     │                                              │
+     │                                   CountDownLatch (safety)
+     │                                              │
+     ▼                                              ▼
+ Files.lines()                    CompletableFuture
+     │                                    │
+     │                              Collectors.groupingBy
+     │                                    │
+     ▼                                    ▼
+ report.txt  ◄──────────── NIO.2 write ◄─── OrderSummary</code></pre>
+    </div>
+
+    <div class="strategy">
+        <div class="strategy-title">Before the Capstone</div>
+        <p>Hours 1–8 have built every component you need. The capstone (Hours 9–16) integrates them all into one project. If any concept feels shaky, revisit the relevant hour now.</p>
+    </div>
+
+    <div class="practice">
+        <div class="practice-title">Practice: Integration Dry Run</div>
+        <ol>
+            <li>Verify your Maven project has all dependencies: JUnit 5, H2, SLF4J, Logback.</li>
+            <li>Create a simple main class that connects to H2, creates a table, inserts a record, and reads it back — all logged at INFO level.</li>
+            <li>Write a JUnit test that verifies the round-trip.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- CAPSTONE: HOURS 9–16 -->
+<section class="hour-section" id="capstone">
+    <div class="capstone-header">
+        <div class="hour-number">Hours 9–16</div>
+        <div class="hour-title" style="font-size: 1.75rem;">The Capstone Project <span class="capstone-badge">Multi-Threaded Order Processing Engine</span></div>
+        <div class="hour-goal">Build a complete application that uses every concept from all 3 days.</div>
+    </div>
+
+    <div class="requirement-card">
+        <div class="requirement-title">
+            <span class="requirement-number">1</span>
+            Model
+            <span class="day-ref">Day 1 H6</span>
+        </div>
+        <p>Create records for the data model:</p>
+        <pre><code><span class="keyword">public record</span> <span class="type">Order</span>(<span class="type">String</span> id, <span class="type">String</span> customer, <span class="keyword">double</span> amount,
+                    <span class="type">String</span> product, <span class="type">LocalDateTime</span> timestamp) {}
+
+<span class="keyword">public record</span> <span class="type">OrderSummary</span>(<span class="type">String</span> category, <span class="keyword">double</span> totalRevenue, <span class="keyword">long</span> count) {}</code></pre>
+    </div>
+
+    <div class="requirement-card">
+        <div class="requirement-title">
+            <span class="requirement-number">2</span>
+            Input
+            <span class="day-ref">Day 1 H14</span>
+        </div>
+        <p>Read <span class="inline-code">orders.csv</span> from <span class="inline-code">src/main/resources</span> using NIO.2:</p>
+        <pre><code><span class="type">Path</span> path = <span class="type">Paths</span>.<span class="function">get</span>(<span class="function">getClass</span>().<span class="function">getResource</span>(<span class="string">"/orders.csv"</span>).<span class="function">toURI</span>());
+<span class="type">Stream</span><<span class="type">String</span>> lines = <span class="type">Files</span>.<span class="function">lines</span>(path);</code></pre>
+        <div class="info">
+            <div class="info-title">Files.lines() Checked Exception</div>
+            <p><span class="inline-code">Files.lines()</span> throws <span class="inline-code">IOException</span> — apply the survival patterns from Day 2 Hour 1, or use <span class="inline-code">Files.readAllLines()</span> first and then stream the list.</p>
+        </div>
+    </div>
+
+    <div class="requirement-card">
+        <div class="requirement-title">
+            <span class="requirement-number">3</span>
+            Parse & Validate
+            <span class="day-ref">Day 2 H4-H7</span>
+        </div>
+        <p>Use Streams to parse CSV lines into <span class="inline-code">Order</span> records. Filter invalid orders (negative amounts, blank fields) using <span class="inline-code">Predicate</span>.</p>
+        <pre><code><span class="type">List</span><<span class="type">Order</span>> validOrders = <span class="type">Files</span>.<span class="function">lines</span>(path)
+    .<span class="function">skip</span>(<span class="number">1</span>)                                        <span class="comment">// Skip header</span>
+    .<span class="function">map</span>(line -> <span class="function">parseOrder</span>(line))                    <span class="comment">// Parse to Order</span>
+    .<span class="function">filter</span>(order -> order != <span class="keyword">null</span>)                  <span class="comment">// Skip malformed</span>
+    .<span class="function">filter</span>(order -> order.<span class="function">amount</span>() > <span class="number">0</span>)          <span class="comment">// No negatives</span>
+    .<span class="function">filter</span>(order -> !order.<span class="function">product</span>().<span class="function">isBlank</span>())   <span class="comment">// No blank fields</span>
+    .<span class="function">toList</span>();</code></pre>
+    </div>
+
+    <div class="requirement-card">
+        <div class="requirement-title">
+            <span class="requirement-number">4</span>
+            Persist
+            <span class="day-ref">Day 2 H13</span> <span class="day-ref">Day 3 H5-H6</span>
+        </div>
+        <p>Use <span class="inline-code">ExecutorService</span> with a fixed thread pool. Each worker inserts valid orders into <strong>H2</strong> via your DAO pattern. <strong>Wrap inserts in a transaction</strong>:</p>
+        <pre><code><span class="type">ExecutorService</span> pool = <span class="type">Executors</span>.<span class="function">newFixedThreadPool</span>(<span class="number">4</span>);
+
+<span class="keyword">for</span> (<span class="type">Order</span> order : validOrders) {
+    pool.<span class="function">submit</span>(() -> {
+        <span class="keyword">try</span> (<span class="type">Connection</span> conn = <span class="function">getConnection</span>()) {
+            conn.<span class="function">setAutoCommit</span>(<span class="keyword">false</span>);
+            <span class="keyword">try</span> {
+                dao.<span class="function">save</span>(conn, order);
+                conn.<span class="function">commit</span>();
+            } <span class="keyword">catch</span> (<span class="type">Exception</span> e) {
+                conn.<span class="function">rollback</span>();
+                log.<span class="function">error</span>(<span class="string">"Failed to persist order {}"</span>, order.<span class="function">id</span>(), e);
+            }
+        }
+    });
+}</code></pre>
+    </div>
+
+    <div class="requirement-card">
+        <div class="requirement-title">
+            <span class="requirement-number">5</span>
+            Concurrent Safety
+            <span class="day-ref">Day 2 H15</span>
+        </div>
+        <p>Use <span class="inline-code">CountDownLatch</span> to ensure all orders are persisted before generating the report:</p>
+        <pre><code><span class="type">CountDownLatch</span> latch = <span class="keyword">new</span> <span class="type">CountDownLatch</span>(validOrders.<span class="function">size</span>());
+
+<span class="keyword">for</span> (<span class="type">Order</span> order : validOrders) {
+    pool.<span class="function">submit</span>(() -> {
+        <span class="keyword">try</span> {
+            <span class="function">persistOrder</span>(order);
+        } <span class="keyword">finally</span> {
+            latch.<span class="function">countDown</span>();
+        }
+    });
+}
+
+latch.<span class="function">await</span>();  <span class="comment">// All inserts complete before report</span></code></pre>
+    </div>
+
+    <div class="requirement-card">
+        <div class="requirement-title">
+            <span class="requirement-number">6</span>
+            Report
+            <span class="day-ref">Day 2 H7</span> <span class="day-ref">Day 2 H16</span> <span class="day-ref">Day 1 H14</span>
+        </div>
+        <p>Use <span class="inline-code">CompletableFuture</span> to generate a summary report:</p>
+        <pre><code><span class="type">CompletableFuture</span><<span class="type">Void</span>> reportFuture = <span class="type">CompletableFuture</span>
+    .<span class="function">supplyAsync</span>(() -> dao.<span class="function">findAll</span>())
+    .<span class="function">thenApply</span>(orders -> orders.<span class="function">stream</span>()
+        .<span class="function">collect</span>(<span class="type">Collectors</span>.<span class="function">groupingBy</span>(
+            <span class="type">Order</span>::<span class="function">product</span>,
+            <span class="type">Collectors</span>.<span class="function">summingDouble</span>(<span class="type">Order</span>::<span class="function">amount</span>))))
+    .<span class="function">thenAccept</span>(report -> <span class="function">writeReport</span>(report));
+
+<span class="comment">// writeReport uses NIO.2 to save to report.txt</span>
+<span class="type">Files</span>.<span class="function">writeString</span>(<span class="type">Path</span>.<span class="function">of</span>(<span class="string">"report.txt"</span>), reportText);</code></pre>
+    </div>
+
+    <div class="requirement-card">
+        <div class="requirement-title">
+            <span class="requirement-number">7</span>
+            Logging
+            <span class="day-ref">Day 3 H7</span>
+        </div>
+        <p>Every step logs at <span class="inline-code">INFO</span> or <span class="inline-code">DEBUG</span> via SLF4J:</p>
+        <pre><code>log.<span class="function">info</span>(<span class="string">"Reading orders from {}"</span>, path);
+log.<span class="function">info</span>(<span class="string">"Parsed {} valid orders, {} rejected"</span>, valid, rejected);
+log.<span class="function">info</span>(<span class="string">"Persisting {} orders with {} threads"</span>, validOrders.<span class="function">size</span>(), threadCount);
+log.<span class="function">debug</span>(<span class="string">"Order {} inserted by thread {}"</span>, order.<span class="function">id</span>(), <span class="type">Thread</span>.<span class="function">currentThread</span>().<span class="function">getName</span>());
+log.<span class="function">info</span>(<span class="string">"Report written to report.txt"</span>);</code></pre>
+    </div>
+
+    <div class="requirement-card">
+        <div class="requirement-title">
+            <span class="requirement-number">8</span>
+            Testing
+            <span class="day-ref">Day 3 H3-H4</span>
+        </div>
+        <p>JUnit 5 tests must verify:</p>
+        <ol>
+            <li><strong>Parsing:</strong> Malformed CSV lines (blank fields, negative amounts) are filtered out.</li>
+            <li><strong>Concurrency:</strong> Concurrent insertion does not lose or duplicate orders.</li>
+            <li><strong>Report math:</strong> <span class="inline-code">groupingBy</span> + <span class="inline-code">summingDouble</span> produces correct totals.</li>
+        </ol>
+    </div>
+
+    <div class="requirement-card">
+        <div class="requirement-title">
+            <span class="requirement-number">9</span>
+            Build & Package
+            <span class="day-ref">Day 1 H15</span>
+        </div>
+        <p>Package as an executable JAR via Maven:</p>
+        <pre><code>$ mvn clean package
+$ java -jar target/order-processor-1.0-SNAPSHOT.jar</code></pre>
+        <p style="margin-top:0.5rem;color:var(--text-secondary);">
+            Ensure <span class="inline-code">pom.xml</span> includes the <span class="inline-code">maven-jar-plugin</span> with <span class="inline-code">Main-Class</span>, or use <span class="inline-code">maven-shade-plugin</span> to create a fat JAR with all dependencies.
+        </p>
+    </div>
+
+    <div class="checklist" style="border-color: var(--capstone);">
+        <h3 style="color: var(--capstone);">Success Criteria</h3>
+        <p style="color:var(--text-secondary);margin-bottom:1rem;">If you can build this unassisted, you are no longer learning Java. You are <strong>using</strong> it.</p>
+        <ul style="margin-left:1.5rem;">
+            <li style="color:var(--text-secondary);">Your project compiles and runs via <span class="inline-code">mvn package</span> and <span class="inline-code">java -jar</span>.</li>
+            <li style="color:var(--text-secondary);">Orders are read from CSV, validated, and persisted to H2.</li>
+            <li style="color:var(--text-secondary);">Concurrent insertion produces no data loss.</li>
+            <li style="color:var(--text-secondary);">A summary report is generated using Streams and CompletableFuture.</li>
+            <li style="color:var(--text-secondary);">Every step is logged via SLF4J.</li>
+            <li style="color:var(--text-secondary);">JUnit 5 tests pass for parsing, concurrency, and report math.</li>
+        </ul>
+    </div>
+
+    <div class="strategy" style="border-color: var(--capstone);">
+        <div class="strategy-title" style="color: var(--capstone);">Suggested Hour Allocation</div>
+        <table>
+            <tr><th>Hours</th><th>Focus</th></tr>
+            <tr><td>9–10</td><td>Set up Maven project, create Order/OrderSummary records, read CSV with NIO.2</td></tr>
+            <tr><td>11–12</td><td>Parse & validate with Streams. Implement DAO with H2. Write JDBC insert transactions.</td></tr>
+            <tr><td>13</td><td>Add ExecutorService for concurrent persistence. Add CountDownLatch safety.</td></tr>
+            <tr><td>14</td><td>Add CompletableFuture report generation. Write report to file with NIO.2.</td></tr>
+            <tr><td>15–16</td><td>Add SLF4J logging. Write JUnit 5 tests. Package and run as JAR.</td></tr>
+        </table>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>Day 3: Engineering, Integration & Capstone</p>
+    <p style="margin-top: 0.5rem; font-size: 0.875rem;">Part of the 3-Day Intensive Java Syllabus — Java 21 LTS</p>
+    <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--border);">
+        Prerequisite: Complete mastery of Day 1 and Day 2 content.
+    </p>
+</footer>
+
+<script>
+    const sections = document.querySelectorAll('.hour-section');
+    const navBtns = document.querySelectorAll('.nav-btn');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (scrollY >= sectionTop - 100) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('href') === '#' + current) {
+                btn.classList.add('active');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
